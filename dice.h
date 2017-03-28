@@ -1,5 +1,5 @@
-#ifndef _ABSTRACT_DICE_H_
-#define _ABSTRACT_DICE_H_
+#ifndef _DICE_H_
+#define _DICE_H_
 
 class AbstractDice {
  public:

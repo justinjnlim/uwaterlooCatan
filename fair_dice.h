@@ -1,7 +1,7 @@
 #ifndef _FAIR_DICE_H_
 #define _FAIR_DICE_H_
 #include <random>
-#include "abstract_dice.h"
+#include "dice.h"
 
 class FairDice : public AbstractDice {
  private:
