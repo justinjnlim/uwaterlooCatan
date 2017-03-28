@@ -11,6 +11,8 @@ void addResource(ResourceType r, int qty) {}
 void subtractResource(ResourceType r, int qty) {}
 
 ResourceType getRandomResource() {}
+void setDice() {}
+void rollDice(){}
 
 void buildRoad(int id) {}
 void buildProperty(int id) {}
