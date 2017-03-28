@@ -7,9 +7,9 @@
 class Player {
   std::string colour;
   int numPoints;
-  <std::vector<Property **> properties;
-  <std::vector<Road *> roads;
-  <std::vector<ResourceType> resources;
+  std::vector<Property **> properties;
+  std::vector<Road *> roads;
+  std::vector<ResourceType> resources;
   Dice * diceChosen;
   Game * g;
 
@@ -29,7 +29,7 @@ private:
   // can do these actions on turn
   void setDice(); // can choose fair or loaded
   void rollDice();
-  
+
   void buildRoad(int id);
   void buildProperty(int id);
   void upgradeProperty(int id);
