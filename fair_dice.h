@@ -6,7 +6,7 @@
 class FairDice : public AbstractDice {
  private:
   std::mt19937 gen(std::random_device{}());
-  std::uniform_int_distribution<> dist(1, 7);
+  std::uniform_int_distribution<> dist(1, 6);
 
  public:
   int getDiceRoll();
