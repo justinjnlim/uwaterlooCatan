@@ -4,7 +4,7 @@
 
 class AbstractDice {
  public:
-  virtual int getDiceRoll(istream &in, ostream &out) = 0;
+  virtual int getDiceRoll(std::istream &in, std::ostream &out) = 0;
 };
 
 #endif

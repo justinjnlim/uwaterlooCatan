@@ -8,13 +8,18 @@ int LoadedDice::getDiceRoll(istream &in, ostream &out) {
   out << "Input a roll between 2 and 12:" << endl;
 
   while (in >> s) {
-    istringstream ss{s}
+    istringstream iss{s};
     int input;
-    if (ss >> input && input > 1 && input < 13)
+    if (iss >> input && input > 1 && input < 13)
       return input;
     else {
       out << "Invalid roll." << endl;
-      out << "Input a roll between 2 and 12" << endl;
+      out << "Input a roll between 2 and 12:" << endl;
     }
   }
 }
+
+// int main() {
+//   LoadedDice ld;
+//   cout << ld.getDiceRoll(cin, cout) << endl;
+// }

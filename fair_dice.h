@@ -6,11 +6,11 @@
 
 class FairDice : public AbstractDice {
  private:
-  std::mt19937 gen(std::random_device{}());
-  std::uniform_int_distribution<> dist(1, 6);
+  std::mt19937 gen{std::random_device{}()};
+  std::uniform_int_distribution<> dist{1, 6};
 
  public:
-  int getDiceRoll(istream &in, ostream &out) override;
+  int getDiceRoll(std::istream &in, std::ostream &out) override;
 };
 
 #endif
