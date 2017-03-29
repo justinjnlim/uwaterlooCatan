@@ -4,7 +4,7 @@
 
 class LoadedDice : public AbstractDice {
  public:
-  int getDiceRoll(std::istream &in, std::ostream &out);
+  int getDiceRoll(std::istream &in, std::ostream &out) override;
 };
 
 #endif

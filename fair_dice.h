@@ -1,5 +1,6 @@
 #ifndef _FAIR_DICE_H_
 #define _FAIR_DICE_H_
+#include <iostream>
 #include <random>
 #include "dice.h"
 
@@ -9,7 +10,7 @@ class FairDice : public AbstractDice {
   std::uniform_int_distribution<> dist(1, 6);
 
  public:
-  int getDiceRoll();
+  int getDiceRoll(istream &in, ostream &out) override;
 };
 
 #endif
