@@ -25,8 +25,11 @@ class Game {
   ~Game();
   Player * getCurrentPlayer();
   std::unique_ptr<Board> getGameBoard();
-
-
+  void listCommands();
+  void initGame();
+  void resetGame();
+  void saveGame();
+  void loadGame();
 };
 
 #endif

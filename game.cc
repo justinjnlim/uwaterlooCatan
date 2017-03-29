@@ -11,3 +11,19 @@ map<string, string> Game::createPropRecipes() {
 }
 
 const map<string, string> Game::propertyRecipes = Game::createPropRecipes();
+
+Game::Game() {};
+
+Game::~Game() {};
+
+unique_ptr<Board> Game::getGameBoard() {};
+
+void Game::listCommands() {};
+
+void Game::initGame() {};
+
+void Game::resetGame() {};
+
+void Game::saveGame() {};
+
+void Game::loadGame() {};
