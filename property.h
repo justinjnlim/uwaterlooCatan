@@ -13,7 +13,7 @@ class Property : public Observer {
   int id;
   std::vector<Road*> neighbours;
 
-  void payOwner(ResourceType r)=0;
+  virtual void payOwner(ResourceType r)=0;
 
   public:
   bool hasOwner();

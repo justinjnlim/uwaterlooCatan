@@ -13,11 +13,12 @@ class Tile : public Subject, public Observer {
   ResourceType r;
   int id;
   bool hasGoose;
-  std::vector<Road*> roads;
-  std::vector<Property*> properties;
+  //std::vector<Road*> roads;
+  //std::vector<Property*> properties;
 
 public:
-  bool canYield(int requestedDV);
+  Tile(ResourceType r, int id);
+
   void notify(Subject& whoNotified);
   SubscriptionType subType();
 
