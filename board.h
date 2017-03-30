@@ -8,9 +8,10 @@
 
 class Board : public Subject {
 
-  std::map<int,Road*> roads;
-  std::map<int,Property*> properties;
-  std::map<int,Tile*> tiles;
+  // not pointers, since Board will "Own" them?
+  std::map<int,Road> roads;
+  std::map<int,Property> properties;
+  std::map<int,Tile> tiles;
 
 public:
   void save();

@@ -7,7 +7,7 @@
 class Road {
   Player* owner;
   int id;
-  std::vector<Property*> neighbours;
+  std::vector<Property**> neighbours;
   public:
   bool hasAdjacentProperty();
   bool hasOwner();

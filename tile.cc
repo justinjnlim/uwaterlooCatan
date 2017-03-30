@@ -1,6 +1,6 @@
 #include "tile.h"
 
-void Tile::notify(Subject& whoNotified) {
+void Tile::notify(BoardSubject& whoNotified) {
   if (!hasGoose) {
     notifyObservers(SubscriptionType::Tile); 
   }

@@ -8,18 +8,16 @@
 #include "subject.h"
 #include "observer.h"
 
-class Tile : public Subject, public Observer {
+class Tile : public TileSubject, public BoardObserver {
 
   ResourceType r;
   int id;
   bool hasGoose;
-  //std::vector<Road*> roads;
-  //std::vector<Property*> properties;
 
 public:
   Tile(ResourceType r, int id);
 
-  void notify(Subject& whoNotified);
+  void notify(BoardSubject& whoNotified);
   SubscriptionType subType();
 
 }
