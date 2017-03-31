@@ -5,21 +5,26 @@
 #include "subscriptions.h"
 #include "road.h"
 #include "property.h"
-#include "subject.h"
-#include "observer.h"
+#include "tileSubject.h"
+#include "boardObserver.h"
 
-class Tile : public Subject, public Observer {
+class Tile : public TileSubject, public BoardObserver {
 
   ResourceType r;
   int id;
   bool hasGoose;
-  std::vector<Road*> roads;
-  std::vector<Property*> properties;
 
 public:
-  bool canYield(int requestedDV);
-  void notify(Subject& whoNotified);
+  Tile(ResourceType r, int id);
+
+  void notify(BoardSubject& whoNotified);
   SubscriptionType subType();
+
+  void setGoose();
+  void unsetGoose();
+  
+  int getId();
+  ResourceType getResourceType();
 
 }
 
