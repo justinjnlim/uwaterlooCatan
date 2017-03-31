@@ -5,8 +5,8 @@
 #include "subscriptions.h"
 #include "road.h"
 #include "property.h"
-#include "subject.h"
-#include "observer.h"
+#include "tileSubject.h"
+#include "boardObserver.h"
 
 class Tile : public TileSubject, public BoardObserver {
 
@@ -19,6 +19,12 @@ public:
 
   void notify(BoardSubject& whoNotified);
   SubscriptionType subType();
+
+  void setGoose();
+  void unsetGoose();
+  
+  int getId();
+  ResourceType getResourceType();
 
 }
 
