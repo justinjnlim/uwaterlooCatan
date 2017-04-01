@@ -3,16 +3,11 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include "info.h"
 #include "subscriptions.h"
 #include "resources.h"
-class Observer;
 
-struct Info {
-  std::string type;
-  bool hasGoose;
-  ResourceType rt;
-  std::string shit;
-};
+class Observer;
 
 class Subject {
   std::vector<std::shared_ptr<Observer>> observers;

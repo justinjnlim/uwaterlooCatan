@@ -29,6 +29,9 @@ public:
   bool upgradeProperty(int id);
   void turn(std::istream &in, std::ostream &out);
   void printStatus(std::ostream &out);
+
+  // SETTERS/GETTERS
+  // void setPoints(int p);
 };
 
 #endif

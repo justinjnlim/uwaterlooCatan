@@ -24,7 +24,7 @@ Info Tile::getInfo() const {
   i.type = "Tile";
   i.hasGoose = hasGoose;
   i.rt = r;
-  i.shit = "";
+  i.ownerString = "";
 
   return i;
 }
