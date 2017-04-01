@@ -30,7 +30,9 @@ public:
   void turn();
   void printStatus();
   void printOwnedBuildings();
-
+  void setDiceToLoaded();
+  bool hasWon();
+  void setDiceToFair();
   std::string getPlayerFirstLetter(); // used for text display
   // SETTERS/GETTERS
   // void setPoints(int p);

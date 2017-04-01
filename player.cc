@@ -51,9 +51,37 @@ bool Player::upgradeProperty(int id) {
  }
 
 void Player::turn() {
-  int diceRoll = diceChosen.lock()->getDiceRoll(cin, cout);
-  g->getGameBoard()->getDiceRoll(diceRoll);
-  cout << "turn has completed" << endl;
+  string cmd;
+  int diceRoll;
+  while(cin >> cmd) {
+    if(cmd == "load") {
+      setDiceToLoaded();
+    } else if(cmd == "fair") {
+      setDiceToFair();
+    } else if (cmd == "roll") {
+      diceRoll = diceChosen.lock()->getDiceRoll(cin, cout);
+      cout << "You rolled a " << diceRoll << endl;
+      g->getGameBoard()->getDiceRoll(diceRoll);
+      cout << "turn has completed" << endl;
+      break; // exits loop once rolled
+    } else {
+      cout << "Invalid Command." << endl;
+    }
+   }
+
+   while(cin >> cmd) {
+     if(cmd == "status") {
+       for(int i = 0; i < 1; ++i) { // TODO: hardcoded NUM OF PLAYERS MIGHT WANNA CHANGE
+         g->getPlayer(i)->printStatus();
+       }
+     } else if(cmd == "help") {
+       g->listCommands();
+     } else if (cmd == "next") {
+       break;
+     } else {
+       cout << "Invalid Command." << endl;
+     }
+   }
 }
 
 string Player::getPlayerFirstLetter() {
@@ -82,3 +110,18 @@ string Player::getPlayerFirstLetter() {
 // void Player::setGame(Game * game) {
 //   g = game;
 // }
+
+// dice functions
+void Player::setDiceToLoaded() {
+  diceChosen = g->getLoadedDice();
+}
+
+void Player::setDiceToFair() {
+  diceChosen = g->getFairDice();
+}
+
+bool Player::hasWon() {
+  return numPoints >= 10;
+}
+
+g->genRand(x, y)
