@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include "resources.h"
+//#include "player_data.h"
 /* #include "game.h" */
 /* #include "property.h" */
 class Property;
@@ -35,8 +36,18 @@ public:
   void setDiceToFair();
   std::string getPlayerFirstLetter(); // used for text display
   ResourceType getRandomResource();
+  std::string save();
+
   // SETTERS/GETTERS
-  // void setPoints(int p);
+  void addProperty(int id, std::weak_ptr<Property> p);
+  // void addRoad(int id, weak_ptr<Road> r);  TODO: uncomment when add roads
+  //void setResources(const PlayerData & pd); TODO: add when playerdata.h is added
+  bool enoughResources(std::string p);
+  int totalResources();
+  int howManyResources(ResourceType r);
+  int totalChangeInResources();
+  void addResource(ResourceType r, int qty);
+  void subtractResource(ResourceType r, int qty);
 };
 
 #endif

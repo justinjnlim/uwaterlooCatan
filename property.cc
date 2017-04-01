@@ -37,6 +37,10 @@ string Property::getBuildingType() const { // used by player's printStatus funct
   }
 }
 
+PropertyType Property::getPropertyType() const {
+  return p;
+}
+
 Info Property::getInfo() const {
   Info i;
   i.type = "Property";

@@ -1,3 +1,4 @@
+
 #ifndef _PROPERTY_H_
 #define _PROPERTY_H_
 #include <vector>
@@ -30,6 +31,8 @@ class Property : public Subject, public Observer, public std::enable_shared_from
   SubscriptionType subType() const override;
 // used to get the letter of it's property type for Player::printStatus
   std::string getBuildingType() const;
+  // get the enum for property type
+  PropertyType getPropertyType() const;
   Info getInfo() const override;
 };
 

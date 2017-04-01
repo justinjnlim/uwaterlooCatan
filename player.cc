@@ -30,13 +30,12 @@ void Player::printStatus() {
   cout << colour << " has " << numPoints << " building points, " << resources[0] << " brick, " <<
     resources[1] << " energy, " << resources[2] << " glass, " << resources[3] <<
     " heat, and " << resources[4] <<" WiFi." << endl;
-  cout << colour << " has built:" << endl;
 
-  // remove this later
-  printOwnedBuildings();
+  printOwnedBuildings(); // TODO: REMOVE
  }
 
  void Player::printOwnedBuildings() {
+   cout << colour << " has built:" << endl;
    for(auto const &address : properties) {
      cout << to_string(address.first)  <<  " " << address.second.lock()->getBuildingType() <<  endl;
    }
@@ -69,47 +68,66 @@ void Player::turn() {
     }
    }
 
-   while(cin >> cmd) {
-     if(cmd == "status") {
-       for(int i = 0; i < 1; ++i) { // TODO: hardcoded NUM OF PLAYERS MIGHT WANNA CHANGE
-         g->getPlayer(i)->printStatus();
-       }
-     } else if(cmd == "help") {
-       g->listCommands();
-     } else if (cmd == "next") {
+  int address;
+  while(cin >> cmd) {
+    if(cmd == "board") {
+
+    } else if(cmd == "status") {
+      for(int i = 0; i < 1; ++i) { // TODO: change to 4 when we finish
+        g->getPlayer(i)->printStatus();
+      }
+    } else if(cmd == "residences") {
+       printOwnedBuildings();
+    } else if(cmd == "build-road") {
+      if(cin >> address) {
+
+      } else {
+        cout << "Invalid Command." << endl;
+      }
+    } else if (cmd == "build-res") {
+      if(cin >> address) {
+
+      } else {
+        cout << "Invalid Command." << endl;
+      }
+    } else if (cmd == "improve") {
+      if(cin >> address) {
+
+      } else {
+        cout << "Invalid Command." << endl;
+      }
+
+    } else if (cmd == "trade") {
+      string colour;
+      string give;
+      string take;
+      if(cin >> colour >> give >> take) {
+
+      } else {
+        cout << "Invalid Command." << endl;
+      }
+
+    } else if(cmd == "help") {
+      g->listCommands();
+    } else if (cmd == "next") {
        break;
-     } else {
-       cout << "Invalid Command." << endl;
-     }
-   }
+    } else if (cmd == "save") {
+      string filename;
+      if(cin >> filename) {
+        //g->saveGame(filename); TODO: add when saveGame is updated
+      } else {
+        cout << "Invalid Command." << endl;
+      }
+    } else {
+      cout << "Invalid Command." << endl;
+    }
+  }
 }
+
 
 string Player::getPlayerFirstLetter() {
   return colour.substr(0, 1);
 }
-
-// SETTERS/GETTERS
-
-// void Player::setPoints(int p) {
-//   numPoints = p;
-// }
-//
-// void Player::addProperty(int id, shared_ptr<Property> p) { // check if still shared ptr
-//   properties[id] = p;
-//   numPoints += 1;
-// }
-//
-// // void Player::addRoad(shared_ptr<Road> r) {
-// //   roads[id] = r;
-// // }
-//
-// void Player::setDice(Dice * d) {
-//   diceChosen = d;
-// }
-//
-// void Player::setGame(Game * game) {
-//   g = game;
-// }
 
 // dice functions
 void Player::setDiceToLoaded() {
@@ -131,11 +149,84 @@ ResourceType Player::getRandomResource() {
   // int randNum = g->genRand(1, sumWeight); // generate from 1 to total #
   // checks randNum against amount of each resource, returns if smaller
   // since porportional weight
-  for(int i = 0; i < 6; ++i) { // TODO: HARDCODED NUM RESOURCES
+  for(int i = 0; i < 6; ++i) { // hardcoded num resources
     if(randNum < resources[i]) {
       return static_cast<ResourceType>(i);
     } else {
       randNum -= resources[i];
     }
   }
+}
+
+
+
+string Player::save() {
+  string saved;
+  for(int i = 0; i < 6; ++i) {
+    if(i) {
+      saved += " ";
+    }
+    saved += resources[i];
+  }
+  saved += " r ";
+  // loop through roads, add addressees
+  saved += " h";
+  for(auto const &address : properties) {
+    saved += " " + address.second.lock()->getBuildingType();
+  }
+  return saved;
+}
+
+// SETTERS (for game file read in)
+void Player::addProperty(int id, weak_ptr<Property> p) {
+  properties[id] = p;
+  PropertyType type = p.lock()->getPropertyType();
+  if(type == PropertyType::Basement) {
+    numPoints += 1;
+  } else if(type == PropertyType::House) {
+    numPoints += 2;
+  } else { // tower
+    numPoints += 3;
+  }
+}
+
+// void Player::addRoad(int id, weak_ptr<Road> r) {  TODO: uncomment when roads implemented
+//   roads[id] = r;
+// }
+//
+// void Player::setResources(const PlayerData & pd) { TODO: when player data added
+//   resources = pd.resources();
+// }
+
+bool Player::enoughResources(string p) {
+  for(int i = 0; i < 6; ++i) {
+    if(Game::propertyRecipes.at(p)[i] > resources[i]) return false;
+  }
+  return true;
+}
+
+int Player::howManyResources(ResourceType r) {
+  return resources[r];
+}
+
+int Player::totalResources() {
+  int total = 0;
+  for(auto i : resources) total += i;
+  return total;
+}
+
+int Player::totalChangeInResources() {
+  int total = 0;
+  for(auto i : changeInResources) total += i;
+  return total;
+}
+
+void Player::addResource(ResourceType r, int qty) {
+  resources[r] += qty;
+  changeInResources[r] += qty;
+}
+
+void Player::subtractResource(ResourceType r, int qty) {
+  resources[r] -= qty;
+  changeInResources[r] -= qty;
 }
