@@ -8,9 +8,12 @@
 #include "subscriptions.h"
 
 class TextDisplay: public Observer {
+  // a map of type to id to location on grid?
   std::vector<string> tiles;
   std::vector<string> roads;
   std::vector<string> properties;
+
+  std::vector<std::vector<char>> theDisplay;
 
 public:
   TextDisplay();
