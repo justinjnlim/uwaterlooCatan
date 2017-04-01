@@ -18,8 +18,6 @@ Game::Game(int seed):
     make_shared<Player>("Yellow", loadedDice, this)
   };
 
-  cout << "player made";
-  cout << players[0];
   currentPlayer = players[0];
 }
 
@@ -48,8 +46,6 @@ shared_ptr<Player> Game::getPlayer(int index) {
 // }
 
 shared_ptr<Board> Game::getGameBoard() {
-  cout << "gameboard" << endl;
-
   return gameBoard;
 }
 
@@ -107,12 +103,8 @@ void Game::startGame() {
   // catch errors
   // manage errors
 
-  cout << "Player is building..." << endl;
-  // getPlayer(0)->printStatus(cout);
-
+  getPlayer(0)->printStatus();
   getPlayer(0)->buildProperty(5);
-
-  cout << "poo" << endl;
   getPlayer(0)->printStatus(); // score = 1
   getPlayer(0)->turn();
   getPlayer(0)->upgradeProperty(5);
