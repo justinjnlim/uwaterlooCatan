@@ -7,7 +7,7 @@ const map<string, string> Game::propertyRecipes = Game::createPropRecipes();
 Game::Game(int seed):
   gen(seed), // seed random gen
   turnCount{0}, // set turn
-  gameBoard{}, // TODO initialize board
+  gameBoard{make_shared<Board>()}, // TODO initialize board
   fairDice{make_shared<FairDice>(gen)},
   loadedDice{make_shared<LoadedDice>()}
 {
