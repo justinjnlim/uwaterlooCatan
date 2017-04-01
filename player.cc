@@ -2,28 +2,44 @@
 
 using namespace std;
 
-void turn(std::istream &in) {}
-void initTurn(std::istream &in) {}
+#include "player.h"
 
+using namespace std;
 
-void howManyResources(ResourceType r) {}
-void addResource(ResourceType r, int qty) {}
-void subtractResource(ResourceType r, int qty) {}
+bool Player::buildProperty(int id) {
+  // check if enough resources first, if not return false
+  shared_ptr<Property> p = g->getGameBoard()->buildProperty(id, shared_from_this());
+  properties[id] = p;
+  ++numPoints;
+  cout << "buildProperty ran" << endl;
+  return true;
+}
 
-ResourceType getRandomResource() {}
-void setDice() {}
-void rollDice() {}
+void Player::addResource(ResourceType r, int qty) {
+  resources[r] += qty;
+  changeInResources[r] += qty;
+  cout << "addedResource ran" << endl;
+}
 
-void buildRoad(int id) {}
-void buildProperty(int id) {}
-void upgradeProperty(int id) {}
-void placeGoose(int id) {}
-void trade(Player *p, ResourceType r) {}
+Player::Player(string colour, Game * g):colour{colour}, g{g} {}
 
-void passTurn() {}
-std::string printStatuses() {}
-std::string printBoard() {}
-std::string printOwnedProperties() {}
-void save() {}
+void Player::printStatus(ostream &out) {
+  out << colour + " has " + numPoints + ", " + resources[0] + " brick, " +
+  resources[1] + " energy, " + resources[2] + " glass, " + resources[3] +
+  " heat, and " + resources[4] + "WiFi." << endl;
+  out << numPoints + " is my score" << endl;
+ }
 
-void steal(Player *p) {}
+bool Player::upgradeProperty(int id) {
+   // if not enough resources, return false
+   properties[id]->upgrade();
+   ++numPoints;
+   cout << "upgradeProperty ran" << endl;
+   return true;
+ }
+
+void Player::turn(istream &in, ostream &out) {
+  int diceRoll = 0;
+  g->getGameBoard()->getsDiceRoll(diceRoll);
+  out << "turn has completed" << endl;
+}
