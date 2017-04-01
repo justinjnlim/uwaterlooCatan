@@ -86,7 +86,7 @@ help)" << endl;
 }
 
 void Game::initGame() {
-  // Board is initialized
+  // Player initiliazes their properties
 
 
 }
@@ -98,6 +98,15 @@ void Game::saveGame() {}
 void Game::loadGame() {}
 
 void Game::startGame() {
+  // initGame();
+  // bool win = 0;
+  // while (!win)
+  // loop through players
+  // try
+  // win = player->turn()
+  // catch errors
+  // manage errors
+
   cout << "Player is building..." << endl;
   // getPlayer(0)->printStatus(cout);
 

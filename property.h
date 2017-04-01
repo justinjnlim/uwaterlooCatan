@@ -11,7 +11,7 @@
 #include "tile.h"
 /* class Player; */
 class Property : public Observer, public std::enable_shared_from_this<Property> {
-  std::shared_ptr<Player> owner = nullptr;
+  std::shared_ptr<Player> owner;
   int id;
   PropertyType p = PropertyType::Unowned;
 //  std::vector<Road*> neighbours;
