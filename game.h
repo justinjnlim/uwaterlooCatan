@@ -6,19 +6,19 @@
 #include <random>
 #include <map>
 #include "player.h"
-/* #include "loaded_dice.h" */
-/* #include "fair_dice.h" */
+#include "loaded_dice.h"
+#include "fair_dice.h"
 #include "board.h"
 class PlayerData;
 
 class Game {
  private:
-  /* std::mt19937 gen; */
+  std::mt19937 gen;
   int turnCount;
   std::shared_ptr<Player> currentPlayer;
   std::shared_ptr<Board> gameBoard;
-  /* std::shared_ptr<FairDice> fairDice; */
-  /* std::shared_ptr<LoadedDice> loadedDice; */
+  std::shared_ptr<FairDice> fairDice;
+  std::shared_ptr<LoadedDice> loadedDice;
   std::vector<std::shared_ptr<Player>> players; // TODO initialize player (know signature)
 
  public:
@@ -43,8 +43,8 @@ class Game {
   std::shared_ptr<Board> getGameBoard();
   void setGameBoard(std::string layout);
 
-  /* std::shared_ptr<FairDice> getFairDice(); */
-  /* std::shared_ptr<LoadedDice> getLoadedDice(); */
+  std::shared_ptr<FairDice> getFairDice();
+  std::shared_ptr<LoadedDice> getLoadedDice();
 
   /* int genRand(int min, int max); */
   void listCommands();

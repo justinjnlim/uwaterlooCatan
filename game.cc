@@ -5,17 +5,17 @@ using namespace std;
 const map<string, vector<int>> Game::propertyRecipes = Game::createPropRecipes();
 
 Game::Game(int seed):
-  // gen(seed), // seed random gen
+  gen(seed), // seed random gen
   turnCount{0}, // set turn
-  gameBoard{make_shared<Board>()} // TODO initialize board
-  // fairDice{make_shared<FairDice>(gen)},
-  // loadedDice{make_shared<LoadedDice>()}
+  gameBoard{make_shared<Board>()}, // TODO initialize board
+  fairDice{make_shared<FairDice>(gen)},
+  loadedDice{make_shared<LoadedDice>()}
 {
   players = {
     // make_shared<Player>("Blue", loadedDice, this),
     // make_shared<Player>("Red", loadedDice, this),
     // make_shared<Player>("Orange", loadedDice, this),
-    make_shared<Player>("Yellow", this)
+    make_shared<Player>("Yellow", loadedDice, this)
   };
 
   cout << "player made";
@@ -57,13 +57,13 @@ void Game::setGameBoard(string layout) {
   // gameBoard.setupTiles(layout); // TODO function pending
 }
 
-// shared_ptr<FairDice> Game::getFairDice() {
-//   return fairDice;
-// }
+shared_ptr<FairDice> Game::getFairDice() {
+  return fairDice;
+}
 
-// shared_ptr<LoadedDice> Game::getLoadedDice() {
-//   return loadedDice;
-// }
+shared_ptr<LoadedDice> Game::getLoadedDice() {
+  return loadedDice;
+}
 
 // int Game::genRand(int min, int max) {
 //   uniform_int_distribution<> dist{min, max};
@@ -101,11 +101,11 @@ void Game::startGame() {
   cout << "Player is building..." << endl;
   // getPlayer(0)->printStatus(cout);
 
-  getPlayer(0)->buildProperty(0);
+  getPlayer(0)->buildProperty(5);
 
   cout << "poo" << endl;
   getPlayer(0)->printStatus(cout); // score = 1
   getPlayer(0)->turn(cin, cout);
-  getPlayer(0)->upgradeProperty(0);
+  getPlayer(0)->upgradeProperty(5);
   getPlayer(0)->printStatus(cout); // score = 2
 }

@@ -6,9 +6,9 @@
 using namespace std;
 
 Board::Board() {
-  tiles[0] = {make_shared<Tile>(ResourceType::Brick,0)};
-  properties[0] = make_shared<Property>(0);
-  tiles[0][0]->attach(properties[0]);
+  tiles[5] = {make_shared<Tile>(ResourceType::Brick, 5)};
+  properties[5] = make_shared<Property>(5);
+  tiles[5][0]->attach(properties[5]);
 }
 
 shared_ptr<Property> Board::buildProperty(int id, shared_ptr<Player> player) {

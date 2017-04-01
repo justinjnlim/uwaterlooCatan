@@ -19,7 +19,7 @@ void Player::addResource(ResourceType r, int qty) {
   cout << "addedResource ran" << endl;
 }
 
-Player::Player(string colour, Game * g):colour{colour}, g{g}, resources(6, 0), changeInResources(6, 0) {}
+Player::Player(string colour, shared_ptr<Dice> diceChosen, Game * g):colour{colour}, diceChosen{diceChosen}, g{g}, resources(6, 0), changeInResources(6, 0) {}
 
 void Player::printStatus(ostream &out) {
   out << colour << " has " << numPoints << ", " << resources[0] << " brick, " <<
@@ -37,7 +37,7 @@ bool Player::upgradeProperty(int id) {
  }
 
 void Player::turn(istream &in, ostream &out) {
-  int diceRoll = 0;
+  int diceRoll = diceChosen->getDiceRoll(cin, cout);
   g->getGameBoard()->getDiceRoll(diceRoll);
   out << "turn has completed" << endl;
 }
