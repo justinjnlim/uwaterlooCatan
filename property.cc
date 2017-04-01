@@ -43,7 +43,11 @@ Info Property::getInfo() const {
   i.hasGoose = false;
   i.rt;
   if(p == PropertyType::Unowned) {
-    i.ownerString = to_string(id);
+    if(id < 10) {
+      i.ownerString = " " + to_string(id);
+    } else {
+      i.ownerString = to_string(id);
+    }
   } else {
     i.ownerString = owner->getPlayerFirstLetter() + getBuildingType();
   }

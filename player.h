@@ -34,6 +34,7 @@ public:
   bool hasWon();
   void setDiceToFair();
   std::string getPlayerFirstLetter(); // used for text display
+  ResourceType getRandomResource();
   // SETTERS/GETTERS
   // void setPoints(int p);
 };

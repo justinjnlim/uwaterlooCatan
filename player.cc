@@ -124,4 +124,18 @@ bool Player::hasWon() {
   return numPoints >= 10;
 }
 
-g->genRand(x, y)
+ResourceType Player::getRandomResource() {
+  int sumWeight = 0;
+  for(auto i : resources) sumWeight += i;
+  int randNum = rand() % sumWeight + 1; // generate from 1 to total # // TODO: USE BOTTOM ONCE METHOD IS IN GAME
+  // int randNum = g->genRand(1, sumWeight); // generate from 1 to total #
+  // checks randNum against amount of each resource, returns if smaller
+  // since porportional weight
+  for(int i = 0; i < 6; ++i) { // TODO: HARDCODED NUM RESOURCES
+    if(randNum < resources[i]) {
+      return static_cast<ResourceType>(i);
+    } else {
+      randNum -= resources[i];
+    }
+  }
+}
