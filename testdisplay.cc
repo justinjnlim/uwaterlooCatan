@@ -2,9 +2,16 @@
 #include <utility>
 #include "testdisplay.h"
 //#include "info.h"
+
 using namespace std;
 
-TestDisplay::TestDisplay(int m, int n): theDisplay(m,vector<char>(n,' ')), m(m), n(n) {
+TestDisplay::TestDisplay(int m, int n): theDisplay(m,vector<char>(n,' ')), m(m), n(n), names(53) {
+
+  for (int i = 0; i < 53; ++i) {
+    names[i] = to_string(i);
+  }
+  int k = 0;
+
   for (int i = 0; i < m; ++i) {
 
     if (i % 2 == 1) {
@@ -22,8 +29,25 @@ TestDisplay::TestDisplay(int m, int n): theDisplay(m,vector<char>(n,' ')), m(m),
 
     if (i % 4 == 0) {
       theDisplay[i][20] = '|';
+
+      // CREATE A METHOD FOE THIS KIND OF THING
+      if (stoi(names[k]) > 9) {
+        theDisplay[i][21] = names[k++][0];
+        theDisplay[i][22] = names[k++][1];
+      } else {
+        theDisplay[i][22] = names[k++][0];
+      }
+
       theDisplay[i][23] = '|';
       theDisplay[i][30] = '|';
+
+      if (stoi(names[k]) > 9) {
+        theDisplay[i][31] = names[k++][0];
+        theDisplay[i][32] = names[k++][1];
+      } else {
+        theDisplay[i][32] = names[k++][0];
+      }
+
       theDisplay[i][33] = '|';
       if (i > 0 && i < 40) {
         theDisplay[i][10] = '|';
