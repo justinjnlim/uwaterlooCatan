@@ -27,17 +27,17 @@ void Player::addResource(ResourceType r, int qty) {
 
 
 void Player::printStatus() {
-  cout << colour << " has " << numPoints << " building points, " << resources[0] << " brick, " <<
-    resources[1] << " energy, " << resources[2] << " glass, " << resources[3] <<
-    " heat, and " << resources[4] <<" WiFi." << endl;
-
-  printOwnedBuildings(); // TODO: REMOVE
+  cout << colour << " has " << numPoints << " building points, ";
+  cout << resources[0] << " brick, " << resources[1] << " energy, ";
+  cout << resources[2] << " glass, " << resources[3] << " heat, and ";
+  cout << resources[4] <<" WiFi." << endl;
  }
 
-void Player::printOwnedBuildings() {
-  cout << colour << " has built:" << endl;
-  for(auto const &address : properties) {
-    cout << to_string(address.first)  <<  " " << address.second.lock()->getBuildingType() <<  endl;
+
+ void Player::printOwnedBuildings() {
+   for(auto const &address : properties) {
+     cout << to_string(address.first) << " ";
+     cout << address.second.lock()->getBuildingType() << endl;
    }
 }
 
@@ -59,7 +59,7 @@ void Player::turn() {
     } else if(cmd == "fair") {
       setDiceToFair();
     } else if (cmd == "roll") {
-      diceRoll = diceChosen.lock()->getDiceRoll(cin, cout);
+      diceRoll = diceChosen.lock()->getDiceRoll();
       cout << "You rolled a " << diceRoll << endl;
       g->getGameBoard()->getDiceRoll(diceRoll);
       // TODO: what each player gained, else no builders gained
@@ -78,7 +78,7 @@ void Player::turn() {
     if(cmd == "board") {
 
     } else if(cmd == "status") {
-      for(int i = 0; i < 1; ++i) { // TODO: change to 4 when we finish
+      for(int i = 0; i < 4; ++i) {
         g->getPlayer(i)->printStatus();
       }
     } else if(cmd == "residences") {
@@ -119,7 +119,7 @@ void Player::turn() {
     } else if (cmd == "save") {
       string filename;
       if(cin >> filename) {
-        //g->saveGame(filename); TODO: add when saveGame is updated
+        g->saveGame(filename);
       } else {
         cout << "Invalid Command." << endl;
       }
@@ -150,8 +150,8 @@ bool Player::hasWon() {
 ResourceType Player::getRandomResource() {
   int sumWeight = 0;
   for(auto i : resources) sumWeight += i;
-  int randNum = rand() % sumWeight + 1; // generate from 1 to total # // TODO: USE BOTTOM ONCE METHOD IS IN GAME
-  // int randNum = g->genRand(1, sumWeight); // generate from 1 to total #
+  int randNum = 10;
+  //int randNum = g->genRand(1, sumWeight); // generate from 1 to total # TODO: fix when randNum is added
   // checks randNum against amount of each resource, returns if smaller
   // since porportional weight
   for(int i = 0; i < 6; ++i) { // hardcoded num resources
@@ -199,9 +199,9 @@ void Player::addProperty(int id, weak_ptr<Property> p) {
 //   roads[id] = r;
 // }
 //
-// void Player::setResources(const PlayerData & pd) { TODO: when player data added
-//   resources = pd.resources();
-// }
+void Player::setResources(const PlayerData & pd) {
+  resources = pd.resources();
+}
 
 bool Player::enoughResources(string p) {
   for(int i = 0; i < 6; ++i) {
@@ -211,7 +211,7 @@ bool Player::enoughResources(string p) {
 }
 
 int Player::howManyResources(ResourceType r) {
-  return resources[r];
+  return resources[static_cast<int>(r)];
 }
 
 int Player::totalResources() {
@@ -226,16 +226,11 @@ int Player::totalChangeInResources() {
   return total;
 }
 
-void Player::addResource(ResourceType r, int qty) {
-  resources[r] += qty;
-  changeInResources[r] += qty;
-}
-
 void Player::subtractResource(ResourceType r, int qty) {
-  resources[r] -= qty;
-  changeInResources[r] -= qty;
+  resources[static_cast<int>(r)] -= qty;
+  changeInResources[static_cast<int>(r)] -= qty;
 }
 
-void Player::getColour() {
+string Player::getColour() const {
   return colour;
 }

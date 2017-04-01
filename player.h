@@ -6,9 +6,7 @@
 #include <vector>
 #include <iostream>
 #include "resources.h"
-//#include "player_data.h"
-/* #include "game.h" */
-/* #include "property.h" */
+#include "player_data.h"
 class Property;
 class Game;
 class Dice;
@@ -26,6 +24,7 @@ class Player: public std::enable_shared_from_this<Player> {
 public:
   Player(std::string colour, std::weak_ptr<Dice> diceChosen, Game * g);
   void addResource(ResourceType r, int qty);
+  void subtractResource(ResourceType r, int qty);
   bool buildProperty(int id);
   bool upgradeProperty(int id);
   void turn();
@@ -41,14 +40,12 @@ public:
   // SETTERS/GETTERS
   void addProperty(int id, std::weak_ptr<Property> p);
   // void addRoad(int id, weak_ptr<Road> r);  TODO: uncomment when add roads
-  //void setResources(const PlayerData & pd); TODO: add when playerdata.h is added
+  void setResources(const PlayerData & pd);
   bool enoughResources(std::string p);
   int totalResources();
   int howManyResources(ResourceType r);
   int totalChangeInResources();
-  void addResource(ResourceType r, int qty);
-  void subtractResource(ResourceType r, int qty);
-  void getColour();
+  std::string getColour() const;
 };
 
 #endif

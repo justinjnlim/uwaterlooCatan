@@ -1,10 +1,9 @@
-#include <iostream>
 #include "fair_dice.h"
 using namespace std;
 
 FairDice::FairDice(mt19937 gen): gen{gen} {};
 
-int FairDice::getDiceRoll(istream &in, ostream &out) {
+int FairDice::getDiceRoll() {
   return dist(gen) + dist(gen);
 }
 
