@@ -15,7 +15,7 @@ Game::Game(int seed):
     // make_shared<Player>("Blue", loadedDice, this),
     // make_shared<Player>("Red", loadedDice, this),
     // make_shared<Player>("Orange", loadedDice, this),
-    make_shared<Player>("Yellow", loadedDice, this)
+    make_shared<Player>("Yellow", this)
   };
 
   currentPlayer = players[0];
@@ -94,7 +94,11 @@ void Game::saveGame() {}
 void Game::loadGame() {}
 
 void Game::startGame() {
+  cout << "Player is building..." << endl;
 
-
-
+  getPlayer(0)->buildProperty(0);
+  getPlayer(0)->printStatus(cout); // score = 1
+  getPlayer(0)->turn(cin, cout);
+  getPlayer(0)->upgradeProperty(0);
+  getPlayer(0)->printStatus(cout); // score = 2
 }
