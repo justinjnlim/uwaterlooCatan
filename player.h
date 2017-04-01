@@ -16,8 +16,8 @@ class Player: public std::enable_shared_from_this<Player> {
   int numPoints;
   std::map<int, std::shared_ptr<Property>> properties;
   /* std::map<int, std::shared_ptr<Road>> roads; */
-  std::vector<int> resources(6, 0);
-  std::vector<int> changeInResources(6, 0);
+  std::vector<int> resources;
+  std::vector<int> changeInResources;
   /* Dice * diceChosen; */
   Game * g;
 

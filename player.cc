@@ -19,7 +19,7 @@ void Player::addResource(ResourceType r, int qty) {
   cout << "addedResource ran" << endl;
 }
 
-Player::Player(string colour, Game * g):colour{colour}, g{g} {}
+Player::Player(string colour, Game * g):colour{colour}, g{g}, resources(6, 0), changeInResources(6, 0) {}
 
 void Player::printStatus(ostream &out) {
   out << colour << " has " << numPoints << ", " << resources[0] << " brick, " <<

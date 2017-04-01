@@ -20,3 +20,4 @@ void Board::getDiceRoll(int diceRoll) {
     i->notify(*this);
 }
 
+Info Board::getInfo() const {}

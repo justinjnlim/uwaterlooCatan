@@ -7,7 +7,7 @@ const map<string, vector<int>> Game::propertyRecipes = Game::createPropRecipes()
 Game::Game(int seed):
   // gen(seed), // seed random gen
   turnCount{0}, // set turn
-  gameBoard{} // TODO initialize board
+  gameBoard{make_shared<Board>()} // TODO initialize board
   // fairDice{make_shared<FairDice>(gen)},
   // loadedDice{make_shared<LoadedDice>()}
 {
@@ -48,6 +48,8 @@ shared_ptr<Player> Game::getPlayer(int index) {
 // }
 
 shared_ptr<Board> Game::getGameBoard() {
+  cout << "gameboard" << endl;
+
   return gameBoard;
 }
 
@@ -97,13 +99,13 @@ void Game::loadGame() {}
 
 void Game::startGame() {
   cout << "Player is building..." << endl;
-  getPlayer(0)->printStatus(cout);
+  // getPlayer(0)->printStatus(cout);
 
-  // getPlayer(0)->buildProperty(0);
+  getPlayer(0)->buildProperty(0);
 
-  // cout << "poo" << endl;
-  // getPlayer(0)->printStatus(cout); // score = 1
-  // getPlayer(0)->turn(cin, cout);
-  // getPlayer(0)->upgradeProperty(0);
-  // getPlayer(0)->printStatus(cout); // score = 2
+  cout << "poo" << endl;
+  getPlayer(0)->printStatus(cout); // score = 1
+  getPlayer(0)->turn(cin, cout);
+  getPlayer(0)->upgradeProperty(0);
+  getPlayer(0)->printStatus(cout); // score = 2
 }

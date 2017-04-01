@@ -27,6 +27,8 @@ public:
 
   void save();
 
+  Info getInfo() const override;
+
 };
 
 #endif
