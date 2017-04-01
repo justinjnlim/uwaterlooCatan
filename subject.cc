@@ -2,7 +2,7 @@
 #include "observer.h"
 #include "subscriptions.h"
 
-void Subject::attach(Observer *o) {
+void Subject::attach(std::shared_ptr<Observer> o) {
     observers.emplace_back(o);
 }
 

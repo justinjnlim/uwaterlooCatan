@@ -1,10 +1,11 @@
 #ifndef _PLAYER_H_
-#define _PLAYER_H
+#define _PLAYER_H_
 #include <map>
 #include <memory>
 #include <string>
 #include <vector>
 #include <iostream>
+#include "property.h"
 
 class Player: public std::enable_shared_from_this<Player> {
   std::string colour;

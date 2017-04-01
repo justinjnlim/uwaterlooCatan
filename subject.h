@@ -12,3 +12,4 @@ class Subject {
   void notifyObservers(SubscriptionType t);
   virtual ~Subject() = 0;
 };
+#endif
