@@ -2,16 +2,18 @@
 #define _BOARD_H_
 #include <map>
 #include <memory>
-#include "property.h"
+/* #include "property.h" */
 /* #include "road.h" */
 #include "subject.h"
-#include "tile.h"
-#include "player.h"
-#include "property.h"
+/* #include "tile.h" */
+/* #include "player.h" */
+class Property;
+class Player;
+class Tile;
 
 class Board : public Subject {
 
-  std::map<int,std::shared_ptr<Road>> roads;
+  /* std::map<int,std::shared_ptr<Road>> roads; */
   std::map<int,std::shared_ptr<Property>> properties;
   std::map<int,std::vector<std::shared_ptr<Tile>>> tiles;
 

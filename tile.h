@@ -4,7 +4,7 @@
 #include <memory>
 #include "resources.h"
 #include "subscriptions.h"
-#include "road.h"
+/* #include "road.h" */
 #include "property.h"
 #include "subject.h"
 #include "observer.h"
@@ -20,9 +20,10 @@ public:
   Tile(ResourceType r, int id);
 
   ResourceType getResourceType();
-  void notify(Subject& whoNotified);
-  SubscriptionType subType();
+  void notify(Subject& whoNotified) override;
+  SubscriptionType subType() const override;
+  Info getInfo() const override;
 
-}
+};
 
 #endif

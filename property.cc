@@ -1,4 +1,5 @@
 #include "property.h"
+#include "tile.h"
 
 using namespace std;
 
@@ -14,14 +15,14 @@ shared_ptr<Property> Property::buy(shared_ptr<Player> player) {
 }
 
 void Property::upgrade() {
-  ++p;
+  p = static_cast<PropertyType>(static_cast<int>(p) + 1);
   // TELL THE DISPLAY
 }
 
 void Property::notify(Subject& whoNotified) {
-  owner->addResource(whoNotified.getResourceType(),static_cast<int>(p));
+  owner->addResource(whoNotified.getInfo().rt, static_cast<int>(p));
 }
 
-SubscriptionType Property::subType() {
+SubscriptionType Property::subType() const {
   return SubscriptionType::Property;
 }

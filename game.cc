@@ -2,7 +2,7 @@
 #include "game.h"
 using namespace std;
 
-const map<string, string> Game::propertyRecipes = Game::createPropRecipes();
+const map<string, vector<int>> Game::propertyRecipes = Game::createPropRecipes();
 
 Game::Game(int seed):
   // gen(seed), // seed random gen
@@ -18,6 +18,8 @@ Game::Game(int seed):
     make_shared<Player>("Yellow", this)
   };
 
+  cout << "player made";
+  cout << players[0];
   currentPlayer = players[0];
 }
 
@@ -50,7 +52,7 @@ shared_ptr<Board> Game::getGameBoard() {
 }
 
 void Game::setGameBoard(string layout) {
-  gameBoard.setupTiles(layout); // TODO function pending
+  // gameBoard.setupTiles(layout); // TODO function pending
 }
 
 // shared_ptr<FairDice> Game::getFairDice() {
@@ -95,10 +97,13 @@ void Game::loadGame() {}
 
 void Game::startGame() {
   cout << "Player is building..." << endl;
+  getPlayer(0)->printStatus(cout);
 
-  getPlayer(0)->buildProperty(0);
-  getPlayer(0)->printStatus(cout); // score = 1
-  getPlayer(0)->turn(cin, cout);
-  getPlayer(0)->upgradeProperty(0);
-  getPlayer(0)->printStatus(cout); // score = 2
+  // getPlayer(0)->buildProperty(0);
+
+  // cout << "poo" << endl;
+  // getPlayer(0)->printStatus(cout); // score = 1
+  // getPlayer(0)->turn(cin, cout);
+  // getPlayer(0)->upgradeProperty(0);
+  // getPlayer(0)->printStatus(cout); // score = 2
 }

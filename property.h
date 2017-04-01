@@ -3,12 +3,13 @@
 #include <vector>
 #include "observer.h"
 #include "player.h"
-#include "road.h"
+/* #include "road.h" */
 #include "resources.h"
 #include "propertytypes.h"
 #include "subject.h"
 #include "subscriptions.h"
-
+#include "tile.h"
+/* class Player; */
 class Property : public Observer, public std::enable_shared_from_this<Property> {
   std::shared_ptr<Player> owner = nullptr;
   int id;
@@ -23,9 +24,9 @@ class Property : public Observer, public std::enable_shared_from_this<Property> 
   void upgrade();
 //  bool hasOwner();
 //  void addNeighbour(Road* nb);
-  void notify(Subject& whoNotified);
+  void notify(Subject& whoNotified) override;
 //  bool hasNeighbouringRoad(int id);
-  SubscriptionType subType();
+  SubscriptionType subType() const override;
 
 };
 

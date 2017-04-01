@@ -14,3 +14,17 @@ void Tile::notify(Subject& whoNotified) {
 ResourceType Tile::getResourceType() {
   return r;
 }
+
+SubscriptionType Tile::subType() const {
+  return SubscriptionType::Tile;
+}
+
+Info Tile::getInfo() const {
+  Info i;
+  i.type = "Tile";
+  i.hasGoose = hasGoose;
+  i.rt = r;
+  i.shit = "";
+
+  return i;
+}
