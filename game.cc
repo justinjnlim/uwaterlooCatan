@@ -4,11 +4,7 @@ using namespace std;
 
 const map<string, string> Game::propertyRecipes = Game::createPropRecipes();
 
-Game::Game() {
-
-
-
-};
+Game::Game() {};
 
 Game::~Game() {};
 
