@@ -27,15 +27,25 @@ SubscriptionType Property::subType() const {
   return SubscriptionType::Property;
 }
 
-// I added
-// string Property::getPropertyString() {
-//   if(p == PropertyType::Unowned) {
-//     return to_string(id);
-//   } else if (p == PropertyType::Basement) {
-//     return "B";
-//   } else if (p == PropertyType::House) {
-//     return "H";
-//   } else {
-//     return "T";
-//   }
-// }
+string Property::getBuildingType() const { // used by player's printStatus function
+  if (p == PropertyType::Basement) {
+    return "B";
+  } else if (p == PropertyType::House) {
+    return "H";
+  } else {
+    return "T";
+  }
+}
+
+Info Property::getInfo() const {
+  Info i;
+  i.type = "Property";
+  i.hasGoose = false;
+  i.rt;
+  if(p == PropertyType::Unowned) {
+    i.ownerString = to_string(id);
+  } else {
+    i.ownerString = owner->getPlayerFirstLetter() + getBuildingType();
+  }
+  return i;
+}

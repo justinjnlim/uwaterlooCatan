@@ -29,7 +29,9 @@ public:
   bool upgradeProperty(int id);
   void turn();
   void printStatus();
+  void printOwnedBuildings();
 
+  std::string getPlayerFirstLetter(); // used for text display
   // SETTERS/GETTERS
   // void setPoints(int p);
 };

@@ -30,7 +30,16 @@ void Player::printStatus() {
   cout << colour << " has " << numPoints << " building points, " << resources[0] << " brick, " <<
     resources[1] << " energy, " << resources[2] << " glass, " << resources[3] <<
     " heat, and " << resources[4] <<" WiFi." << endl;
-  cout << numPoints << " is my score" << endl;
+  cout << colour << " has built:" << endl;
+
+  // remove this later
+  printOwnedBuildings();
+ }
+
+ void Player::printOwnedBuildings() {
+   for(auto const &address : properties) {
+     cout << to_string(address.first)  <<  " " << address.second.lock()->getBuildingType() <<  endl;
+   }
  }
 
 bool Player::upgradeProperty(int id) {
@@ -45,6 +54,10 @@ void Player::turn() {
   int diceRoll = diceChosen.lock()->getDiceRoll(cin, cout);
   g->getGameBoard()->getDiceRoll(diceRoll);
   cout << "turn has completed" << endl;
+}
+
+string Player::getPlayerFirstLetter() {
+  return colour.substr(0, 1);
 }
 
 // SETTERS/GETTERS

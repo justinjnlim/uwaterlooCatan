@@ -11,7 +11,7 @@
 #include "subscriptions.h"
 #include "tile.h"
 /* class Player; */
-class Property : public Observer, public std::enable_shared_from_this<Property> {
+class Property : public Subject, public Observer, public std::enable_shared_from_this<Property> {
   std::shared_ptr<Player> owner;
   int id;
   PropertyType p = PropertyType::Unowned;
@@ -28,9 +28,9 @@ class Property : public Observer, public std::enable_shared_from_this<Property> 
   void notify(Subject& whoNotified) override;
 //  bool hasNeighbouringRoad(int id);
   SubscriptionType subType() const override;
-// used to get the letter of it's property type
-  // std::string getPropertyString();
-
+// used to get the letter of it's property type for Player::printStatus
+  std::string getBuildingType() const;
+  Info getInfo() const override;
 };
 
 #endif
