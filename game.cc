@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "game.h"
 using namespace std;
 
@@ -12,9 +13,9 @@ Game::Game(int seed):
   loadedDice{make_shared<LoadedDice>()}
 {
   players = {
-    // make_shared<Player>("Blue", loadedDice, this),
-    // make_shared<Player>("Red", loadedDice, this),
-    // make_shared<Player>("Orange", loadedDice, this),
+    make_shared<Player>("Blue", loadedDice, this),
+    make_shared<Player>("Red", loadedDice, this),
+    make_shared<Player>("Orange", loadedDice, this),
     make_shared<Player>("Yellow", loadedDice, this)
   };
 
@@ -39,11 +40,18 @@ shared_ptr<Player> Game::getPlayer(int index) {
   return players[index];
 }
 
-// void Game::setPlayer(int index, PlayerData pd) {
-//   shared_ptr<Player> player = getPlayer(index);
-//   player.setup(pd); // TODO function pending
-//   gameBoard.setupProps(player, pd); // TODO function pending
-// }
+shared_ptr<Player> Game::getPlayer(string colour) {
+  for (auto i : players) {
+    if (i->getColour() == colour)
+      return i;
+  }
+}
+
+void Game::setPlayer(int index, const PlayerData & pd) {
+  weak_ptr<Player> player = getPlayer(index);
+  (player.lock())->setResources(pd); // TODO function pending
+  gameBoard.setupProperties(player.lock(), pd); // TODO function pending
+}
 
 shared_ptr<Board> Game::getGameBoard() {
   return gameBoard;
@@ -61,10 +69,10 @@ shared_ptr<LoadedDice> Game::getLoadedDice() {
   return loadedDice;
 }
 
-// int Game::genRand(int min, int max) {
-//   uniform_int_distribution<> dist{min, max};
-//   return dist(gen);
-// }
+int Game::genRand(int min, int max) {
+  uniform_int_distribution<> dist{min, max};
+  return dist(gen);
+}
 
 void Game::listCommands() {
   // uses string literal
@@ -83,17 +91,33 @@ help)" << endl;
 
 void Game::initGame() {
   // Player initiliazes their properties
-
-
 }
 
 void Game::resetGame() {}
 
-void Game::saveGame() {}
+void Game::saveGame(string file) {}
 
-void Game::loadGame() {}
+void Game::loadGame(ifstream & loadFile) {
+  int turnCount;
+  string loadData;
 
-void Game::startGame() {
+  if (loadFile) {
+    loadFile >> turnCount;
+    setTurnCount(turnCount);
+
+    for (int i = 0; i < NUMPLAYERS; i++) {
+      getline(loadFile, loadData);
+      PlayerData pd(loadData);
+      setPlayer(i, pd);
+    }
+
+    // getline(loadFile, loadData);
+    // getGameBoard()->setLayout(loadData);
+    loadFile.close();
+  }
+}
+
+bool Game::startGame() {
   // initGame();
   // bool win = 0;
   // while (!win)
