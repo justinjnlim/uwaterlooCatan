@@ -5,17 +5,21 @@
 #include "player.h"
 #include "road.h"
 #include "resources.h"
+#include "propertytypes.h"
 #include "subject.h"
 #include "subscriptions.h"
 
 class Property : public Observer {
-  Player* owner;
+  Player* owner = nullptr;
   int id;
+  PropertyType p = 0;
   std::vector<Road*> neighbours;
 
-  void payOwner(ResourceType r)=0;
+  void payOwner(ResourceType r);
 
   public:
+
+  Property(int id);
   bool hasOwner();
   void addNeighbour(Road* nb);
   void notify(Subject& whoNotified);

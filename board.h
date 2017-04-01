@@ -14,6 +14,9 @@ class Board : public Subject {
   std::map<int,std::shared_ptr<Tile>> tiles;
 
 public:
+
+  Board();
+
   void save();
 
 }
