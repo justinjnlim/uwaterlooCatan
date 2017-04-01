@@ -61,9 +61,9 @@ void Player::turn() {
     } else if(cmd == "fair") {
       setDiceToFair();
     } else if (cmd == "roll") {
-      diceRoll = diceChosen.lock()->getDiceRoll(cin, cout);
+      diceRoll = diceChosen.lock()->getDiceRoll();
       cout << "You rolled a " << diceRoll << endl;
-      g->getGameBoard()->getDiceRoll(diceRoll);
+      g->getGameBoard()->getDiceRoll(diceRoll); // TODO change with observers + getInfo
       cout << "turn has completed" << endl;
       break; // exits loop once rolled
     } else {

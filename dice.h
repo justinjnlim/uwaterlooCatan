@@ -4,7 +4,7 @@
 
 class Dice {
  public:
-  virtual int getDiceRoll(std::istream &in, std::ostream &out) = 0;
+  virtual int getDiceRoll() = 0;
 };
 
 #endif

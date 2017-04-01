@@ -1,6 +1,5 @@
 #ifndef _FAIR_DICE_H_
 #define _FAIR_DICE_H_
-#include <iostream>
 #include <random>
 #include "dice.h"
 
@@ -11,7 +10,7 @@ class FairDice : public Dice {
 
  public:
   FairDice(std::mt19937 gen);
-  int getDiceRoll(std::istream &in = std::cin, std::ostream &out = std::cout) override;
+  int getDiceRoll() override;
 };
 
 #endif
