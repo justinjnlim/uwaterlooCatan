@@ -24,7 +24,7 @@ class Game {
  public:
   static const std::map<std::string, std::vector<int>> propertyRecipes;
   static std::map<std::string, std::vector<int>> createPropRecipes() {
-    std::map<std::string, std::string> m;
+    std::map<std::string, std::vector<int>> m;
     m["Basement"] = {1, 1, 1, 0, 1}; // "Brick 1 Energy 1 Glass 1 Wifi 1"
     m["House"] = {0, 0, 2, 3, 0}; // "Glass 2 Heat 3"
     m["Tower"] = {3, 2, 2, 2, 1}; // "Brick 3 Energy 2 Glass 2 Wifi 1 Heat 2"

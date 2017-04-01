@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include "property.h"
+#include "game.h"
 
 class Player: public std::enable_shared_from_this<Player> {
   std::string colour;
@@ -13,16 +14,16 @@ class Player: public std::enable_shared_from_this<Player> {
   std::map<int, std::shared_ptr<Property>> properties;
   std::map<int, std::shared_ptr<Road>> roads;
   std::vector<ResourceType> resources;
-  Dice * diceChosen;
+  /* Dice * diceChosen; */
   Game * g;
 
 public:
-  Player(string colour, Game * g);
+  Player(std::string colour, Game * g);
   void addResource(ResourceType r, int qty);
   void buildProperty(int id);
   void upgradeProperty(int id);
   std::string printStatus(std::iostream &out);
-  void turn(istream &in, ostream &out);
+  void turn(std::istream &in, std::ostream &out);
 };
 
 #endif

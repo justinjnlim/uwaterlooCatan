@@ -3,10 +3,11 @@
 #include <map>
 #include <memory>
 #include "property.h"
-#include "road.h"
+/* #include "road.h" */
 #include "subject.h"
 #include "tile.h"
 #include "player.h"
+#include "property.h"
 
 class Board : public Subject {
 
@@ -24,6 +25,6 @@ public:
 
   void save();
 
-}
+};
 
 #endif
