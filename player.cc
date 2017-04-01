@@ -2,10 +2,6 @@
 
 using namespace std;
 
-#include "player.h"
-
-using namespace std;
-
 bool Player::buildProperty(int id) {
   // check if enough resources first, if not return false
   shared_ptr<Property> p = g->getGameBoard()->buildProperty(id, shared_from_this());
