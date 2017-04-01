@@ -1,6 +1,7 @@
 #ifndef _TILE_H_
 #define _TILE_H_
 #include <vector>
+#include <memory>
 #include "resources.h"
 #include "subscriptions.h"
 #include "road.h"
@@ -12,12 +13,12 @@ class Tile : public Subject, public Observer {
 
   ResourceType r;
   int id;
-  bool hasGoose;
-  std::vector<Road*> roads;
-  std::vector<Property*> properties;
+  bool hasGoose = false;
 
 public:
-  bool canYield(int requestedDV);
+
+  Tile(ResourceType r, int id);
+
   void notify(Subject& whoNotified);
   SubscriptionType subType();
 
