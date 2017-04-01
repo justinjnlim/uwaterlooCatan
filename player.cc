@@ -4,14 +4,15 @@
 
 using namespace std;
 
-Player::Player(string colour, shared_ptr<Dice> diceChosen, Game * g):
-colour{colour}, diceChosen{diceChosen}, g{g}, resources(6, 0),
-changeInResources(6, 0) {}
+Player::Player(string colour, weak_ptr<Dice> diceChosen, Game * g):
+colour{colour}, resources(6, 0), changeInResources(6, 0),
+diceChosen{diceChosen}, g{g} {}
 
 bool Player::buildProperty(int id) {
   // check if enough resources first, if not return false
-  shared_ptr<Property> p = g->getGameBoard()->buildProperty(id, shared_from_this());
-  properties[id] = p;
+  // converts shared ptr returned to weak_ptr
+  weak_ptr<Property> w = g->getGameBoard()->buildProperty(id, shared_from_this());
+  properties[id] = w;
   ++numPoints;
   cout << "buildProperty ran" << endl;
   return true;
@@ -25,25 +26,25 @@ void Player::addResource(ResourceType r, int qty) {
 
 
 
-void Player::printStatus(ostream &out) {
-  out << colour << " has " << numPoints << ", " << resources[0] << " brick, " <<
+void Player::printStatus() {
+  cout << colour << " has " << numPoints << " building points, " << resources[0] << " brick, " <<
     resources[1] << " energy, " << resources[2] << " glass, " << resources[3] <<
-    " heat, and " << resources[4] <<"WiFi." << endl;
-  out << numPoints << " is my score" << endl;
+    " heat, and " << resources[4] <<" WiFi." << endl;
+  cout << numPoints << " is my score" << endl;
  }
 
 bool Player::upgradeProperty(int id) {
    // if not enough resources, return false
-   properties[id]->upgrade();
+   properties[id].lock()->upgrade();
    ++numPoints;
    cout << "upgradeProperty ran" << endl;
    return true;
  }
 
-void Player::turn(istream &in, ostream &out) {
-  int diceRoll = diceChosen->getDiceRoll(cin, cout);
+void Player::turn() {
+  int diceRoll = diceChosen.lock()->getDiceRoll(cin, cout);
   g->getGameBoard()->getDiceRoll(diceRoll);
-  out << "turn has completed" << endl;
+  cout << "turn has completed" << endl;
 }
 
 // SETTERS/GETTERS

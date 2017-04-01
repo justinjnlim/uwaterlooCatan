@@ -113,8 +113,8 @@ void Game::startGame() {
   getPlayer(0)->buildProperty(5);
 
   cout << "poo" << endl;
-  getPlayer(0)->printStatus(cout); // score = 1
-  getPlayer(0)->turn(cin, cout);
+  getPlayer(0)->printStatus(); // score = 1
+  getPlayer(0)->turn();
   getPlayer(0)->upgradeProperty(5);
-  getPlayer(0)->printStatus(cout); // score = 2
+  getPlayer(0)->printStatus(); // score = 2
 }

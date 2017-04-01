@@ -1,6 +1,7 @@
 #ifndef _PROPERTY_H_
 #define _PROPERTY_H_
 #include <vector>
+#include <string>
 #include "observer.h"
 #include "player.h"
 /* #include "road.h" */
@@ -19,7 +20,7 @@ class Property : public Observer, public std::enable_shared_from_this<Property> 
   public:
 
   Property(int id);
-  
+
   std::shared_ptr<Property> buy(std::shared_ptr<Player> player);
   void upgrade();
 //  bool hasOwner();
@@ -27,6 +28,8 @@ class Property : public Observer, public std::enable_shared_from_this<Property> 
   void notify(Subject& whoNotified) override;
 //  bool hasNeighbouringRoad(int id);
   SubscriptionType subType() const override;
+// used to get the letter of it's property type
+  // std::string getPropertyString();
 
 };
 
