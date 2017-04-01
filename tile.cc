@@ -10,3 +10,7 @@ void Tile::notify(Subject& whoNotified) {
     notifyObservers(SubscriptionType::Property);
   }
 }
+
+ResourceType Tile::getResourceType() {
+  return r;
+}

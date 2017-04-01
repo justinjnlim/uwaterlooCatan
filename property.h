@@ -9,21 +9,22 @@
 #include "subject.h"
 #include "subscriptions.h"
 
-class Property : public Observer {
-  Player* owner = nullptr;
+class Property : public Observer, public std::enable_shared_from_this<Property> {
+  std::shared_ptr<Player> owner = nullptr;
   int id;
-  PropertyType p = 0;
-  std::vector<Road*> neighbours;
-
-  void payOwner(ResourceType r);
+  PropertyType p = PropertyType::Unowned;
+//  std::vector<Road*> neighbours;
 
   public:
 
   Property(int id);
-  bool hasOwner();
-  void addNeighbour(Road* nb);
+  
+  std::shared_ptr<Property> buy(std::shared_ptr<Player> player);
+  void upgrade();
+//  bool hasOwner();
+//  void addNeighbour(Road* nb);
   void notify(Subject& whoNotified);
-  bool hasNeighbouringRoad(int id);
+//  bool hasNeighbouringRoad(int id);
   SubscriptionType subType();
 
 };

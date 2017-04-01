@@ -19,6 +19,7 @@ public:
 
   Tile(ResourceType r, int id);
 
+  ResourceType getResourceType();
   void notify(Subject& whoNotified);
   SubscriptionType subType();
 
