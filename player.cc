@@ -27,9 +27,10 @@ void Player::addResource(ResourceType r, int qty) {
 
 
 void Player::printStatus() {
-  cout << colour << " has " << numPoints << " building points, " << resources[0] << " brick, " <<
-    resources[1] << " energy, " << resources[2] << " glass, " << resources[3] <<
-    " heat, and " << resources[4] <<" WiFi." << endl;
+  cout << colour << " has " << numPoints << " building points, ";
+  cout << resources[0] << " brick, " << resources[1] << " energy, ";
+  cout << resources[2] << " glass, " << resources[3] << " heat, and ";
+  cout << resources[4] <<" WiFi." << endl;
   cout << colour << " has built:" << endl;
 
   // remove this later
@@ -38,7 +39,8 @@ void Player::printStatus() {
 
  void Player::printOwnedBuildings() {
    for(auto const &address : properties) {
-     cout << to_string(address.first)  <<  " " << address.second.lock()->getBuildingType() <<  endl;
+     cout << to_string(address.first) << " ";
+     cout << address.second.lock()->getBuildingType() << endl;
    }
  }
 
