@@ -48,6 +48,7 @@ public:
   int totalChangeInResources();
   void addResource(ResourceType r, int qty);
   void subtractResource(ResourceType r, int qty);
+  void getColour();
 };
 
 #endif

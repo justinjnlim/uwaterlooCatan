@@ -34,12 +34,13 @@ void Player::printStatus() {
   printOwnedBuildings(); // TODO: REMOVE
  }
 
- void Player::printOwnedBuildings() {
-   cout << colour << " has built:" << endl;
-   for(auto const &address : properties) {
-     cout << to_string(address.first)  <<  " " << address.second.lock()->getBuildingType() <<  endl;
+void Player::printOwnedBuildings() {
+  cout << colour << " has built:" << endl;
+  for(auto const &address : properties) {
+    cout << to_string(address.first)  <<  " " << address.second.lock()->getBuildingType() <<  endl;
    }
- }
+}
+
 
 bool Player::upgradeProperty(int id) {
    // if not enough resources, return false
@@ -61,6 +62,10 @@ void Player::turn() {
       diceRoll = diceChosen.lock()->getDiceRoll(cin, cout);
       cout << "You rolled a " << diceRoll << endl;
       g->getGameBoard()->getDiceRoll(diceRoll);
+      // TODO: what each player gained, else no builders gained
+      // for(int i = 0; i < 1; ++i) { // TODO: change to 4 when we finish
+      //   g->getPlayer(i)->printGained();
+      // }
       cout << "turn has completed" << endl;
       break; // exits loop once rolled
     } else {
@@ -229,4 +234,8 @@ void Player::addResource(ResourceType r, int qty) {
 void Player::subtractResource(ResourceType r, int qty) {
   resources[r] -= qty;
   changeInResources[r] -= qty;
+}
+
+void Player::getColour() {
+  return colour;
 }
