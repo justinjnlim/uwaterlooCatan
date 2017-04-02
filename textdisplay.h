@@ -11,9 +11,9 @@ class TextDisplay: public Observer {
 
   int m, n;
   std::vector<std::vector<char>> theDisplay;
-  std::vector<string> a_prop;
-  std::vector<string> a_road;
-  std::vector<string> a_tile;;
+  std::vector<std::string> a_prop;
+  std::vector<std::string> a_road;
+  std::vector<std::string> a_tile;;
 
 public:
   TextDisplay();
