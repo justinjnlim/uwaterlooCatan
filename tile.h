@@ -13,11 +13,12 @@ class Tile : public Subject, public Observer {
 
   ResourceType r;
   int id;
+  int diceValue;
   bool hasGoose = false;
 
 public:
 
-  Tile(ResourceType r, int id);
+  Tile(ResourceType r, int id, int dv);
 
   ResourceType getResourceType();
   void notify(Subject& whoNotified) override;

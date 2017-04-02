@@ -6,7 +6,8 @@
 Tile::Tile(ResourceType r, int id): r{r}, id{id} {}
 
 void Tile::notify(Subject& whoNotified) {
-  if (!hasGoose) {
+  Info board = whoNotofied.getInfo();
+  if (!hasGoose && board.value) {
     notifyObservers(SubscriptionType::Property);
   }
 }

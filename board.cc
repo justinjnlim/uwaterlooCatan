@@ -16,8 +16,14 @@ shared_ptr<Property> Board::buildProperty(int id, shared_ptr<Player> player) {
 }
 
 void Board::getDiceRoll(int diceRoll) {
+  diceValue = diceRoll;
+  // TODO call notifyObservers(SubscriptionType::??) instead.
+  // 
   for (auto i : tiles[diceRoll])
     i->notify(*this);
 }
 
-Info Board::getInfo() const {}
+Info Board::getInfo() const {
+  Info ret = {diceValue};
+  return ret;
+}

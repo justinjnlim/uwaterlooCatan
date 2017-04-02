@@ -3,10 +3,11 @@
 #include "resources.h"
 
 struct Info {
+  int value;
   std::string type;
   bool hasGoose;
-  ResourceType rt;
   std::string ownerString;
+  ResourceType rt;
 };
 
 #endif
