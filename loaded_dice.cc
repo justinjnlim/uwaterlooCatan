@@ -6,6 +6,7 @@ using namespace std;
 int LoadedDice::getDiceRoll() {
   string s;
   cout << "Input a roll between 2 and 12:" << endl;
+  cout << ">";
 
   while (cin >> s) {
     istringstream iss{s};
@@ -15,6 +16,7 @@ int LoadedDice::getDiceRoll() {
     else {
       cout << "Invalid roll." << endl;
       cout << "Input a roll between 2 and 12:" << endl;
+      cout << ">";
     }
   }
 }

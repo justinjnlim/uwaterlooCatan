@@ -17,6 +17,13 @@ bool Player::buildProperty(int id) {
   cout << "buildProperty ran" << endl;
 }
 
+bool Player::buildBeginningProperty(int id) {
+  // if(!canBuildBeginningProperty(id)) return false;
+  weak_ptr<Property> w = g->getGameBoard()->buildProperty(id, shared_from_this());
+  properties[id] = w;
+  ++numPoints;
+  return true;
+}
 
 bool Player::buildRoad(int id) {
   // if(!canBuildRoad(id)) return false;
@@ -112,6 +119,7 @@ void Player::rolledSeven() {
   }
   cout << "Choose where to place the GEESE." << endl;
   string s;
+  cout << ">";
   if(cin >> s) {
     int address;
     istringstream(s) >> address;
@@ -122,6 +130,7 @@ void Player::rolledSeven() {
       cout << "Builder " << colour << " can choose to steal from " << builders << endl;
       cout << "Choose a builder to steal from." << endl;
       string stealFrom;
+      cout << ">";
       while(cin >> stealFrom) {
         if(stealFrom == colour) {
           cout << "You cannot steal from yourself." << endl;
@@ -141,15 +150,17 @@ void Player::rolledSeven() {
 void Player::initTurn() {
   cout << "Builder " << colour << " where do you want to build a basement?" << endl;
   string s;
+  cout << ">";
   while(cin >> s) {
     istringstream ss{s};
     int address;
     if(ss >> address) {
-      if(buildProperty(address)) break; // built
+      if(buildBeginningProperty(address)) break; // built
       cout << "You cannot build here." << endl;
     } else {
       cout << "Please provide an address." << endl;
     }
+    cout << ">";
   }
 }
 
@@ -157,6 +168,7 @@ bool Player::turn() {
   cout << "Builder " << colour << "'s turn." << endl;
   printStatus();
   string cmd;
+  cout << ">";
   while(cin >> cmd) {
     if(cmd == "load") {
       setDiceToLoaded();
@@ -168,9 +180,10 @@ bool Player::turn() {
     } else {
       cout << "Invalid Command." << endl;
     }
+    cout << ">";
    }
   int address;
-
+  cout << ">";
   while(cin >> cmd) {
     if(cmd == "board") {
 
@@ -201,11 +214,19 @@ bool Player::turn() {
         cout << "Invalid Command." << endl;
       }
     } else if (cmd == "trade") {
-      string colour;
+      string tradeWith;
       string give;
       string take;
-      if(cin >> colour >> give >> take) {
-        trade(colour, give, take);
+      cout << ">";
+      if(cin >> tradeWith >> give >> take) {
+        cout << colour << " offers " << tradeWith << " one " << give;
+        cout << " for one " << take << "." << endl;
+        cout << "Does " << tradeWith << " accept this offer?" << endl;
+        string response;
+        cout << ">";
+        if(cin >> response) {
+          if(response == "yes") trade(tradeWith, give, take);
+        }
       } else {
         cout << "Invalid Command." << endl;
       }
@@ -224,6 +245,7 @@ bool Player::turn() {
     } else {
       cout << "Invalid Command." << endl;
     }
+    cout << ">";
   }
 }
 

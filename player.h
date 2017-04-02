@@ -43,7 +43,7 @@ public:
   // void addRoad(int id, weak_ptr<Road> r);  TODO: uncomment when add roads
   void setResources(const PlayerData & pd);
   int howManyResources(ResourceType r);
-
+  bool buildBeginningProperty(int id);
   std::string getColour() const;
   void placeGoose(int id);
   int totalResources();
