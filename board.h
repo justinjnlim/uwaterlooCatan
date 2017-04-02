@@ -20,6 +20,7 @@ class Board : public Subject {
   std::vector<std::shared_ptr<Property>> properties;
   std::vector<std::shared_ptr<Tile>> tiles;
   int diceValue;
+  void linkRoadsAndProperties();
 
 public:
 

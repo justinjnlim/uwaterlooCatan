@@ -5,7 +5,7 @@
 #include <iostream>
 #include "resources.h"
 #include "subscriptions.h"
-/* #include "road.h" */
+#include "road.h"
 #include "property.h"
 #include "subject.h"
 #include "observer.h"
@@ -18,6 +18,7 @@ class Tile : public Subject, public Observer {
   bool hasGoose = false;
 
   std::vector<std::weak_ptr<Property>> properties;
+  std::vector<std::weak_ptr<Road>> roads;
 
 public:
 
