@@ -56,7 +56,7 @@ shared_ptr<Player> Game::getPlayer(string colour) {
 // }
 
 void Game::setPlayer(weak_ptr<Player> player, const PlayerData & pd) {
-  (player.lock())->setResources(pd); // TODO function pending
+  (player.lock())->setResources(pd);
   //gameBoard->setupProperties(player.lock(), pd); // TODO function pending
 }
 
@@ -100,11 +100,11 @@ void Game::init() {
   // Player initiliazes their properties
 
   for (auto i = players.begin(); i != players.end(); i++) {
-    // i->init(); // TODO player init pending
+    i->initTurn();
   }
 
   for (auto i = players.rbegin(); i != players.rend(); i++) {
-    // i->init(); // TODO player init pending
+    i->initTurn();
   }
 
   // board->print();
@@ -138,12 +138,6 @@ void Game::load(ifstream & loadFile) {
       PlayerData pd(loadData);
       setPlayer(p, pd);
     }
-
-    // for (int i = 0; i < NUMPLAYERS; i++) {
-    //   getline(loadFile, loadData);
-    //   PlayerData pd(loadData);
-    //   setPlayer(i, pd);
-    // }
 
     // getline(loadFile, loadData);
     // board->setGameBoard(loadData)

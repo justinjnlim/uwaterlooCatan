@@ -12,6 +12,7 @@
 #include "player_data.h"
 
 const int NUMPLAYERS = 4;
+const int NUMRESOURCES = 5;
 
 class Game {
  private:
