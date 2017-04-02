@@ -77,6 +77,7 @@ void Game::setGameBoard(ifstream & loadFile) {
 }
 
 void Game::setGameBoard() {
+  cout << "is the game set getting called" << endl;
   gameBoard->randomizeTiles();
 }
 

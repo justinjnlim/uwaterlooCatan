@@ -24,11 +24,10 @@ class Board : public Subject {
   int diceValue;
 
   //used for random Generation
-  std::vector<int> resourceDistribution = {4,4,4,3,3,1};
-  std::vector<int> diceDistribution = {2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12};
+  std::vector<int> resourceDistribution = {0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,4,4,4,5};
+  std::vector<int> diceDistribution = {2,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11,12};
   Game * g;
   // private
-  ResourceType getRandomResource();
 
   void linkAssets();
   void linkRoads_Properties();

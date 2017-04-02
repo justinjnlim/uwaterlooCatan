@@ -53,14 +53,12 @@ shared_ptr<Property> Board::buildProperty(int id, shared_ptr<Player> player) {
 void Board::setupTiles(string layout) {
   int resource;
   int dicevalue;
-
-  for(int i = 0; i < 18; ++i) { // TODO: hardcoded
-    istringstream(layout) >> resource;
-    istringstream(layout) >> dicevalue;
-
+  istringstream ss{layout};
+  for(int i = 0; i < NUMTILES; ++i) {
+    ss >> resource;
+    ss >> dicevalue;
     tiles[i]->setResourceType(static_cast<ResourceType>(resource));
     tiles[i]->setDiceValue(dicevalue);
-
   }
 }
 
@@ -314,26 +312,17 @@ void Board::linkRoads_Properties() {
 // tiles[0]->attach(properties[0]);
 
 void Board::randomizeTiles() {
-  for(int i = 0; i < NUMTILES; ++i) { // TODO: hardcoded
-    tiles[i]->setResourceType(getRandomResource()); // sets all to random resource
-  }
+  shuffle(resourceDistribution.begin(), resourceDistribution.end(), g->getRandEng());
   shuffle(diceDistribution.begin(), diceDistribution.end(), g->getRandEng());
+
+  int j = 0;
   for(int i = 0; i < NUMTILES; ++i) {
-    tiles[i]->setDiceValue(diceDistribution[i]);
-  }
-}
-
-
-ResourceType Board::getRandomResource() {
-  int sumWeight = 0;
-  for(auto i : resourceDistribution) sumWeight += i;
-  int randNum = g->genRand(1, sumWeight);
-  for(int i = 0; i < NUMRESOURCES; ++i) {
-    if(randNum < resourceDistribution[i]) {
-      resourceDistribution[i] -= 1;
-      return static_cast<ResourceType>(i);
+    tiles[i]->setResourceType(static_cast<ResourceType>(resourceDistribution[i]));
+    if(tiles[i]->getResourceType() == ResourceType::Park) {
+      tiles[i]->setDiceValue(0);
     } else {
-      randNum -= resourceDistribution[i];
+      tiles[i]->setDiceValue(diceDistribution[j]);
+      ++j;
     }
   }
 }
