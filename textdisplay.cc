@@ -1,7 +1,7 @@
 #include <iostream>
 #include <utility>
 #include "textdisplay.h"
-//#include "info.h"
+#include "info.h"
 using namespace std;
 
 
@@ -124,10 +124,18 @@ void TextDisplay::insertAt(int i, int j, string s) {
 
 void TextDisplay::notify(Subject &whoNotified) {
   Info cell = whoNotified.getInfo();
-  if (cell.type) {
-    theDisplay[cell.row][cell.col] = 'X';
-  } else {
-    theDisplay[cell.row][cell.col] = '_';
+  if (cell.type == "Property") { 
+    // Displays the new ownerString.
+    a_prop[cell.value] = cell.ownerString;
+
+  } else if (cell.type == "Road") {
+    // Displays the new ownerString
+    a_road[cell.value] = cell.ownerString;
+
+  } else if (cell.type == "Tile") {
+
+    
+
   }
   refresh();
 }
