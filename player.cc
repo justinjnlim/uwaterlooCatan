@@ -9,11 +9,20 @@ colour{colour}, resources(NUMRESOURCES, 0), changeInResources(NUMRESOURCES, 0),
 diceChosen{diceChosen}, g{g} {}
 
 bool Player::buildProperty(int id) {
-  // call canBuild() // else it'll return false and output can't build here
+  // if(!canBuildProperty(id)) return false;
   weak_ptr<Property> w = g->getGameBoard()->buildProperty(id, shared_from_this());
   properties[id] = w;
   ++numPoints;
+  return true;
   cout << "buildProperty ran" << endl;
+}
+
+
+bool Player::buildRoad(int id) {
+  // if(!canBuildRoad(id)) return false;
+  // weak_ptr<Road> w = g->getGameBoard()->buildRoad(id, shared_from_this());
+  // roads[id] = w;
+  // return true;
 }
 
 void Player::addResource(ResourceType r, int qty) {
@@ -196,7 +205,7 @@ bool Player::turn() {
       string give;
       string take;
       if(cin >> colour >> give >> take) {
-
+        trade(colour, give, take);
       } else {
         cout << "Invalid Command." << endl;
       }
@@ -352,10 +361,6 @@ string Player::getColour() const {
 
 void Player::clearChangeInResources() {
   for(auto i : changeInResources) i = 0;
-}
-
-bool Player::buildRoad(int id) {
-  // call canBuild() // else it'll return false and output can't build here
 }
 
 string Player::steal(string playerColour) {

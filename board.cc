@@ -3,9 +3,10 @@
 #include "tile.h"
 #include "property.h"
 #include "player.h"
+#include "game.h"
 using namespace std;
 
-Board::Board() {
+Board::Board(Game * g): g{g} {
   tiles.emplace_back(make_shared<Tile>(ResourceType::Brick, 5, 5));
   properties.emplace_back(make_shared<Property>(5));
   attach(tiles[0]);
@@ -78,14 +79,34 @@ void Board::setupTiles(string layout) {
   }
 }
 
-// void Board::randomizeTiles() {
-//   vector<int> resSpec = [4,4,4,3,3,1];
-//   for(int i = 0; i < 18; ++i) { // TODO: hardcoded
-//     tiles[i]->setResourceType(static_cast<ResourceType>(resource));
-//     tiles[i]->setDiceValue(dicevalue);
-//
-//   }
-// }
+void Board::randomizeTiles() {
+  for(int i = 0; i < 18; ++i) { // TODO: hardcoded
+    tiles[i]->setResourceType(getRandomResource()); // sets all to random resource
+  }
+  vector<int> diceVals= {2, 12};
+  for(int i = 0; i < 2; ++i) {
+    diceVals.emplace_back(g->genRand(3,6));
+  }
+
+  // create array of posibble values, use shuffle, with seed from joseph
+  tiles[0]->setDiceValue(2);
+  tiles[12]->setDiceValue(2); // TODO: RANDOMIZE DICE VALUES
+}
+
+
+ResourceType Board::getRandomResource() {
+  int sumWeight = 0;
+  for(auto i : resourceDistribution) sumWeight += i;
+  int randNum = g->genRand(1, sumWeight);
+  for(int i = 0; i < NUMRESOURCES; ++i) {
+    if(randNum < resourceDistribution[i]) {
+      resourceDistribution[i] -= 1;
+      return static_cast<ResourceType>(i);
+    } else {
+      randNum -= resourceDistribution[i];
+    }
+  }
+}
 
 void Board::getDiceRoll(int diceRoll) {
   diceValue = diceRoll;
