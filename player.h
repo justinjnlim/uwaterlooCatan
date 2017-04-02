@@ -3,6 +3,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <sstream>
 #include <vector>
 #include <iostream>
 #include "resources.h"
@@ -25,8 +26,8 @@ public:
   Player(std::string colour, std::weak_ptr<Dice> diceChosen, Game * g);
   void addResource(ResourceType r, int qty);
   void subtractResource(ResourceType r, int qty);
-  bool buildProperty(int id);
-  bool upgradeProperty(int id);
+  void buildProperty(int id);
+  void upgradeProperty(int id);
   void turn();
   void printStatus();
   void printOwnedBuildings();
@@ -41,11 +42,20 @@ public:
   void addProperty(int id, std::weak_ptr<Property> p);
   // void addRoad(int id, weak_ptr<Road> r);  TODO: uncomment when add roads
   void setResources(const PlayerData & pd);
-  bool enoughResources(std::string p);
   int totalResources();
   int howManyResources(ResourceType r);
-  int totalChangeInResources();
+
   std::string getColour() const;
+
+private:
+  void rollDice();
+  void rolledSeven();
+  void printResourcesGained();
+  bool anyResourcesGained();
+  int totalChangeInResources();
+  bool enoughResources(std::string p);
+  bool enoughResourcesToUpgrade(int id);
+  void clearChangeInResources();
 };
 
 #endif

@@ -102,6 +102,7 @@ void Game::loadGame(ifstream & loadFile) {
   string loadData;
 
   if (loadFile) {
+    cout << "AM I EVEN IN HERE?" << endl;
     loadFile >> turnCount;
     setTurnCount(turnCount);
 
