@@ -14,8 +14,10 @@ class Tile;
 class Board : public Subject {
 
   /* std::map<int,std::shared_ptr<Road>> roads; */
-  std::map<int,std::shared_ptr<Property>> properties;
-  std::map<int,std::vector<std::shared_ptr<Tile>>> tiles;
+  //std::map<int,std::shared_ptr<Property>> properties;
+  //std::map<int,std::vector<std::shared_ptr<Tile>>> tiles;
+  std::vector<std::shared_ptr<Property>> properties;
+  std::vector<std::shared_ptr<Tile>> tiles;
   int diceValue;
 
 public:

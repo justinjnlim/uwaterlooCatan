@@ -6,21 +6,18 @@
 using namespace std;
 
 Board::Board() {
-  tiles[5] = {make_shared<Tile>(ResourceType::Brick, 5)};
-  properties[5] = make_shared<Property>(5);
-  tiles[5][0]->attach(properties[5]);
+  tiles.emplace_back(make_shared<Tile>(ResourceType::Brick, 5, 2));
+  properties.emplace_back(make_shared<Property>(5));
+  attach(properties[0]);
 }
 
 shared_ptr<Property> Board::buildProperty(int id, shared_ptr<Player> player) {
-  return properties[id]->buy(player);
+  return properties[0]->buy(player);
 }
 
 void Board::getDiceRoll(int diceRoll) {
   diceValue = diceRoll;
-  // TODO call notifyObservers(SubscriptionType::??) instead.
-  // 
-  for (auto i : tiles[diceRoll])
-    i->notify(*this);
+  notifyObservers(SubscriptionType::Tile);
 }
 
 Info Board::getInfo() const {
