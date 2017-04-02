@@ -125,7 +125,7 @@ void Player::rolledSeven() {
   // PRINT THE BOARD TODO
 }
 
-void Player::turn() {
+bool Player::turn() {
   cout << "Builder " << colour << "'s turn." << endl;
   printStatus();
   string cmd;
@@ -183,7 +183,7 @@ void Player::turn() {
     } else if(cmd == "help") {
       g->listCommands();
     } else if (cmd == "next") {
-       break;
+      return numPoints >= 10;
     } else if (cmd == "save") {
       string filename;
       if(cin >> filename) {
@@ -208,10 +208,6 @@ void Player::setDiceToLoaded() {
 
 void Player::setDiceToFair() {
   diceChosen = g->getFairDice();
-}
-
-bool Player::hasWon() {
-  return numPoints >= 10;
 }
 
 ResourceType Player::getRandomResource() {
@@ -325,6 +321,7 @@ string Player::steal(string playerColour) {
     ResourceType random = p.lock()->getRandomResource();
     p.lock()->subtractResource(random, 1);
     p.lock()->clearChangeInResources();
+    addResource(random, 1);
     if(random == ResourceType::Brick) return "BRICK";
     if(random == ResourceType::Glass) return "GLASS";
     if(random == ResourceType::Energy) return "ENERGY";

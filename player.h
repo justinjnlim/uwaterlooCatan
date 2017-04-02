@@ -29,11 +29,10 @@ public:
   void buildProperty(int id);
   void buildRoad(int id);
   void upgradeProperty(int id);
-  void turn();
+  bool turn();
   void printStatus();
   void printOwnedBuildings();
   void setDiceToLoaded();
-  bool hasWon();
   void setDiceToFair();
   std::string getPlayerFirstLetter(); // used for text display
   ResourceType getRandomResource();
