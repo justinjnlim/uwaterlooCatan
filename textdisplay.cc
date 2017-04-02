@@ -5,7 +5,7 @@
 using namespace std;
 
 
-TextDisplay::TextDisplay(): m(41), n(54) theDisplay(m,vector<char>(n,' ')) {
+TextDisplay::TextDisplay(): m(41), n(54), theDisplay(41,vector<char>(54,' ')) {
 
   for (int i = 0; i < 54; ++i) {
     if (i < 10) {
@@ -147,15 +147,11 @@ SubscriptionType TextDisplay::subType() const {
 }
 
 ostream &operator<<(ostream &out, const TextDisplay &td) {
-  for (int r = 0; r < td.gridSize; ++r) {
-    for (int c = 0; c < td.gridSize; ++c) {
+  for (int r = 0; r < td.m; ++r) {
+    for (int c = 0; c < td.n; ++c) {
       out << td.theDisplay[r][c];
     }
     out << endl;
   }
   return out;
-}
-
-int main() {
-
 }
