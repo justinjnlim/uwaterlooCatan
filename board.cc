@@ -63,6 +63,50 @@ void Board::linkAssets() {
   linkRoads_Properties();
 }
 
+void Board::linkRoads_Properties() {
+  int start=0, extra=4, jump=0, bot=7;
+  for (int i = 0; i < 19; ++i) {
+    extra -= 2;
+    ++jump;
+    --bot;
+    if (i == 3) {
+      extra += 4;
+      jump = 2;
+    }
+    if (i == 6 || i == 8 || i == 11 || i == 13 || i == 16 || i == 18) {
+      extra += 6;
+      jump = 3;
+    }
+    if (i == 3 || i == 8 || i == 13) bot = 6;
+    if (i == 1 || i == 6 || i == 11) bot = 5;
+    if (i == 16) bot = 4;
+    
+    start = 3*i + extra;
+
+    if (i == 18) start = 61;
+
+    tiles[i]->addRoad(roads[start]);
+    if (i == 1) {
+      tiles[i]->addRoad(roads[start+1]);
+      tiles[i]->addRoad(roads[start+2]);
+      tiles[i]->addRoad(roads[start+6]);
+      tiles[i]->addRoad(roads[start+7]);
+      tiles[i]->addRoad(roads[start+10]);
+    } else if (i < 18) {
+      tiles[i]->addRoad(roads[start+jump]);
+      tiles[i]->addRoad(roads[start+jump+1]);
+      tiles[i]->addRoad(roads[start+jump+8]);
+      tiles[i]->addRoad(roads[start+jump+8+bot]);
+      tiles[i]->addRoad(roads[start+jump+9+bot]);
+    } else if (i == 18) {
+      tiles[i]->addRoad(roads[start+jump]);
+      tiles[i]->addRoad(roads[start+jump+1]);
+      tiles[i]->addRoad(roads[start+jump+5]);
+      tiles[i]->addRoad(roads[start+jump+6]);
+      tiles[i]->addRoad(roads[start+jump+7]);
+  }
+}
+
 void Board::linkTiles_Properties() {
   for (int i = 0; i < 19; ++i) {
     int start = 2*i;
