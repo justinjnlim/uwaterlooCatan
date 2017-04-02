@@ -5,7 +5,7 @@
 using namespace std;
 
 Player::Player(string colour, weak_ptr<Dice> diceChosen, Game * g):
-colour{colour}, resources(5, 0), changeInResources(5, 0),
+colour{colour}, resources(NUMRESOURCES, 0), changeInResources(NUMRESOURCES, 0),
 diceChosen{diceChosen}, g{g} {}
 
 bool Player::buildProperty(int id) {
@@ -130,6 +130,7 @@ void Player::rolledSeven() {
   // PRINT THE BOARD TODO
 }
 void Player::initTurn() {
+  cout << "Builder " << colour << " where do you want to build a basement?" << endl;
   string s;
   while(cin >> s) {
     istringstream ss{s};
@@ -252,7 +253,7 @@ ResourceType Player::getRandomResource() {
   int sumWeight = 0;
   for(auto i : resources) sumWeight += i;
   int randNum = g->genRand(1, sumWeight);
-  for(int i = 0; i < 5; ++i) { // TODO: Hardcoded to 5
+  for(int i = 0; i < NUMRESOURCES; ++i) {
     if(randNum < resources[i]) {
       return static_cast<ResourceType>(i);
     } else {
@@ -263,7 +264,7 @@ ResourceType Player::getRandomResource() {
 
 string Player::save() {
   string saved;
-  for(int i = 0; i < 5; ++i) {
+  for(int i = 0; i < NUMRESOURCES; ++i) {
     if(i) {
       saved += " ";
     }
