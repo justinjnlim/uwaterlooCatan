@@ -123,7 +123,7 @@ void Player::rolledSeven() {
   cout << "Choose where to place the GEESE." << endl;
   string s;
   cout << "> ";
-  if(cin >> s) {
+  while(cin >> s) {
     int address;
     istringstream(s) >> address;
     if(!placeGoose(address)) {
