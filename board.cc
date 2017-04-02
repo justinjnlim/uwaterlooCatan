@@ -21,33 +21,33 @@ Board::Board() {
     if (i > 12) ++start;
     if (i > 15) start += 3;
     // TODO WRITE THIS ADDPROPERTY FUNCTION
-    tiles[i].addProperty(properties[start]);
-    tiles[i].addProperty(properties[start+1]);
+    tiles[i]->addProperty(properties[start]);
+    tiles[i]->addProperty(properties[start+1]);
     if (i == 0) {
-      tiles[i].addProperty(properties[start+3]);
-      tiles[i].addProperty(properties[start+4]);
-      tiles[i].addProperty(properties[start+8]);
-      tiles[i].addProperty(properties[start+9]);
+      tiles[i]->addProperty(properties[start+3]);
+      tiles[i]->addProperty(properties[start+4]);
+      tiles[i]->addProperty(properties[start+8]);
+      tiles[i]->addProperty(properties[start+9]);
     } else if (i < 3) {
-      tiles[i].addProperty(properties[start+5]);
-      tiles[i].addProperty(properties[start+6]);
-      tiles[i].addProperty(properties[start+11]);
-      tiles[i].addProperty(properties[start+12]);
+      tiles[i]->addProperty(properties[start+5]);
+      tiles[i]->addProperty(properties[start+6]);
+      tiles[i]->addProperty(properties[start+11]);
+      tiles[i]->addProperty(properties[start+12]);
     } else if (i < 16) {
-      tiles[i].addProperty(properties[start+6]);
-      tiles[i].emplace_back(properties[start+7]);
-      tiles[i].emplace_back(properties[start+12]);
-      tiles[i].emplace_back(properties[start+13]);
+      tiles[i]->addProperty(properties[start+6]);
+      tiles[i]->addProperty(properties[start+7]);
+      tiles[i]->addProperty(properties[start+12]);
+      tiles[i]->addProperty(properties[start+13]);
     } else if (i < 18) {
-      tiles[i].emplace_back(properties[start+6]);
-      tiles[i].emplace_back(properties[start+7]);
-      tiles[i].emplace_back(properties[start+11]);
-      tiles[i].emplace_back(properties[start+12]);
+      tiles[i]->addProperty(properties[start+6]);
+      tiles[i]->addProperty(properties[start+7]);
+      tiles[i]->addProperty(properties[start+11]);
+      tiles[i]->addProperty(properties[start+12]);
     } else {
-      tiles[i].emplace_back(properties[start+5]);
-      tiles[i].emplace_back(properties[start+6]);
-      tiles[i].emplace_back(properties[start+8]);
-      tiles[i].emplace_back(properties[start+9]);
+      tiles[i]->addProperty(properties[start+5]);
+      tiles[i]->addProperty(properties[start+6]);
+      tiles[i]->addProperty(properties[start+8]);
+      tiles[i]->addProperty(properties[start+9]);
     }
   }
 

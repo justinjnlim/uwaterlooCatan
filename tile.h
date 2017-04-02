@@ -16,6 +16,8 @@ class Tile : public Subject, public Observer {
   int diceValue;
   bool hasGoose = false;
 
+  std::vector<std::weak_ptr<Property>> properties;
+
 public:
 
   Tile(ResourceType r, int id, int dv);
@@ -24,6 +26,8 @@ public:
   void notify(Subject& whoNotified) override;
   SubscriptionType subType() const override;
   Info getInfo() const override;
+
+  void addProperty(std::shared_ptr<Property> p);
 
 };
 

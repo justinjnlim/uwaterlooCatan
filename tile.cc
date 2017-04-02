@@ -3,6 +3,8 @@
 #include "observer.h"
 #include "subscriptions.h"
 
+using namespace std;
+
 Tile::Tile(ResourceType r, int id, int dv): r{r}, id{id}, diceValue{dv} {}
 
 void Tile::notify(Subject& whoNotified) {
@@ -28,4 +30,8 @@ Info Tile::getInfo() const {
   i.ownerString = "";
 
   return i;
+}
+
+void Tile::addProperty(shared_ptr<Property> p) {
+  properties.emplace_back(p);
 }
