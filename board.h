@@ -31,6 +31,7 @@ public:
   void save();
 
   Info getInfo() const override;
+  void setupTiles(std::string layout);
 
 };
 

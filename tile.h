@@ -30,6 +30,11 @@ public:
 
   void addProperty(std::shared_ptr<Property> p);
 
+  void setResourceType(ResourceType rt);
+
+  void setDiceValue(int dv);
+
+
 };
 
 #endif

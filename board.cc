@@ -11,9 +11,17 @@ Board::Board() {
   attach(tiles[0]);
   tiles[0]->attach(properties[0]);
 
+  for(int i = 0; i < 18; ++i) { // TODO: hardcoded
+    tiles.emplace_back(make_shared<Tile>(ResourceType::Brick, i, 0)); // default values so setUp is called after
+    attach(tiles[i]);
+  }
+
+  for(int i = 0; i < 53; ++ i) { // TODO: max properties;
+    properties.emplace_back(make_shared<Property>(i));
+  }
   // LINK THESE MOTHERFUCKERS
   // PROPERTY LINKING
-  /*for(int i = 0; i < 19; ++i) {
+  for(int i = 0; i < 19; ++i) {
     int start = 2*i;
     if (i > 5) ++start;
     if (i > 7) ++start;
@@ -49,12 +57,35 @@ Board::Board() {
       tiles[i]->addProperty(properties[start+8]);
       tiles[i]->addProperty(properties[start+9]);
     }
-  } */
+  }
 }
 
 shared_ptr<Property> Board::buildProperty(int id, shared_ptr<Player> player) {
   return properties[0]->buy(player);
 }
+
+void Board::setupTiles(string layout) {
+  int resource;
+  int dicevalue;
+
+  for(int i = 0; i < 18; ++i) { // TODO: hardcoded
+    istringstream(layout) >> resource;
+    istringstream(layout) >> dicevalue;
+
+    tiles[i]->setResourceType(static_cast<ResourceType>(resource));
+    tiles[i]->setDiceValue(dicevalue);
+
+  }
+}
+
+// void Board::randomizeTiles() {
+//   vector<int> resSpec = [4,4,4,3,3,1];
+//   for(int i = 0; i < 18; ++i) { // TODO: hardcoded
+//     tiles[i]->setResourceType(static_cast<ResourceType>(resource));
+//     tiles[i]->setDiceValue(dicevalue);
+//
+//   }
+// }
 
 void Board::getDiceRoll(int diceRoll) {
   diceValue = diceRoll;

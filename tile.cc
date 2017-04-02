@@ -37,3 +37,11 @@ Info Tile::getInfo() const {
 void Tile::addProperty(shared_ptr<Property> p) {
   properties.emplace_back(p);
 }
+
+void Tile::setResourceType(ResourceType rt) {
+  r = rt;
+}
+
+void Tile::setDiceValue(int dv) {
+  diceValue = dv;
+}
