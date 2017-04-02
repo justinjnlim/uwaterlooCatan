@@ -84,6 +84,18 @@ TextDisplay::TextDisplay(): m(41), n(54), theDisplay(41,vector<char>(54,' ')) {
   }
 }
 
+int TextDisplay::getM() {
+  return m;
+}
+
+int TextDisplay::getN() {
+  return n;
+}
+
+char TextDisplay::getCharAt(int m, int n) {
+  return theDisplay[m][n];
+}
+
 void TextDisplay::refresh() {
   int p = 0, r = 0;
 
@@ -146,10 +158,11 @@ SubscriptionType TextDisplay::subType() const {
   return SubscriptionType::Display;
 }
 
-ostream &operator<<(ostream &out, const TextDisplay &td) {
-  for (int r = 0; r < td.m; ++r) {
-    for (int c = 0; c < td.n; ++c) {
-      out << td.theDisplay[r][c];
+ostream &operator<<(ostream &out, shared_ptr<TextDisplay> td) {
+  int m = td->getM(), n = td->getN();
+  for (int r = 0; r < m; ++r) {
+    for (int c = 0; c < n; ++c) {
+      out << td->getCharAt(r,c);
     }
     out << endl;
   }
