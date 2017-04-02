@@ -6,7 +6,7 @@
 using namespace std;
 
 Board::Board() {
-  tiles.emplace_back(make_shared<Tile>(ResourceType::Brick, 5, 2));
+  tiles.emplace_back(make_shared<Tile>(ResourceType::Brick, 5, 5));
   properties.emplace_back(make_shared<Property>(5));
   attach(tiles[0]);
   tiles[0]->attach(properties[0]);
@@ -50,9 +50,6 @@ Board::Board() {
       tiles[i]->addProperty(properties[start+9]);
     }
   }
-
-
-
 }
 
 shared_ptr<Property> Board::buildProperty(int id, shared_ptr<Player> player) {
