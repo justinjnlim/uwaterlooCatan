@@ -56,6 +56,7 @@ PropertyType Property::getPropertyType() const {
 
 Info Property::getInfo() const {
   Info i;
+  i.value = id;
   i.type = "Property";
   i.hasGoose = false;
   i.rt;
