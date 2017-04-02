@@ -9,7 +9,6 @@ colour{colour}, resources(6, 0), changeInResources(6, 0),
 diceChosen{diceChosen}, g{g} {}
 
 void Player::buildProperty(int id) {
-  // converts shared ptr returned to weak_ptr
   weak_ptr<Property> w = g->getGameBoard()->buildProperty(id, shared_from_this());
   properties[id] = w;
   ++numPoints;
@@ -21,8 +20,6 @@ void Player::addResource(ResourceType r, int qty) {
   changeInResources[static_cast<int>(r)] += qty;
   cout << "addedResource ran" << endl;
 }
-
-
 
 void Player::printStatus() {
   cout << colour << " has " << numPoints << " building points, ";
@@ -38,7 +35,6 @@ void Player::printStatus() {
      cout << address.second.lock()->getBuildingType() << endl;
    }
 }
-
 
 void Player::upgradeProperty(int id) {
    properties[id].lock()->upgrade();
@@ -59,35 +55,79 @@ void Player::rollDice() {
       if(!g->getPlayer(i)->anyResourcesGained()) {
         --numGained;
       } else {
-        g->getPlayer(i)->printResourcesGained();
+        cout << "Builder " << colour << " gained:" << endl;
+        g->getPlayer(i)->printResourcesChange();
       }
     }
     if(!numGained) { // no one gained resources
       cout << "No builders gained resources." << endl;
     }
   }
-
 }
 
 bool Player::anyResourcesGained() {
   return totalChangeInResources() > 0;
 }
 
-void Player::printResourcesGained() {
-  cout << "Builder " << colour << " gained:" << endl;
-  if(resources[0]) cout << resources[0] << " " << "BRICK" << endl;
-  if(resources[1]) cout << resources[1] << " " << "ENERGY" << endl;
-  if(resources[2]) cout << resources[2] << " " << "GLASS" << endl;
-  if(resources[3]) cout << resources[3] << " " << "HEAT" << endl;
-  if(resources[4]) cout << resources[4] << " " << "WIFI" << endl;
+void Player::printResourcesChange() {
+  if(changeInResources[0]) cout << changeInResources[0] << " " << "BRICK" << endl;
+  if(changeInResources[1]) cout << changeInResources[1] << " " << "ENERGY" << endl;
+  if(changeInResources[2]) cout << changeInResources[2] << " " << "GLASS" << endl;
+  if(changeInResources[3]) cout << changeInResources[3] << " " << "HEAT" << endl;
+  if(changeInResources[4]) cout << changeInResources[4] << " " << "WIFI" << endl;
   clearChangeInResources();
 }
 
-void Player::rolledSeven() {
+void Player::placeGoose(int id) {
+  //g->getGameBoard()->removeGoose(); // TODO: waiting for from board
+  //g->getGameBoard()->setGoose(id); // TODO: waiting for from board
+}
 
+void Player::discardHalf() {
+  if(totalResources() >= 10) {
+    int discardNum = totalResources() / 2;
+    for(int i = 0; i < discardNum; ++i) {
+      ResourceType r = getRandomResource();
+      subtractResource(r, 1);
+      changeInResources[static_cast<int>(r)] += 1;
+    }
+    cout << "Builder " << colour << " loses " << totalChangeInResources();
+    cout << " resources to the geese. They lose:" << endl;
+    printResourcesChange();
+  }
+}
+
+void Player::rolledSeven() {
+  for(int i = 0; i < NUMPLAYERS; ++i) {
+    g->getPlayer(i)->discardHalf();
+  }
+  cout << "Choose where to place the GEESE." << endl;
+  string s;
+  if(cin >> s) {
+    int address;
+    istringstream(s) >> address;
+    placeGoose(address);
+    string builders = "temporary string until justin makes method";
+    //string builders = g->getGameBoard()->whoLivesOnTile(address); // TODO: Add function
+    if(builders != "") {
+      cout << "Builder " << colour << " can choose to steal from " << builders << endl;
+      cout << "Choose a builder to steal from." << endl;
+      string stealFrom;
+      if(cin >> stealFrom) {
+        string stolenResource = steal(stealFrom);
+        cout << "Builder " << colour << " steals " << stolenResource;
+        cout << " from builder " << stealFrom << "." << endl;
+      }
+    } else {
+      cout << "Builder <colour1> has no builders to steal from." << endl;
+    }
+  }
+  // PRINT THE BOARD TODO
 }
 
 void Player::turn() {
+  cout << "Builder " << colour << "'s turn." << endl;
+  printStatus();
   string cmd;
   while(cin >> cmd) {
     if(cmd == "load") {
@@ -113,6 +153,7 @@ void Player::turn() {
     } else if(cmd == "residences") {
        printOwnedBuildings();
     } else if(cmd == "build-road") {
+
     } else if (cmd == "build-res") {
 
     } else if (cmd == "improve") {
@@ -197,7 +238,7 @@ string Player::save() {
     saved += resources[i];
   }
   saved += " r ";
-  // loop through roads, add addressees
+  // loop through roads, add addressees TODO:
   saved += " h";
   for(auto const &address : properties) {
     saved += " " + address.second.lock()->getBuildingType();
@@ -275,4 +316,24 @@ string Player::getColour() const {
 
 void Player::clearChangeInResources() {
   for(auto i : changeInResources) i = 0;
+}
+
+void Player::buildRoad(int id) {
+
+}
+
+string Player::steal(string playerColour) {
+  weak_ptr<Player> p = g->getPlayer(playerColour);
+  if(p.lock()->totalResources() != 0) {
+    ResourceType random = p.lock()->getRandomResource();
+    p.lock()->subtractResource(random, 1);
+    p.lock()->clearChangeInResources();
+    if(random == ResourceType::Brick) return "BRICK";
+    if(random == ResourceType::Glass) return "GLASS";
+    if(random == ResourceType::Energy) return "ENERGY";
+    if(random == ResourceType::Heat) return "HEAT";
+    if(random == ResourceType::Wifi) return "WIFI";
+  } else {
+    return "NOTHING"; // if they have no resources
+  }
 }

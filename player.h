@@ -27,6 +27,7 @@ public:
   void addResource(ResourceType r, int qty);
   void subtractResource(ResourceType r, int qty);
   void buildProperty(int id);
+  void buildRoad(int id);
   void upgradeProperty(int id);
   void turn();
   void printStatus();
@@ -42,20 +43,24 @@ public:
   void addProperty(int id, std::weak_ptr<Property> p);
   // void addRoad(int id, weak_ptr<Road> r);  TODO: uncomment when add roads
   void setResources(const PlayerData & pd);
-  int totalResources();
   int howManyResources(ResourceType r);
 
   std::string getColour() const;
+  void placeGoose(int id);
+
 
 private:
   void rollDice();
   void rolledSeven();
-  void printResourcesGained();
+  void printResourcesChange();
   bool anyResourcesGained();
   int totalChangeInResources();
+  int totalResources();
   bool enoughResources(std::string p);
   bool enoughResourcesToUpgrade(int id);
   void clearChangeInResources();
+  std::string steal(std::string playerColour);
+  void discardHalf();
 };
 
 #endif
