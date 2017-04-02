@@ -1,6 +1,7 @@
 #include "player.h"
 #include "property.h"
 #include "game.h"
+#include "road.h"
 
 using namespace std;
 
@@ -301,12 +302,21 @@ string Player::save() {
     }
     saved += resources[i];
   }
-  saved += " r ";
-  // loop through roads, add addressees TODO:
-  saved += " h";
-  for(auto const &address : properties) {
-    saved += " " + address.second.lock()->getBuildingType();
+  if(roads.size()) {
+    saved += " r";
+    for(auto const &address : roads) {
+      saved += " " + to_string(address.first);
+    }
   }
+
+  if(properties.size()) {
+    saved += " h";
+    for(auto const &address : properties) {
+      saved += " " + to_string(address.first) + " " +
+      address.second.lock()->getBuildingType();
+    }
+  }
+
   return saved;
 }
 
@@ -323,10 +333,10 @@ void Player::addProperty(int id, weak_ptr<Property> p) {
   }
 }
 
-// void Player::addRoad(int id, weak_ptr<Road> r) {  TODO: uncomment when roads implemented
-//   roads[id] = r;
-// }
-//
+void Player::addRoad(int id, weak_ptr<Road> r) {
+  roads[id] = r;
+}
+
 void Player::setResources(const PlayerData & pd) {
   resources = pd.resources();
 }

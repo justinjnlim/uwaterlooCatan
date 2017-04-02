@@ -11,12 +11,13 @@
 class Property;
 class Game;
 class Dice;
+class Road;
 
 class Player: public std::enable_shared_from_this<Player> {
   std::string colour;
   int numPoints;
   std::map<int, std::weak_ptr<Property>> properties;
-  /* std::map<int, std::shared_ptr<Road>> roads; */
+  std::map<int, std::weak_ptr<Road>> roads;
   std::vector<int> resources;
   std::vector<int> changeInResources;
   std::weak_ptr<Dice> diceChosen;
@@ -37,6 +38,7 @@ public:
   std::string getPlayerFirstLetter(); // used for text display
   ResourceType getRandomResource();
   std::string save();
+  void addRoad(int id, std::weak_ptr<Road> r);
 
   // SETTERS/GETTERS
   void addProperty(int id, std::weak_ptr<Property> p);
