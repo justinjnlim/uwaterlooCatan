@@ -13,16 +13,16 @@ Board::Board(Game * g): g{g} {
   // attach(tiles[0]);
   // tiles[0]->attach(properties[0]);
 
-  for(int i = 0; i < 19; ++i) { // TODO: hardcoded
+  for(int i = 0; i < NUMTILES; ++i) { // TODO: hardcoded
     tiles.emplace_back(make_shared<Tile>(ResourceType::Brick, i, 5)); // default values so setUp is called after
     attach(tiles[i]);
   }
 
-  for (int i = 0; i < 72; ++i) { // TODO: max roads
+  for (int i = 0; i < NUMROADS; ++i) { // TODO: max roads
     roads.emplace_back(make_shared<Road>(i));
   }
 
-  for (int i = 0; i < 54; ++i) { // TODO: max properties;
+  for (int i = 0; i < NUMPROPERTIES; ++i) { // TODO: max properties;
     properties.emplace_back(make_shared<Property>(i));
   }
 
@@ -65,7 +65,7 @@ void Board::linkAssets() {
 
 void Board::linkTiles_Roads() {
   int start=0, extra=2, jump=0, bot=7, vert=8;
-  for (int i = 0; i < 19; ++i) {
+  for (int i = 0; i < NUMTILES; ++i) {
     extra -= 2;
     ++jump;
     --bot;
@@ -113,7 +113,7 @@ void Board::linkTiles_Roads() {
 }
 
 void Board::linkTiles_Properties() {
-  for (int i = 0; i < 19; ++i) {
+  for (int i = 0; i < NUMTILES; ++i) {
     int start = 2*i;
     if (i > 5) ++start;
     if (i > 7) ++start;
@@ -301,12 +301,17 @@ void Board::linkRoads_Properties() {
   }
 }
 
+// tiles.emplace_back(make_shared<Tile>(ResourceType::Brick, 5, 5));
+// properties.emplace_back(make_shared<Property>(5));
+// attach(tiles[0]);
+// tiles[0]->attach(properties[0]);
+
 void Board::randomizeTiles() {
-  for(int i = 0; i < 18; ++i) { // TODO: hardcoded
+  for(int i = 0; i < NUMTILES; ++i) { // TODO: hardcoded
     tiles[i]->setResourceType(getRandomResource()); // sets all to random resource
   }
   shuffle(diceDistribution.begin(), diceDistribution.end(), g->getRandEng());
-  for(int i = 0; i < 18; ++i) {
+  for(int i = 0; i < NUMTILES; ++i) {
     tiles[i]->setDiceValue(diceDistribution[i]);
   }
 }

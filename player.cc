@@ -194,6 +194,7 @@ bool Player::turn() {
   cout << ">";
   while(cin >> cmd) {
     if(cmd == "board") {
+      rolledSeven();
     } else if(cmd == "status") {
       for(int i = 0; i < NUMPLAYERS; ++i) {
         g->getPlayer(i)->printStatus();
@@ -403,11 +404,11 @@ void Player::clearChangeInResources() {
 
 string Player::steal(string playerColour) {
   weak_ptr<Player> p = g->getPlayer(playerColour);
-
   ResourceType random = p.lock()->getRandomResource();
   p.lock()->subtractResource(random, 1);
   p.lock()->clearChangeInResources();
   addResource(random, 1);
+
   if(random == ResourceType::Brick) return "BRICK";
   if(random == ResourceType::Glass) return "GLASS";
   if(random == ResourceType::Energy) return "ENERGY";

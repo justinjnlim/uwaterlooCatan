@@ -13,6 +13,9 @@
 
 const int NUMPLAYERS = 4;
 const int NUMRESOURCES = 5;
+const int NUMTILES = 19;
+const int NUMROADS = 72;
+const int NUMPROPERTIES = 54;
 
 class Game {
  private:
