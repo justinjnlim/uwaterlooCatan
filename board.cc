@@ -107,6 +107,7 @@ void Board::linkTiles_Roads() {
     }
   }
 }
+}
 
 void Board::linkTiles_Properties() {
   for (int i = 0; i < 19; ++i) {
@@ -301,9 +302,9 @@ void Board::randomizeTiles() {
   for(int i = 0; i < 18; ++i) { // TODO: hardcoded
     tiles[i]->setResourceType(getRandomResource()); // sets all to random resource
   }
-  shuffle(diceDistrbution.begin(), diceDistrbution.end(), g->getRandEng());
+  shuffle(diceDistribution.begin(), diceDistribution.end(), g->getRandEng());
   for(int i = 0; i < 18; ++i) {
-    tiles[i]->setDiceValue(diceDistrbution[i]);
+    tiles[i]->setDiceValue(diceDistribution[i]);
   }
 }
 

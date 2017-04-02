@@ -187,7 +187,11 @@ bool Player::turn() {
   cout << ">";
   while(cin >> cmd) {
     if(cmd == "board") {
-
+      vector<int>diceDistrbution = {1,2,2,3,4,5,6,6,7};
+      shuffle(diceDistrbution.begin(), diceDistrbution.end(), g->getRandEng());
+      for(int i = 0; i < 8; ++ i) {
+        cout << diceDistrbution[i] << " is my num " << endl;
+      }
     } else if(cmd == "status") {
       for(int i = 0; i < NUMPLAYERS; ++i) {
         g->getPlayer(i)->printStatus();
