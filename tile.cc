@@ -3,11 +3,11 @@
 #include "observer.h"
 #include "subscriptions.h"
 
-Tile::Tile(ResourceType r, int id): r{r}, id{id} {}
+Tile::Tile(ResourceType r, int id): r{r}, id{id}, diceValue{dv} {}
 
 void Tile::notify(Subject& whoNotified) {
-  Info board = whoNotofied.getInfo();
-  if (!hasGoose && board.value) {
+  Info board = whoNotified.getInfo();
+  if (!hasGoose && board.value == diceValue) {
     notifyObservers(SubscriptionType::Property);
   }
 }
