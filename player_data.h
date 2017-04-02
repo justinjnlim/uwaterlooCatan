@@ -16,10 +16,10 @@ class PlayerData {
   PlayerData(std::string loadString);
   /* int points(); */
   std::vector<int> resources() const;
-  std::vector<int> roads();
-  std::vector<int> basements();
-  std::vector<int> houses();
-  std::vector<int> towers();
+  std::vector<int> roads() const;
+  std::vector<int> basements() const;
+  std::vector<int> houses() const;
+  std::vector<int> towers() const;
 };
 
 #endif

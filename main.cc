@@ -9,7 +9,7 @@ using namespace std;
 int main() {
 
   Game g;
-  ifstream f{"savefile.txt"};
+  ifstream f{"provided_files/savefile.txt"};
   g.loadGame(f);
 
   g.startGame();

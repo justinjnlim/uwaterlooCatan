@@ -1,16 +1,15 @@
 #include <sstream>
 #include <vector>
+#include <iostream>
 #include "player_data.h"
 // #include <iostream>
 using namespace std;
 
 PlayerData::PlayerData(string loadString) {
   // playerPoints = 0;
-
   istringstream iss{loadString};
   string type;
   int num;
-
   while (iss >> num) { // count resources
     resourceCount.emplace_back(num);
   }
@@ -55,19 +54,19 @@ vector<int> PlayerData::resources() const {
   return resourceCount;
 }
 
-vector<int> PlayerData::roads() {
+vector<int> PlayerData::roads() const {
   return roadIds;
 }
 
-vector<int> PlayerData::basements() {
+vector<int> PlayerData::basements() const {
   return basementIds;
 }
 
-vector<int> PlayerData::houses() {
+vector<int> PlayerData::houses() const {
   return houseIds;
 }
 
-vector<int> PlayerData::towers() {
+vector<int> PlayerData::towers() const {
   return towerIds;
 }
 

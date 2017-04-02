@@ -32,6 +32,8 @@ void Game::setTurnCount(int turn) {
   turnCount = turn;
 }
 
+// TODO set current player
+
 shared_ptr<Player> Game::getCurrentPlayer() {
   return currentPlayer;
 }
@@ -49,6 +51,8 @@ shared_ptr<Player> Game::getPlayer(string colour) {
 
 void Game::setPlayer(int index, const PlayerData & pd) {
   weak_ptr<Player> player = getPlayer(index);
+
+  pd.resources();
   (player.lock())->setResources(pd); // TODO function pending
   //gameBoard->setupProperties(player.lock(), pd); // TODO function pending
 }
@@ -102,8 +106,8 @@ void Game::loadGame(ifstream & loadFile) {
   string loadData;
 
   if (loadFile) {
-    cout << "AM I EVEN IN HERE?" << endl;
-    loadFile >> turnCount;
+    getline(loadFile, loadData);
+    turnCount = stoi(loadData);
     setTurnCount(turnCount);
 
     for (int i = 0; i < NUMPLAYERS; i++) {
@@ -112,9 +116,9 @@ void Game::loadGame(ifstream & loadFile) {
       setPlayer(i, pd);
     }
 
-    // getline(loadFile, loadData);
-    // getGameBoard()->setLayout(loadData);
-    loadFile.close();
+    // // getline(loadFile, loadData);
+    // // getGameBoard()->setLayout(loadData);
+    // loadFile.close();
   }
 }
 

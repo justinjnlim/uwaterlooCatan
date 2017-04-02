@@ -264,9 +264,6 @@ void Player::addProperty(int id, weak_ptr<Property> p) {
 // }
 //
 void Player::setResources(const PlayerData & pd) {
-  for(int i = 0; i < 6; ++i) {
-    cout << "this resource value is" << pd.resources()[i] << endl;
-  }
   resources = pd.resources();
 }
 

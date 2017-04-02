@@ -42,7 +42,7 @@ class Game {
   std::shared_ptr<Player> getCurrentPlayer();
   std::shared_ptr<Player> getPlayer(int index);
   std::shared_ptr<Player> getPlayer(std::string colour);
-  void setPlayer(int index, const PlayerData &pd);
+  void setPlayer(int index, const PlayerData & pd);
 
   std::shared_ptr<Board> getGameBoard();
   void setGameBoard(std::string layout);
