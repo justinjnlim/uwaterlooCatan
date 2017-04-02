@@ -1,5 +1,6 @@
 #ifndef _BOARD_H_
 #define _BOARD_H_
+#include <iostream>
 #include <map>
 #include <memory>
 #include "resources.h"
@@ -12,6 +13,7 @@ class Property;
 class Player;
 class Tile;
 class Game;
+class TextDisplay;
 
 class Board : public Subject {
 
@@ -22,6 +24,8 @@ class Board : public Subject {
   std::vector<std::shared_ptr<Property>> properties;
   std::vector<std::shared_ptr<Tile>> tiles;
   int diceValue;
+
+  std::shared_ptr<TextDisplay> td;
 
   //used for random Generation
   std::vector<int> resourceDistribution = {0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,4,4,4,5};
@@ -50,6 +54,7 @@ class Board : public Subject {
   void randomizeTiles();
   bool addGoose(int id);
 
+  friend std::ostream &operator<<
 
 };
 

@@ -1,13 +1,14 @@
-#include "board.h"
+#include "textdisplay.h"
 #include "resources.h"
 #include "tile.h"
 #include "property.h"
 #include "road.h"
 #include "player.h"
 #include "game.h"
+#include "board.h"
 using namespace std;
 
-Board::Board(Game * g): g{g} {
+Board::Board(Game * g): td{make_shared<TextDisplay>()}, g{g} {
   // tiles.emplace_back(make_shared<Tile>(ResourceType::Brick, 5, 5));
   // properties.emplace_back(make_shared<Property>(5));
   // attach(tiles[0]);
@@ -16,14 +17,17 @@ Board::Board(Game * g): g{g} {
   for(int i = 0; i < NUMTILES; ++i) { // TODO: hardcoded
     tiles.emplace_back(make_shared<Tile>(ResourceType::Brick, i, 5)); // default values so setUp is called after
     attach(tiles[i]);
+    tiles[i]->attach(td);
   }
 
   for (int i = 0; i < NUMROADS; ++i) { // TODO: max roads
     roads.emplace_back(make_shared<Road>(i));
+    roads[i]->attach(td);
   }
 
   for (int i = 0; i < NUMPROPERTIES; ++i) { // TODO: max properties;
     properties.emplace_back(make_shared<Property>(i));
+    properties[i]->attach(td);
   }
 
   linkAssets();
