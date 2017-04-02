@@ -366,3 +366,8 @@ bool Board::addGoose(int id) {
   }
   return true;
 }
+
+ostream &operator<<(ostream &out, shared_ptr<Board> b) {
+  out << *(b.td);
+  return out;
+}

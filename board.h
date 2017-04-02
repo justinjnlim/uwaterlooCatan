@@ -55,8 +55,7 @@ class Board : public Subject {
   void randomizeTiles();
   bool addGoose(int id);
 
-  friend std::ostream &operator<<
-
+  friend std::ostream &operator<<(std::ostream &out, std::shared_ptr<Board> b);
 };
 
 #endif

@@ -18,6 +18,10 @@ class TextDisplay: public Observer {
 public:
   TextDisplay();
 
+  int getM();
+  int getN();
+  char getCharAt(int m, int n);
+
   void refresh();
   void insertAt(int i, int j, std::string s);
   void insertType(int i, int j, std::string s); 
