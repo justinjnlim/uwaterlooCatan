@@ -8,15 +8,19 @@
 #include "subscriptions.h"
 
 class TextDisplay: public Observer {
-  // a map of type to id to location on grid?
-  std::vector<string> tiles;
-  std::vector<string> roads;
-  std::vector<string> properties;
 
+  int m, n;
   std::vector<std::vector<char>> theDisplay;
+  std::vector<string> a_prop;
+  std::vector<string> a_road;
+  std::vector<string> a_tile;;
 
 public:
   TextDisplay();
+
+  void refresh();
+  void insertAt(int i, int j, std::string s);
+  void insertType(int i, int j, std::string s); 
 
   void notify(Subject &whoNotified) override;
   SubscriptionType subType() const override;
