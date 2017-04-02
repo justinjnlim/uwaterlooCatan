@@ -138,7 +138,7 @@ void Player::rolledSeven() {
     cout << "Builder " << colour << " can choose to steal from " << builders << endl;
     cout << "Choose a builder to steal from." << endl;
     string stealFrom;
-    cout << ">";
+    cout << "> ";
     while(cin >> stealFrom) {
       if(stealFrom == colour) {
         cout << "You cannot steal from yourself." << endl;

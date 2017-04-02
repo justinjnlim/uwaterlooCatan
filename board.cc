@@ -51,6 +51,8 @@ shared_ptr<Property> Board::buildProperty(int id, shared_ptr<Player> player) {
 }
 
 void Board::setupTiles(string layout) {
+  cout << layout << endl;
+
   int resource;
   int dicevalue;
 
