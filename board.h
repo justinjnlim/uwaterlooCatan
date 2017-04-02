@@ -33,9 +33,9 @@ class Board : public Subject {
   void linkAssets();
   void linkRoads_Properties();
   void linkTiles_Properties();
-  // void linkTiles_Roads(); TODO implement this
+  void linkTiles_Roads();
 
-public:
+ public:
 
   Board(Game * g);
 

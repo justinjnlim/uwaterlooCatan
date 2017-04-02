@@ -58,12 +58,12 @@ void Board::setupTiles(string layout) {
 }
 
 void Board::linkAssets() {
-  // linkTiles_Roads(); // TODO Implement this
+  linkTiles_Roads(); // TODO Implement this
   linkTiles_Properties();
   linkRoads_Properties();
 }
 
-void Board::linkRoads_Properties() {
+void Board::linkTiles_Roads() {
   int start=0, extra=4, jump=0, bot=7;
   for (int i = 0; i < 19; ++i) {
     extra -= 2;
@@ -80,7 +80,7 @@ void Board::linkRoads_Properties() {
     if (i == 3 || i == 8 || i == 13) bot = 6;
     if (i == 1 || i == 6 || i == 11) bot = 5;
     if (i == 16) bot = 4;
-    
+
     start = 3*i + extra;
 
     if (i == 18) start = 61;
@@ -104,6 +104,7 @@ void Board::linkRoads_Properties() {
       tiles[i]->addRoad(roads[start+jump+5]);
       tiles[i]->addRoad(roads[start+jump+6]);
       tiles[i]->addRoad(roads[start+jump+7]);
+    }
   }
 }
 

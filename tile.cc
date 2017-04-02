@@ -11,6 +11,10 @@ Tile::Tile(ResourceType r, int id, int dv): r{r}, id{id}, diceValue{dv} {}
 void Tile::notify(Subject& whoNotified) {
   cout << "Tile " << id << " was notified. DiceValue: " << diceValue << endl;
 
+  for (weak_ptr<Road> r : roads) {
+    cout << "Has Road " << (r.lock())->getId() << endl;
+  }
+
   Info board = whoNotified.getInfo();
   if (!hasGoose && board.value == diceValue) {
     notifyObservers(SubscriptionType::Property);
@@ -38,6 +42,10 @@ Info Tile::getInfo() const {
 void Tile::addProperty(shared_ptr<Property> p) {
   properties.emplace_back(p);
   attach(p);
+}
+
+void Tile::addRoad(shared_ptr<Road> r) {
+  roads.emplace_back(r);
 }
 
 void Tile::setResourceType(ResourceType rt) {
