@@ -156,9 +156,7 @@ bool Game::start() {
   // catch errors
   // manage errors
 
-  getPlayer(0)->printStatus();
   getPlayer(0)->buildProperty(5);
-  getPlayer(0)->printStatus(); // score = 1
   getPlayer(0)->turn();
   getPlayer(0)->upgradeProperty(5);
   getPlayer(0)->printStatus(); // score = 2

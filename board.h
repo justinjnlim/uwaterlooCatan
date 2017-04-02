@@ -4,10 +4,10 @@
 #include <memory>
 #include "resources.h"
 /* #include "property.h" */
-/* #include "road.h" */
 #include "subject.h"
 /* #include "tile.h" */
 /* #include "player.h" */
+class Road;
 class Property;
 class Player;
 class Tile;
@@ -18,14 +18,22 @@ class Board : public Subject {
   /* std::map<int,std::shared_ptr<Road>> roads; */
   //std::map<int,std::shared_ptr<Property>> properties;
   //std::map<int,std::vector<std::shared_ptr<Tile>>> tiles;
+  std::vector<std::shared_ptr<Road>> roads;
   std::vector<std::shared_ptr<Property>> properties;
   std::vector<std::shared_ptr<Tile>> tiles;
   int diceValue;
+
   //used for random Generation
   std::vector<int> resourceDistribution = {4,4,4,3,3,1};
   Game * g;
   // private
   ResourceType getRandomResource();
+
+  void linkAssets();
+  void linkRoads_Properties();
+  void linkTiles_Properties();
+  // void linkTiles_Roads(); TODO implement this
+ 
 public:
 
   Board(Game * g);

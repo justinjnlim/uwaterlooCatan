@@ -9,7 +9,8 @@ using namespace std;
 Tile::Tile(ResourceType r, int id, int dv): r{r}, id{id}, diceValue{dv} {}
 
 void Tile::notify(Subject& whoNotified) {
-  cout << "I'm being notified" << endl;
+  cout << "Tile " << id << " was notified. DiceValue: " << diceValue << endl;
+
   Info board = whoNotified.getInfo();
   if (!hasGoose && board.value == diceValue) {
     notifyObservers(SubscriptionType::Property);
@@ -36,6 +37,7 @@ Info Tile::getInfo() const {
 
 void Tile::addProperty(shared_ptr<Property> p) {
   properties.emplace_back(p);
+  attach(p);
 }
 
 void Tile::setResourceType(ResourceType rt) {

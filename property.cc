@@ -1,9 +1,20 @@
 #include "property.h"
 #include "tile.h"
-
+#include <iostream>
 using namespace std;
 
-Property::Property(int id): id{id} {}
+Property::Property(int id): id{id}, owner{weak_ptr<Player>()} {}
+
+void Property::printNeighbours() {
+  cout << "Property " << id << " has neighbours:" << endl;
+  for (weak_ptr<Road> r : neighbours) {
+    cout << (r.lock())->getId() << endl;
+  }
+}
+
+void Property::addNeighbour(weak_ptr<Road> neighbour) {
+  neighbours.emplace_back(neighbour);
+}
 
 shared_ptr<Property> Property::buy(shared_ptr<Player> player) {
   upgrade();
@@ -20,7 +31,9 @@ void Property::upgrade() {
 }
 
 void Property::notify(Subject& whoNotified) {
-  owner->addResource(whoNotified.getInfo().rt, static_cast<int>(p));
+  cout << "Property " << id << " was notified" << endl;
+  if (!owner.expired())
+    (owner.lock())->addResource(whoNotified.getInfo().rt, static_cast<int>(p));
 }
 
 SubscriptionType Property::subType() const {
@@ -53,7 +66,7 @@ Info Property::getInfo() const {
       i.ownerString = to_string(id);
     }
   } else {
-    i.ownerString = owner->getPlayerFirstLetter() + getBuildingType();
+    i.ownerString = (owner.lock())->getPlayerFirstLetter() + getBuildingType();
   }
   return i;
 }

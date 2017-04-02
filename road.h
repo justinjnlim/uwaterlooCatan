@@ -1,17 +1,23 @@
 #ifndef _ROAD_H_
 #define _ROAD_H_
 #include <vector>
+#include <memory>
 #include "player.h"
-#include "property.h"
+class Property;
 
-class Road {
-  Player* owner;
+class Road : public std::enable_shared_from_this<Road> {
   int id;
-  std::vector<Property*> neighbours;
-  public:
-  bool hasAdjacentProperty();
-  bool hasOwner();
-  bool hasNeighbourRoad(int id);
+  std::weak_ptr<Player> owner;
+  std::vector<std::weak_ptr<Property>> neighbours;
+
+ public:
+  Road(int id);
+  void addNeighbour(std::weak_ptr<Property> neighbour);
+  void printNeighbours();
+  int getId();
+  /* bool hasAdjacentProperty(); */
+  /* bool hasOwner(); */
+  /* bool hasNeighbourRoad(int id); */
 };
 
 #endif
