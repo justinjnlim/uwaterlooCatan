@@ -19,3 +19,14 @@ void Road::printNeighbours() {
 int Road::getId() {
   return id;
 }
+
+Info Road::getInfo() const {
+  Info i;
+  i.value = id;
+  i.type = "Road";
+  i.hasGoose = false;
+  i.rt;
+  if (owner != nullptr) {
+    i.ownerSring = (owner.lock())->getPlayerFirstLetter() + "R";
+  }
+}

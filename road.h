@@ -15,6 +15,7 @@ class Road : public std::enable_shared_from_this<Road> {
   void addNeighbour(std::weak_ptr<Property> neighbour);
   void printNeighbours();
   int getId();
+  Info getInfo() const override;
   /* bool hasAdjacentProperty(); */
   /* bool hasOwner(); */
   /* bool hasNeighbourRoad(int id); */
