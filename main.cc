@@ -75,21 +75,33 @@ int main(int argc, char * argv[]) {
   //   check istream.eof()
   //   g.save("backup.sv")
 
-  // cin.exceptions(istream::failbit|istream::eofbit|istream::badbit);
+  cin.exceptions(istream::failbit|istream::eofbit|istream::badbit);
 
-  // try {
-  //   bool stopGame = 1;
-  //   while (stopFame) {
-  //     Game g;
+  try {
+    bool stopGame = 1;
+    while (stopGame) {
+      Game g;
 
-  //     if (options.loadFlag) {
-  //       options.boardFlag = 0;
-  //       options.randomFalg = 0;
-  //     }
+      if (options.loadFlag) {
+        options.boardFlag = 0;
+        options.randomFlag = 0;
 
-  //     if (options.boardFlag)
-  //   }
-  // }
+        ifstream f{options.loadFile};
+        g.load(f);
+      }
+
+      if (options.boardFlag) {
+        options.randomFlag = 0;
+
+        ifstream f{options.boardFile};
+        g.setGameBoard(f);
+      }
+
+      if (options.randomFlag) {
+        g.setGameBoard();
+      }
+    }
+  }
 
   Game g;
   ifstream f{"provided_files/savefile.txt"};

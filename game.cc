@@ -64,8 +64,14 @@ shared_ptr<Board> Game::getGameBoard() {
   return gameBoard;
 }
 
-void Game::setGameBoard(string layout) {
-  // gameBoard.setupTiles(layout); // TODO function pending
+void Game::setGameBoard(ifstream & loadFile) {
+  string layout;
+  getline(loadFile, layout);
+  gameBoard.setupTiles(layout);
+}
+
+void Game::setGameBoard() {
+  gameBoard.randomizeTiles();
 }
 
 shared_ptr<FairDice> Game::getFairDice() {

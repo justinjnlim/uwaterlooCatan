@@ -47,7 +47,8 @@ class Game {
   void setPlayer(std::weak_ptr<Player> player, const PlayerData & pd);
 
   std::shared_ptr<Board> getGameBoard();
-  void setGameBoard(std::string layout);
+  void setGameBoard(std::ifstream & loadFile);
+  void setGameBoard();
 
   std::shared_ptr<FairDice> getFairDice();
   std::shared_ptr<LoadedDice> getLoadedDice();
