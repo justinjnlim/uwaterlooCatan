@@ -10,8 +10,12 @@ void Road::addNeighbour(weak_ptr<Property> neighbour) {
 }
 
 void Road::printNeighbours() {
-  cout << id << " has neighbours:" << endl;
+  cout << "Road " << id << " has neighbours:" << endl;
   for (weak_ptr<Property> p : neighbours) {
     cout << (p.lock())->getInfo().ownerString << endl;
   }
+}
+
+int Road::getId() {
+  return id;
 }

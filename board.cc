@@ -25,14 +25,44 @@ Board::Board() {
     properties.emplace_back(make_shared<Property>(i));
   }
 
-  linkRoadsAndProperties();
+  linkAssets();
 
-  for (weak_ptr<Road> r : roads) {
-    (r.lock())->printNeighbours();
+  // // check roads' neighbours
+  // for (weak_ptr<Road> r : roads) {
+  //   (r.lock())->printNeighbours();
+  // }
+
+  // // check properties' neighbours
+  // for (weak_ptr<Property> p : properties) {
+  //   (p.lock())->printNeighbours();
+  // }
+}
+
+shared_ptr<Property> Board::buildProperty(int id, shared_ptr<Player> player) {
+  return properties[id]->buy(player);
+}
+
+void Board::setupTiles(string layout) {
+  int resource;
+  int dicevalue;
+
+  for(int i = 0; i < 18; ++i) { // TODO: hardcoded
+    istringstream(layout) >> resource;
+    istringstream(layout) >> dicevalue;
+
+    tiles[i]->setResourceType(static_cast<ResourceType>(resource));
+    tiles[i]->setDiceValue(dicevalue);
+
   }
+}
 
-  // LINK THESE MOTHERFUCKERS
-  // PROPERTY LINKING
+void Board::linkAssets() {
+  // linkTiles_Roads(); // TODO Implement this
+  linkTiles_Properties();
+  linkRoads_Properties();
+}
+
+void Board::linkTiles_Properties() {
   for (int i = 0; i < 19; ++i) {
     int start = 2*i;
     if (i > 5) ++start;
@@ -73,68 +103,151 @@ Board::Board() {
   }
 }
 
-shared_ptr<Property> Board::buildProperty(int id, shared_ptr<Player> player) {
-  return properties[id]->buy(player);
-}
+void Board::linkRoads_Properties() {
+  int id = 0;
 
-void Board::setupTiles(string layout) {
-  int resource;
-  int dicevalue;
-
-  for(int i = 0; i < 18; ++i) { // TODO: hardcoded
-    istringstream(layout) >> resource;
-    istringstream(layout) >> dicevalue;
-
-    tiles[i]->setResourceType(static_cast<ResourceType>(resource));
-    tiles[i]->setDiceValue(dicevalue);
-
-  }
-}
-
-void Board::linkRoadsAndProperties() {
-  // horizontal roads in main square
-  int id = 9;
+  // main square stuff
   int proxyID; // for vertical road linking pattern
-  int horizontalSubtractor = 3;
-  int verticalSubtractor = 0;
-  int top, bottom, left, right; // cardinal neighbours
-  while (id < 63) {
-    // initiates horizontal road linking pattern
+  int horizontalSubtractor;
+  int verticalSubtractor;
+  int topSubtractor; // used in non-main square tiles
+  int bottomSubtractor; // used in non-main square tiles
+  int constSubtractor;
+  int top, bottom, left, right; // cardinal neighbours  while (id < 72) {}
 
-    left = id - horizontalSubtractor;
-    roads[id]->addNeighbour(properties[left]);
-    properties[left]->addNeighbour(roads[id]);
+  while (id < 72) {
+    if (id < 9) {
+      horizontalSubtractor = 0;
 
-    right = left + 1;
-    roads[id]->addNeighbour(properties[right]);
-    properties[right]->addNeighbour(roads[id]);
+      while (id < 9) {
+        left = id - horizontalSubtractor;
+        roads[id]->addNeighbour(properties[left]);
+        properties[left]->addNeighbour(roads[id]);
 
-    // id reaches end of horizontal road row
-    if (id == 11 || id == 19 || id == 28 || id == 36 || id == 45 || id == 53) {
-      // initiates vertical road linking pattern
-      int constSubtractor = verticalSubtractor;
+        right = left + 1;
+        roads[id]->addNeighbour(properties[right]);
+        properties[right]->addNeighbour(roads[id]);
 
-      if (id == 11 || id == 28 || id == 45 || id == 53)
-        verticalSubtractor += 2;
-      else
-        verticalSubtractor += 3;
+        if (id == 0 || id == 4) {
+          if (id == 0) {
+            topSubtractor = 1;
+            bottomSubtractor = -2;
 
-      for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 2; i++) {
+              id++;
+              top = id - topSubtractor;
+              bottom = id - bottomSubtractor;
+              roads[id]->addNeighbour(properties[top]);
+              properties[top]->addNeighbour(roads[id]);
+              roads[id]->addNeighbour(properties[bottom]);
+              properties[bottom]->addNeighbour(roads[id]);
+            }
+          } else if (id == 4) {
+            topSubtractor = 3;
+            bottomSubtractor = -2;
+
+            for (int i = 0; i < 4; i++) {
+              id++;
+              top = id - topSubtractor;
+              bottom = id - bottomSubtractor;
+              roads[id]->addNeighbour(properties[top]);
+              properties[top]->addNeighbour(roads[id]);
+              roads[id]->addNeighbour(properties[bottom]);
+              properties[bottom]->addNeighbour(roads[id]);
+            }
+          }
+          horizontalSubtractor += 2;
+        }
+
+        horizontalSubtractor--;
         id++;
-        proxyID = id - constSubtractor;
-        top = proxyID - (proxyID % 6) - (6 - i);
-        bottom = proxyID - (proxyID % 6) + i;
+      }
+    } else if (id > 8 && id < 63) {
+      horizontalSubtractor = 3;
+      verticalSubtractor = 0;
+
+      while (id < 63) {
+       // initiates horizontal road linking pattern
+
+        left = id - horizontalSubtractor;
+        roads[id]->addNeighbour(properties[left]);
+        properties[left]->addNeighbour(roads[id]);
+
+        right = left + 1;
+        roads[id]->addNeighbour(properties[right]);
+        properties[right]->addNeighbour(roads[id]);
+
+        // id reaches end of horizontal road row
+        if (id == 11 || id == 19 || id == 28 || id == 36 || id == 45 || id == 53) {
+          // initiates vertical road linking pattern
+          constSubtractor = verticalSubtractor;
+
+          if (id == 11 || id == 28 || id == 45 || id == 53)
+            verticalSubtractor += 2;
+          else
+            verticalSubtractor += 3;
+
+          for (int i = 0; i < 6; i++) {
+            id++;
+            proxyID = id - constSubtractor;
+            top = proxyID - (proxyID % 6) - (6 - i);
+            bottom = proxyID - (proxyID % 6) + i;
+            roads[id]->addNeighbour(properties[top]);
+            properties[top]->addNeighbour(roads[id]);
+            roads[id]->addNeighbour(properties[bottom]);
+            properties[bottom]->addNeighbour(roads[id]);
+          }
+
+          horizontalSubtractor += 5;
+        }
+
+        horizontalSubtractor--;
+        id++;
+      }
+    } else {
+      topSubtractor = 20;
+      bottomSubtractor = 15;
+
+      while (id < 72) {
+        top = id - topSubtractor;
+        bottom = id - bottomSubtractor;
         roads[id]->addNeighbour(properties[top]);
         properties[top]->addNeighbour(roads[id]);
         roads[id]->addNeighbour(properties[bottom]);
         properties[bottom]->addNeighbour(roads[id]);
+
+        if (id == 66 || id == 70) {
+          if (id == 66) {
+            horizontalSubtractor = 19;
+
+            for (int i = 0; i < 2; i++) {
+              id++;
+              left = id - horizontalSubtractor;
+              right = left + 1;
+              roads[id]->addNeighbour(properties[left]);
+              properties[left]->addNeighbour(roads[id]);
+              roads[id]->addNeighbour(properties[right]);
+              properties[right]->addNeighbour(roads[id]);
+
+              horizontalSubtractor--;
+            }
+
+            bottomSubtractor += 2;
+          } else if (id == 70) {
+            horizontalSubtractor = 19;
+
+            id++;
+            left = id - horizontalSubtractor;
+            right = left + 1;
+            roads[id]->addNeighbour(properties[left]);
+            properties[left]->addNeighbour(roads[id]);
+            roads[id]->addNeighbour(properties[right]);
+            properties[right]->addNeighbour(roads[id]);
+          }
+        }
+        id++;
       }
-
-      horizontalSubtractor += 5;
     }
-
-    id++;
-    horizontalSubtractor--;
   }
 }
 

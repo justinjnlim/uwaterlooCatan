@@ -5,6 +5,13 @@ using namespace std;
 
 Property::Property(int id): id{id}, owner{weak_ptr<Player>()} {}
 
+void Property::printNeighbours() {
+  cout << "Property " << id << " has neighbours:" << endl;
+  for (weak_ptr<Road> r : neighbours) {
+    cout << (r.lock())->getId() << endl;
+  }
+}
+
 void Property::addNeighbour(weak_ptr<Road> neighbour) {
   neighbours.emplace_back(neighbour);
 }

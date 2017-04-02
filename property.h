@@ -21,6 +21,8 @@ class Property : public Subject, public Observer, public std::enable_shared_from
 
   Property(int id);
 
+  void printNeighbours();
+
   std::shared_ptr<Property> buy(std::shared_ptr<Player> player);
   void upgrade();
 //  bool hasOwner();
