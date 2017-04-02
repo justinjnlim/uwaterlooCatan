@@ -31,7 +31,7 @@ public:
 
   ~TextDisplay();
 
-  friend std::ostream &operator<<(std::ostream &out, const TextDisplay &td);
+  friend std::ostream &operator<<(std::ostream &out, std::shared_ptr<TextDisplay> td);
 };
 
 #endif
