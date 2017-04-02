@@ -2,6 +2,7 @@
 #include "resources.h"
 #include "tile.h"
 #include "property.h"
+#include "road.h"
 #include "player.h"
 using namespace std;
 

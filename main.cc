@@ -15,7 +15,7 @@ struct gameOptions {
   int seed = 1;
   string loadFile;
   string boardFile;
-}
+};
 
 void errorMessage() {
   cout << "Ctor game parameters not provided. Available options are:\n" << endl;
@@ -48,7 +48,7 @@ int main(int argc, char * argv[]) {
 
     switch (iarg) {
     case 's':
-      options.seed = optarg;
+      options.seed = stoi(optarg);
       break;
     case 'l':
       options.loadFlag = 1;
