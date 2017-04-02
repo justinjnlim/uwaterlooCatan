@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <getopt.h>
+#include <stdexcept>
 #include "game.h"
 #include "property.h"
 #include "board.h"
@@ -74,25 +75,34 @@ int main(int argc, char * argv[]) {
   // catch (istream::failure & e)
   //   check istream.eof()
   //   g.save("backup.sv")
+  try {
+    bool stopGame = 1;
+    while (stopGame) {
+      Game g(options.seed);
 
-  // cin.exceptions(istream::failbit|istream::eofbit|istream::badbit);
+      if (options.loadFlag) {
+        options.boardFlag = 0;
+        options.randomFlag = 0;
 
-  // try {
-  //   bool stopGame = 1;
-  //   while (stopFame) {
-  //     Game g;
+        ifstream f{options.loadFile};
+        g.load(f);
+      }
 
-  //     if (options.loadFlag) {
-  //       options.boardFlag = 0;
-  //       options.randomFalg = 0;
-  //     }
+      if (options.boardFlag) {
+        options.randomFlag = 0;
 
-  //     if (options.boardFlag)
-  //   }
-  // }
+        ifstream f{options.boardFile};
+        g.setGameBoard(f);
+      }
 
-  Game g;
-  ifstream f{"provided_files/savefile.txt"};
-  g.load(f);
-  g.start();
+      if (options.randomFlag) {
+        g.setGameBoard();
+      }
+
+      stopGame = g.start();
+    }
+  } catch (exception & e) {
+    cout << "Error: " << e.what() << endl;
+    cout << "Terminating..." << endl;
+  }
 }

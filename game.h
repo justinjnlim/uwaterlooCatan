@@ -26,6 +26,7 @@ class Game {
   std::shared_ptr<FairDice> fairDice;
   std::shared_ptr<LoadedDice> loadedDice;
   std::vector<std::shared_ptr<Player>> players;
+  void init();
 
  public:
   static const std::map<std::string, std::vector<int>> propertyRecipes;
@@ -50,7 +51,8 @@ class Game {
   void setPlayer(std::weak_ptr<Player> player, const PlayerData & pd);
 
   std::shared_ptr<Board> getGameBoard();
-  void setGameBoard(std::string layout);
+  void setGameBoard(std::ifstream & loadFile);
+  void setGameBoard();
 
   std::shared_ptr<FairDice> getFairDice();
   std::shared_ptr<LoadedDice> getLoadedDice();
@@ -58,7 +60,6 @@ class Game {
   int genRand(int min, int max);
 
   void listCommands();
-  void init();
   void save(std::string file);
   void load(std::ifstream & loadFile);
   bool start();

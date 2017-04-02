@@ -39,6 +39,13 @@ Board::Board(Game * g): g{g} {
   // }
 }
 
+void Board::printTiles() {
+  for (weak_ptr<Tile> t : tiles) {
+    cout << "Resource Type: " << static_cast<int>((t.lock())->getInfo().rt) << endl;
+    cout << "Dice Value: " << (t.lock())->getDiceValue() << endl;
+  }
+}
+
 shared_ptr<Property> Board::buildProperty(int id, shared_ptr<Player> player) {
   return properties[id]->buy(player);
 }
