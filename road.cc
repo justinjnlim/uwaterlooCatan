@@ -26,7 +26,7 @@ Info Road::getInfo() const {
   i.type = "Road";
   i.hasGoose = false;
   i.rt;
-  if (owner != nullptr) {
-    i.ownerSring = (owner.lock())->getPlayerFirstLetter() + "R";
+  if (!owner.expired()) {
+    i.ownerString = (owner.lock())->getPlayerFirstLetter() + "R";
   }
 }

@@ -3,9 +3,11 @@
 #include <vector>
 #include <memory>
 #include "player.h"
+#include "subject.h"
+#include "info.h"
 class Property;
 
-class Road : public std::enable_shared_from_this<Road> {
+class Road : public Subject, public std::enable_shared_from_this<Road> {
   int id;
   std::weak_ptr<Player> owner;
   std::vector<std::weak_ptr<Property>> neighbours;
