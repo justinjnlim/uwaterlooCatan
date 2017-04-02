@@ -45,7 +45,7 @@ class Board : public Subject {
   void getDiceRoll(int diceRoll);
 
   void save();
-
+  void printTiles();
   Info getInfo() const override;
   void setupTiles(std::string layout);
   void randomizeTiles();

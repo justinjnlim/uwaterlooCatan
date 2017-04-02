@@ -40,6 +40,10 @@ Info Tile::getInfo() const {
   return i;
 }
 
+int Tile::getDiceValue() {
+  return diceValue;
+}
+
 void Tile::addProperty(shared_ptr<Property> p) {
   properties.emplace_back(p);
   attach(p);

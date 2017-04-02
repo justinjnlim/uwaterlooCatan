@@ -29,6 +29,7 @@ public:
   SubscriptionType subType() const override;
   Info getInfo() const override;
 
+  int getDiceValue();
   void addProperty(std::shared_ptr<Property> p);
   void addRoad(std::shared_ptr<Road>r);
   void setResourceType(ResourceType rt);

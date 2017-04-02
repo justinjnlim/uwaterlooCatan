@@ -122,8 +122,8 @@ void Player::rolledSeven() {
   }
   cout << "Choose where to place the GEESE." << endl;
   string s;
-  cout << ">";
-  while(cin >> s) {
+  cout << "> ";
+  if(cin >> s) {
     int address;
     istringstream(s) >> address;
     if(!placeGoose(address)) {
@@ -158,7 +158,7 @@ void Player::rolledSeven() {
 void Player::initTurn() {
   cout << "Builder " << colour << " where do you want to build a basement?" << endl;
   string s;
-  cout << ">";
+  cout << "> ";
   while(cin >> s) {
     istringstream ss{s};
     int address;
@@ -168,7 +168,7 @@ void Player::initTurn() {
     } else {
       cout << "Please provide an address." << endl;
     }
-    cout << ">";
+    cout << "> ";
   }
 }
 
@@ -176,7 +176,7 @@ bool Player::turn() {
   cout << "Builder " << colour << "'s turn." << endl;
   printStatus();
   string cmd;
-  cout << ">";
+  cout << "> ";
   while(cin >> cmd) {
     if(cmd == "load") {
       setDiceToLoaded();
@@ -188,10 +188,10 @@ bool Player::turn() {
     } else {
       cout << "Invalid Command." << endl;
     }
-    cout << ">";
+    cout << "> ";
    }
   int address;
-  cout << ">";
+  cout << "> ";
   while(cin >> cmd) {
     if(cmd == "board") {
     } else if(cmd == "status") {
@@ -224,13 +224,13 @@ bool Player::turn() {
       string tradeWith;
       string give;
       string take;
-      cout << ">";
+      cout << "> ";
       if(cin >> tradeWith >> give >> take) {
         cout << colour << " offers " << tradeWith << " one " << give;
         cout << " for one " << take << "." << endl;
         cout << "Does " << tradeWith << " accept this offer?" << endl;
         string response;
-        cout << ">";
+        cout << "> ";
         if(cin >> response) {
           if(response == "yes") trade(tradeWith, give, take);
         }
@@ -252,7 +252,7 @@ bool Player::turn() {
     } else {
       cout << "Invalid Command." << endl;
     }
-    cout << ">";
+    cout << "> ";
   }
 }
 

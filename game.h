@@ -23,6 +23,7 @@ class Game {
   std::shared_ptr<FairDice> fairDice;
   std::shared_ptr<LoadedDice> loadedDice;
   std::vector<std::shared_ptr<Player>> players;
+  void init();
 
  public:
   static const std::map<std::string, std::vector<int>> propertyRecipes;
@@ -56,7 +57,6 @@ class Game {
   int genRand(int min, int max);
 
   void listCommands();
-  void init();
   void save(std::string file);
   void load(std::ifstream & loadFile);
   bool start();

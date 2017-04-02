@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <stdexcept>
 #include "game.h"
 using namespace std;
 
@@ -66,12 +67,17 @@ shared_ptr<Board> Game::getGameBoard() {
 
 void Game::setGameBoard(ifstream & loadFile) {
   string layout;
-  getline(loadFile, layout);
-  gameBoard.setupTiles(layout);
+
+  if (loadFile) {
+    getline(loadFile, layout);
+    gameBoard->setupTiles(layout);
+  } else {
+    throw runtime_error("Could not open file");
+  }
 }
 
 void Game::setGameBoard() {
-  gameBoard.randomizeTiles();
+  gameBoard->randomizeTiles();
 }
 
 shared_ptr<FairDice> Game::getFairDice() {
@@ -120,7 +126,7 @@ void Game::init() {
 }
 
 void Game::save(string file) {
-  string path = "provided_files/" + file;
+  string path = file;
   ofstream saveFile(path);
 
   saveFile << getTurnCount() << endl;
@@ -148,9 +154,11 @@ void Game::load(ifstream & loadFile) {
       setPlayer(p, pd);
     }
 
-    // getline(loadFile, loadData);
-    // board->setGameBoard(loadData)
-    // loadFile.close();
+    getline(loadFile, loadData);
+    gameBoard->setupTiles(loadData);
+    loadFile.close();
+  } else {
+    throw runtime_error("Could not open file");
   }
 }
 
@@ -165,8 +173,23 @@ bool Game::start() {
   // catch errors
   // manage errors
 
-  getPlayer(0)->buildProperty(5);
-  getPlayer(0)->turn();
-  getPlayer(0)->upgradeProperty(5);
-  getPlayer(0)->printStatus(); // score = 2
+  cin.exceptions(istream::failbit|istream::eofbit|istream::badbit);
+
+  try {
+    gameBoard->printTiles();
+    getPlayer(0)->buildProperty(5);
+    getPlayer(0)->turn();
+    getPlayer(0)->upgradeProperty(5);
+    getPlayer(0)->printStatus();
+  } catch (istream::failure & e) {
+    if (cin.eof()) {
+      cout << "Game terminating due to EOF. Saving..." << endl;
+      save("backup.sv");
+      cout << "Done." << endl;
+    }
+
+    return 0;
+  }
+
+  return 0;
 }
