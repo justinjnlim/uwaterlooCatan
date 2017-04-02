@@ -42,7 +42,8 @@ class Game {
   std::shared_ptr<Player> getCurrentPlayer();
   std::shared_ptr<Player> getPlayer(int index);
   std::shared_ptr<Player> getPlayer(std::string colour);
-  void setPlayer(int index, const PlayerData & pd);
+  /* void setPlayer(int index, const PlayerData & pd); */
+  void setPlayer(std::weak_ptr<Player> player, const PlayerData & pd);
 
   std::shared_ptr<Board> getGameBoard();
   void setGameBoard(std::string layout);
@@ -51,13 +52,12 @@ class Game {
   std::shared_ptr<LoadedDice> getLoadedDice();
 
   int genRand(int min, int max);
-  
+
   void listCommands();
-  void initGame();
-  void resetGame();
-  void saveGame(std::string file);
-  void loadGame(std::ifstream & loadFile);
-  bool startGame();
+  void init();
+  void save(std::string file);
+  void load(std::ifstream & loadFile);
+  bool start();
 };
 
 #endif

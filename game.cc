@@ -49,10 +49,13 @@ shared_ptr<Player> Game::getPlayer(string colour) {
   }
 }
 
-void Game::setPlayer(int index, const PlayerData & pd) {
-  weak_ptr<Player> player = getPlayer(index);
+// void Game::setPlayer(int index, const PlayerData & pd) {
+//   weak_ptr<Player> player = getPlayer(index);
+//   (player.lock())->setResources(pd); // TODO function pending
+//   //gameBoard->setupProperties(player.lock(), pd); // TODO function pending
+// }
 
-  pd.resources();
+void Game::setPlayer(weak_ptr<Player> player, const PlayerData & pd) {
   (player.lock())->setResources(pd); // TODO function pending
   //gameBoard->setupProperties(player.lock(), pd); // TODO function pending
 }
@@ -93,15 +96,35 @@ save <file>
 help)" << endl;
 }
 
-void Game::initGame() {
+void Game::init() {
   // Player initiliazes their properties
+
+  for (auto i = players.begin(); i != players.end(); i++) {
+    // i->init(); // TODO player init pending
+  }
+
+  for (auto i = players.rbegin(); i != players.rend(); i++) {
+    // i->init(); // TODO player init pending
+  }
+
+  // board->print();
 }
 
-void Game::resetGame() {}
+void Game::save(string file) {
+  string path = "provided_files/" + file;
+  ofstream saveFile(path);
 
-void Game::saveGame(string file) {}
+  saveFile << getTurnCount() << endl;
 
-void Game::loadGame(ifstream & loadFile) {
+  for (shared_ptr<Player> p : players) {
+    saveFile << p->save() << endl;
+  }
+
+  // board->save();
+  saveFile.close();
+}
+
+void Game::load(ifstream & loadFile) {
   int turnCount;
   string loadData;
 
@@ -110,23 +133,30 @@ void Game::loadGame(ifstream & loadFile) {
     turnCount = stoi(loadData);
     setTurnCount(turnCount);
 
-    for (int i = 0; i < NUMPLAYERS; i++) {
+    for (shared_ptr<Player> p : players) {
       getline(loadFile, loadData);
       PlayerData pd(loadData);
-      setPlayer(i, pd);
+      setPlayer(p, pd);
     }
 
-    // // getline(loadFile, loadData);
-    // // getGameBoard()->setLayout(loadData);
+    // for (int i = 0; i < NUMPLAYERS; i++) {
+    //   getline(loadFile, loadData);
+    //   PlayerData pd(loadData);
+    //   setPlayer(i, pd);
+    // }
+
+    // getline(loadFile, loadData);
+    // board->setGameBoard(loadData)
     // loadFile.close();
   }
 }
 
-bool Game::startGame() {
+bool Game::start() {
   // initGame();
   // bool win = 0;
   // while (!win)
-  // loop through players
+  // playerTurn = getTurnCount % NUMPLAYER
+  // player = getPlayer(playerTurn)
   // try
   // win = player->turn()
   // catch errors

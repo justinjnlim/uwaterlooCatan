@@ -187,7 +187,7 @@ void Player::turn() {
     } else if (cmd == "save") {
       string filename;
       if(cin >> filename) {
-        g->saveGame(filename);
+        g->save(filename);
       } else {
         cout << "Invalid Command." << endl;
       }
