@@ -5,10 +5,11 @@
 using namespace std;
 
 Player::Player(string colour, weak_ptr<Dice> diceChosen, Game * g):
-colour{colour}, resources(6, 0), changeInResources(6, 0),
+colour{colour}, resources(5, 0), changeInResources(5, 0),
 diceChosen{diceChosen}, g{g} {}
 
-void Player::buildProperty(int id) {
+bool Player::buildProperty(int id) {
+  // call canBuild() // else it'll return false and output can't build here
   weak_ptr<Property> w = g->getGameBoard()->buildProperty(id, shared_from_this());
   properties[id] = w;
   ++numPoints;
@@ -89,7 +90,6 @@ void Player::discardHalf() {
     for(int i = 0; i < discardNum; ++i) {
       ResourceType r = getRandomResource();
       subtractResource(r, 1);
-      changeInResources[static_cast<int>(r)] += 1;
     }
     cout << "Builder " << colour << " loses " << totalChangeInResources();
     cout << " resources to the geese. They lose:" << endl;
@@ -113,16 +113,34 @@ void Player::rolledSeven() {
       cout << "Builder " << colour << " can choose to steal from " << builders << endl;
       cout << "Choose a builder to steal from." << endl;
       string stealFrom;
-      if(cin >> stealFrom) {
-        string stolenResource = steal(stealFrom);
-        cout << "Builder " << colour << " steals " << stolenResource;
-        cout << " from builder " << stealFrom << "." << endl;
+      while(cin >> stealFrom) {
+        if(stealFrom == colour) {
+          cout << "You cannot steal from yourself." << endl;
+        } else {
+          string stolenResource = steal(stealFrom);
+          cout << "Builder " << colour << " steals " << stolenResource;
+          cout << " from builder " << stealFrom << "." << endl;
+          break;
+        }
       }
     } else {
       cout << "Builder <colour1> has no builders to steal from." << endl;
     }
   }
   // PRINT THE BOARD TODO
+}
+void Player::initTurn() {
+  string s;
+  while(cin >> s) {
+    istringstream ss{s};
+    int address;
+    if(ss >> address) {
+      if(buildProperty(address)) break; // built
+      cout << "You cannot build here." << endl;
+    } else {
+      cout << "Please provide an address." << endl;
+    }
+  }
 }
 
 bool Player::turn() {
@@ -136,7 +154,7 @@ bool Player::turn() {
       setDiceToFair();
     } else if (cmd == "roll") {
       rollDice();
-      break; // exits loop once rolled
+      break;
     } else {
       cout << "Invalid Command." << endl;
     }
@@ -162,6 +180,8 @@ bool Player::turn() {
         istringstream(s) >> address;
         if(!properties.count(address)) {
           cout << "You cannot build here." << endl; // do not own
+        } else if(!canUpgrade(address)) {
+          cout << "You cannot upgrade anymore, this is a Tower." << endl;
         } else if(!enoughResourcesToUpgrade(address)) {
           cout << "You do not have enough resources." << endl;
         } else {
@@ -198,6 +218,24 @@ bool Player::turn() {
 }
 
 
+void Player::trade(string player, string give, string take) {
+  weak_ptr<Player> p = g->getPlayer(player);
+  ResourceType g = convertToResourceType(give);
+  ResourceType t = convertToResourceType(take);
+  subtractResource(g, 1);
+  addResource(t, 1);
+  p.lock()->subtractResource(t, 1);
+  p.lock()->addResource(g, 1);
+}
+
+ResourceType Player::convertToResourceType(string r) {
+  if(r == "Brick") return ResourceType::Brick;
+  if(r == "Glass") return ResourceType::Glass;
+  if(r == "Energy") return ResourceType::Energy;
+  if(r == "Heat") return ResourceType::Heat;
+  if(r == "Wifi") return ResourceType::Wifi;
+}
+
 string Player::getPlayerFirstLetter() {
   return colour.substr(0, 1);
 }
@@ -214,9 +252,7 @@ ResourceType Player::getRandomResource() {
   int sumWeight = 0;
   for(auto i : resources) sumWeight += i;
   int randNum = g->genRand(1, sumWeight);
-  // checks randNum against amount of each resource, returns if smaller
-  // since porportional weight
-  for(int i = 0; i < 6; ++i) { // hardcoded num resources
+  for(int i = 0; i < 5; ++i) { // TODO: Hardcoded to 5
     if(randNum < resources[i]) {
       return static_cast<ResourceType>(i);
     } else {
@@ -227,7 +263,7 @@ ResourceType Player::getRandomResource() {
 
 string Player::save() {
   string saved;
-  for(int i = 0; i < 6; ++i) {
+  for(int i = 0; i < 5; ++i) {
     if(i) {
       saved += " ";
     }
@@ -271,6 +307,12 @@ bool Player::enoughResources(string p) {
   return true;
 }
 
+bool Player::canUpgrade(int id) {
+  PropertyType p = properties[id].lock()->getPropertyType();
+  if(p == PropertyType::Tower) return false;
+  return true;
+}
+
 bool Player::enoughResourcesToUpgrade(int id) {
   PropertyType p = properties[id].lock()->getPropertyType();
   if(p == PropertyType::Basement) {
@@ -300,7 +342,7 @@ int Player::totalChangeInResources() {
 
 void Player::subtractResource(ResourceType r, int qty) {
   resources[static_cast<int>(r)] -= qty;
-  changeInResources[static_cast<int>(r)] -= qty;
+  changeInResources[static_cast<int>(r)] += qty; // changes
 }
 
 string Player::getColour() const {
@@ -311,23 +353,20 @@ void Player::clearChangeInResources() {
   for(auto i : changeInResources) i = 0;
 }
 
-void Player::buildRoad(int id) {
-
+bool Player::buildRoad(int id) {
+  // call canBuild() // else it'll return false and output can't build here
 }
 
 string Player::steal(string playerColour) {
   weak_ptr<Player> p = g->getPlayer(playerColour);
-  if(p.lock()->totalResources() != 0) {
-    ResourceType random = p.lock()->getRandomResource();
-    p.lock()->subtractResource(random, 1);
-    p.lock()->clearChangeInResources();
-    addResource(random, 1);
-    if(random == ResourceType::Brick) return "BRICK";
-    if(random == ResourceType::Glass) return "GLASS";
-    if(random == ResourceType::Energy) return "ENERGY";
-    if(random == ResourceType::Heat) return "HEAT";
-    if(random == ResourceType::Wifi) return "WIFI";
-  } else {
-    return "NOTHING"; // if they have no resources
-  }
+
+  ResourceType random = p.lock()->getRandomResource();
+  p.lock()->subtractResource(random, 1);
+  p.lock()->clearChangeInResources();
+  addResource(random, 1);
+  if(random == ResourceType::Brick) return "BRICK";
+  if(random == ResourceType::Glass) return "GLASS";
+  if(random == ResourceType::Energy) return "ENERGY";
+  if(random == ResourceType::Heat) return "HEAT";
+  if(random == ResourceType::Wifi) return "WIFI";
 }

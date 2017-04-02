@@ -26,8 +26,8 @@ public:
   Player(std::string colour, std::weak_ptr<Dice> diceChosen, Game * g);
   void addResource(ResourceType r, int qty);
   void subtractResource(ResourceType r, int qty);
-  void buildProperty(int id);
-  void buildRoad(int id);
+  bool buildProperty(int id);
+  bool buildRoad(int id);
   void upgradeProperty(int id);
   bool turn();
   void printStatus();
@@ -46,7 +46,8 @@ public:
 
   std::string getColour() const;
   void placeGoose(int id);
-
+  int totalResources();
+  void initTurn();
 
 private:
   void rollDice();
@@ -54,12 +55,14 @@ private:
   void printResourcesChange();
   bool anyResourcesGained();
   int totalChangeInResources();
-  int totalResources();
+  bool canUpgrade(int id);
   bool enoughResources(std::string p);
   bool enoughResourcesToUpgrade(int id);
   void clearChangeInResources();
   std::string steal(std::string playerColour);
   void discardHalf();
+  void trade(std::string player, std::string give, std::string take);
+  ResourceType convertToResourceType(std::string r);
 };
 
 #endif

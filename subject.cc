@@ -11,7 +11,7 @@ void Subject::notifyObservers(SubscriptionType t) {
         if (ob->subType() == t) { // only notify the right subscribers
             ob->notify(*this);
         }
-    };
+    }
 }
 
 Subject::~Subject() {}

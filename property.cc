@@ -20,6 +20,7 @@ void Property::upgrade() {
 }
 
 void Property::notify(Subject& whoNotified) {
+  cout << "I'm adding resource now" << endl;
   owner->addResource(whoNotified.getInfo().rt, static_cast<int>(p));
 }
 

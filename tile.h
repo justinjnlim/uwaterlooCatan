@@ -2,6 +2,7 @@
 #define _TILE_H_
 #include <vector>
 #include <memory>
+#include <iostream>
 #include "resources.h"
 #include "subscriptions.h"
 /* #include "road.h" */

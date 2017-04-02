@@ -2,12 +2,14 @@
 #include "subject.h"
 #include "observer.h"
 #include "subscriptions.h"
+using namespace std;
 
 using namespace std;
 
 Tile::Tile(ResourceType r, int id, int dv): r{r}, id{id}, diceValue{dv} {}
 
 void Tile::notify(Subject& whoNotified) {
+  cout << "I'm being notified" << endl;
   Info board = whoNotified.getInfo();
   if (!hasGoose && board.value == diceValue) {
     notifyObservers(SubscriptionType::Property);
