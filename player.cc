@@ -96,9 +96,11 @@ void Player::printResourcesChange() {
   clearChangeInResources();
 }
 
-void Player::placeGoose(int id) {
-  //g->getGameBoard()->removeGoose(); // TODO: waiting for from board
-  //g->getGameBoard()->setGoose(id); // TODO: waiting for from board
+bool Player::placeGoose(int id) {
+  if(g->getGameBoard()->addGoose(id)) { // can add goose
+    return true;
+  }
+  return false; // adding on same tile
 }
 
 void Player::discardHalf() {
@@ -121,31 +123,36 @@ void Player::rolledSeven() {
   cout << "Choose where to place the GEESE." << endl;
   string s;
   cout << ">";
-  if(cin >> s) {
+  while(cin >> s) {
     int address;
     istringstream(s) >> address;
-    placeGoose(address);
-    string builders = "temporary string until justin makes method";
-    //string builders = g->getGameBoard()->whoLivesOnTile(address); // TODO: Add function
-    if(builders != "") {
-      cout << "Builder " << colour << " can choose to steal from " << builders << endl;
-      cout << "Choose a builder to steal from." << endl;
-      string stealFrom;
-      cout << ">";
-      while(cin >> stealFrom) {
-        if(stealFrom == colour) {
-          cout << "You cannot steal from yourself." << endl;
-        } else {
-          string stolenResource = steal(stealFrom);
-          cout << "Builder " << colour << " steals " << stolenResource;
-          cout << " from builder " << stealFrom << "." << endl;
-          break;
-        }
-      }
+    if(!placeGoose(address)) {
+      cout << "You can not place GEESE on same spot. Please choose another spot." << endl;
     } else {
-      cout << "Builder <colour1> has no builders to steal from." << endl;
+      break;
     }
   }
+  string builders = "temporary string until justin makes method";
+  //string builders = g->getGameBoard()->whoLivesOnTile(address); // TODO: Add function
+  if(builders != "") {
+    cout << "Builder " << colour << " can choose to steal from " << builders << endl;
+    cout << "Choose a builder to steal from." << endl;
+    string stealFrom;
+    cout << ">";
+    while(cin >> stealFrom) {
+      if(stealFrom == colour) {
+        cout << "You cannot steal from yourself." << endl;
+      } else {
+        string stolenResource = steal(stealFrom);
+        cout << "Builder " << colour << " steals " << stolenResource;
+        cout << " from builder " << stealFrom << "." << endl;
+        break;
+      }
+    }
+  } else {
+    cout << "Builder <colour1> has no builders to steal from." << endl;
+  }
+
   // PRINT THE BOARD TODO
 }
 void Player::initTurn() {
@@ -187,11 +194,6 @@ bool Player::turn() {
   cout << ">";
   while(cin >> cmd) {
     if(cmd == "board") {
-      vector<int>diceDistrbution = {1,2,2,3,4,5,6,6,7};
-      shuffle(diceDistrbution.begin(), diceDistrbution.end(), g->getRandEng());
-      for(int i = 0; i < 8; ++ i) {
-        cout << diceDistrbution[i] << " is my num " << endl;
-      }
     } else if(cmd == "status") {
       for(int i = 0; i < NUMPLAYERS; ++i) {
         g->getPlayer(i)->printStatus();

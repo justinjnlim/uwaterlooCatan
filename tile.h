@@ -30,11 +30,14 @@ public:
   Info getInfo() const override;
 
   void addProperty(std::shared_ptr<Property> p);
-  void addRoad(std::shared_ptr<Road> r);
+  void addRoad(std::shared_ptr<Road>r);
   void setResourceType(ResourceType rt);
 
   void setDiceValue(int dv);
-
+  int getAddress();
+  bool getHasGoose();
+  void removeGoose();
+  bool addGoose();
 
 };
 

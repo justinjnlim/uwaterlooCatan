@@ -107,7 +107,6 @@ void Board::linkTiles_Roads() {
     }
   }
 }
-}
 
 void Board::linkTiles_Properties() {
   for (int i = 0; i < 19; ++i) {
@@ -331,4 +330,17 @@ void Board::getDiceRoll(int diceRoll) {
 Info Board::getInfo() const {
   Info ret = {diceValue};
   return ret;
+}
+
+bool Board::addGoose(int id) {
+  for(auto tile : tiles) {
+    if(tile->getHasGoose() && tile->getAddress() == id) { // placing on same address
+      return false;
+    } else if(tile->getHasGoose()){ // remove goose current
+      tile->removeGoose();
+    } else if(tile->getAddress() == id) { // add goose
+      tile->addGoose();
+    }
+  }
+  return true;
 }

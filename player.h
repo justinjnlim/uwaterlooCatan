@@ -47,7 +47,7 @@ public:
   int howManyResources(ResourceType r);
   bool buildBeginningProperty(int id);
   std::string getColour() const;
-  void placeGoose(int id);
+  bool placeGoose(int id);
   int totalResources();
   void initTurn();
 

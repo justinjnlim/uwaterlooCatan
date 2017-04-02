@@ -34,6 +34,7 @@ class Board : public Subject {
   void linkRoads_Properties();
   void linkTiles_Properties();
   void linkTiles_Roads();
+  void removeGoose();
 
  public:
 
@@ -48,6 +49,7 @@ class Board : public Subject {
   Info getInfo() const override;
   void setupTiles(std::string layout);
   void randomizeTiles();
+  bool addGoose(int id);
 
 
 };

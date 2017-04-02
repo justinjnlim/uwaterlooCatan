@@ -2,6 +2,7 @@
 #include "subject.h"
 #include "observer.h"
 #include "subscriptions.h"
+#include <iostream>
 using namespace std;
 
 using namespace std;
@@ -54,4 +55,24 @@ void Tile::setResourceType(ResourceType rt) {
 
 void Tile::setDiceValue(int dv) {
   diceValue = dv;
+}
+
+bool Tile::getHasGoose() {
+  return hasGoose;
+}
+
+int Tile::getAddress() {
+  return id;
+}
+
+void Tile::removeGoose() {
+  cout << "this method was called" << endl;
+  hasGoose = false;
+  // notify TD
+}
+
+bool Tile::addGoose() {
+  cout << "this method was also called" << endl;
+  hasGoose = true;
+  // notify TD
 }
