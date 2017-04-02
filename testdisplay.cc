@@ -141,6 +141,15 @@ void TestDisplay::refresh() {
 
       if (i > 4 && i < 36) insertAt(i,51,a_prop[p++]);
     }
+
+    if ((i + 2) % 4 == 0 && i > 0 && i < 40) {
+      if (i > 8 && i < 32) insertAt(i,1,a_road[r++]);
+      if (i > 4 && i < 36) insertAt(i,11,a_road[r++]);
+      insertAt(i,21,a_road[r++]);
+      insertAt(i,31,a_road[r++]);
+      if (i > 4 && i < 36) insertAt(i,41,a_road[r++]);
+      if (i > 8 && i < 32) insertAt(i,51,a_road[r++]);
+    }
   }
 }
 
