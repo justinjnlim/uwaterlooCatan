@@ -100,11 +100,11 @@ void Game::init() {
   // Player initiliazes their properties
 
   for (auto i = players.begin(); i != players.end(); i++) {
-    i->initTurn();
+    (*i)->initTurn();
   }
 
   for (auto i = players.rbegin(); i != players.rend(); i++) {
-    i->initTurn();
+    (*i)->initTurn();
   }
 
   // board->print();

@@ -13,7 +13,7 @@ Board::Board() {
 
   // LINK THESE MOTHERFUCKERS
   // PROPERTY LINKING
-  for(int i = 0; i < 19; ++i) {
+  /*for(int i = 0; i < 19; ++i) {
     int start = 2*i;
     if (i > 5) ++start;
     if (i > 7) ++start;
@@ -49,7 +49,7 @@ Board::Board() {
       tiles[i]->addProperty(properties[start+8]);
       tiles[i]->addProperty(properties[start+9]);
     }
-  }
+  } */
 }
 
 shared_ptr<Property> Board::buildProperty(int id, shared_ptr<Player> player) {
