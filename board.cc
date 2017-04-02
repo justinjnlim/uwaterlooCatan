@@ -256,14 +256,10 @@ void Board::randomizeTiles() {
   for(int i = 0; i < 18; ++i) { // TODO: hardcoded
     tiles[i]->setResourceType(getRandomResource()); // sets all to random resource
   }
-  vector<int> diceVals= {2, 12};
-  for(int i = 0; i < 2; ++i) {
-    diceVals.emplace_back(g->genRand(3,6));
+  shuffle(diceDistrbution.begin(), diceDistrbution.end(), g->getRandEng());
+  for(int i = 0; i < 18; ++i) {
+    tiles[i]->setDiceValue(diceDistrbution[i]);
   }
-
-  // create array of posibble values, use shuffle, with seed from joseph
-  tiles[0]->setDiceValue(2);
-  tiles[12]->setDiceValue(2); // TODO: RANDOMIZE DICE VALUES
 }
 
 

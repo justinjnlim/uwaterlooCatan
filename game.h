@@ -34,7 +34,7 @@ class Game {
     m["Road"] = {0, 0, 0, 1, 1};
     return m;
   }
-
+  std::mt19937 getRandEng();
   Game(int seed = 1);
   ~Game();
   int getTurnCount();

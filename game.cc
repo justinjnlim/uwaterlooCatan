@@ -80,6 +80,9 @@ int Game::genRand(int min, int max) {
   uniform_int_distribution<> dist{min, max};
   return dist(gen);
 }
+std::mt19937 Game::getRandEng() {
+  return gen;
+}
 
 void Game::listCommands() {
   // uses string literal

@@ -25,6 +25,7 @@ class Board : public Subject {
 
   //used for random Generation
   std::vector<int> resourceDistribution = {4,4,4,3,3,1};
+  std::vector<int> diceDistrbution = {2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12};
   Game * g;
   // private
   ResourceType getRandomResource();
@@ -33,7 +34,7 @@ class Board : public Subject {
   void linkRoads_Properties();
   void linkTiles_Properties();
   // void linkTiles_Roads(); TODO implement this
- 
+
 public:
 
   Board(Game * g);
