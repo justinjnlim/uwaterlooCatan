@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-Property::Property(int id): id{id}, owner{weak_ptr<Player>()} {}
+Property::Property(int id): owner{weak_ptr<Player>()}, id{id}  {}
 
 void Property::printNeighbours() {
   cout << "Property " << id << " has neighbours:" << endl;
@@ -60,7 +60,6 @@ Info Property::getInfo() const {
   i.value = id;
   i.type = "Property";
   i.hasGoose = false;
-  i.rt;
   if(p == PropertyType::Unowned) {
     if(id < 10) {
       i.ownerString = " " + to_string(id);
@@ -79,3 +78,17 @@ string Property::getOwnerColour() {
   }
   return (owner.lock())->getColour();
 }
+
+bool Property::hasOwner() {
+  return !(owner.expired);
+}
+
+bool Property::attachedToColourRoad(std::string colour) {
+  for (weak_ptr<Road> r : neighbours) {
+    if (!r.expired()) {
+      
+    }
+  }
+}
+
+bool canBuild(std::string

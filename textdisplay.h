@@ -6,6 +6,7 @@
 #include "observer.h"
 #include "subject.h"
 #include "subscriptions.h"
+#include "resources.h"
 
 class TextDisplay: public Observer {
 
@@ -13,7 +14,10 @@ class TextDisplay: public Observer {
   std::vector<std::vector<char>> theDisplay;
   std::vector<std::string> a_prop;
   std::vector<std::string> a_road;
-  std::vector<std::string> a_tile;;
+  std::vector<std::string> a_dv;
+  std::vector<ResourceType> a_rt;
+  std::vector<bool> a_geese;
+
 
 public:
   TextDisplay();
