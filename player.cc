@@ -162,8 +162,13 @@ void Player::initTurn() {
     istringstream ss{s};
     int address;
     if(ss >> address) {
-      if(buildBeginningProperty(address)) break;
-      cout << "You cannot build here." << endl;
+      if(address < 0 || address >= NUMPROPERTIES) {
+        cout << "That address does not exist" << endl;
+      } else if (buildBeginningProperty(address)) {
+        break;
+      } else {
+        cout << "You cannot build here." << endl;
+      }
     } else {
       cout << "Please provide an address." << endl;
     }
@@ -207,21 +212,31 @@ bool Player::turn() {
       istringstream ss{s};
       int address;
       if(ss >> address) {
-        if(!buildProperty(address)) cout << "You cannot build here." << endl;
+        if(address < 0 || address >= NUMROADS) {
+          cout << "That address does not exist" << endl;
+        } else if(!buildRoad(address)) {
+          cout << "You cannot build here." << endl;
+        }
       }
     } else if (cmd == "build-res") {
       string s;
       istringstream ss{s};
       int address;
       if(ss >> address) {
-        if(!buildProperty(address)) cout << "You cannot build here." << endl;
+        if(address < 0 || address >= NUMPROPERTIES) {
+          cout << "That address does not exist" << endl;
+        } else if(!buildProperty(address)) {
+          cout << "You cannot build here." << endl;
+        }
       }
     } else if (cmd == "improve") {
       string s;
       if(cin >> s) {
         istringstream(s) >> address;
-        if(!properties.count(address)) {
-          cout << "You cannot build here." << endl; // do not own
+        if(address < 0 || address >= NUMPROPERTIES) {
+          cout << "That address does not exist" << endl;
+        } else if(!properties.count(address)) {
+          cout << "You do not own this property." << endl;
         } else if(!canUpgrade(address)) {
           cout << "You cannot upgrade anymore, this is a Tower." << endl;
         } else if(!enoughResourcesToUpgrade(address)) {
@@ -345,7 +360,6 @@ string Player::save() {
       address.second.lock()->getBuildingType();
     }
   }
-
   return saved;
 }
 
