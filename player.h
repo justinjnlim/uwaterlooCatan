@@ -27,26 +27,25 @@ class Player: public std::enable_shared_from_this<Player> {
 public:
   Player(std::string colour, std::weak_ptr<Dice> diceChosen, Game * g);
   void addResource(ResourceType r, int qty);
-  void subtractResource(ResourceType r, int qty);
   bool buildProperty(int id);
   bool buildRoad(int id);
-  void upgradeProperty(int id);
   bool turn();
   std::string getPlayerFirstLetter(); // used for text display
-  ResourceType getRandomResource();
   std::string save();
 
-  // SETTERS/GETTERS
   void addProperty(int id, std::weak_ptr<Property> p);
   void addRoad(int id, std::weak_ptr<Road> r);
   void setResources(const PlayerData & pd);
-  bool buildBeginningProperty(int id);
   std::string getColour() const;
   int totalResources();
   void initTurn();
   std::string getDiceType();
 
 private:
+  bool buildBeginningProperty(int id);
+  void subtractResource(ResourceType r, int qty);
+  ResourceType getRandomResource();
+  void upgradeProperty(int id);
   bool placeGoose(int id);
   int howManyResources(ResourceType r);
   void rollDice();
