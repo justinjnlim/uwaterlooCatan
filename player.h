@@ -6,6 +6,7 @@
 #include <sstream>
 #include <vector>
 #include <iostream>
+#include <algorithm>
 #include "resources.h"
 #include "player_data.h"
 class Property;

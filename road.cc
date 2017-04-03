@@ -28,6 +28,7 @@ Info Road::getInfo() const {
   if (!owner.expired()) {
     i.ownerString = (owner.lock())->getPlayerFirstLetter() + "R";
   }
+  return i;
 }
 
 bool Road::hasAdjacentProperty() {

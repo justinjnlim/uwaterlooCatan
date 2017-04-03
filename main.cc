@@ -68,6 +68,10 @@ int main(int argc, char * argv[]) {
     case 'r':
       options.randomFlag = 1;
       break;
+    case '?':
+      errorMessage();
+      cout << "\nTerminating game..." << endl;
+      return 1;
     }
   }
 
