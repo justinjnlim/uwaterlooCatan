@@ -9,11 +9,11 @@ using namespace std;
 Tile::Tile(ResourceType r, int id, int dv): r{r}, id{id}, diceValue{dv} {}
 
 void Tile::notify(Subject& whoNotified) {
-  cout << "Tile " << id << " was notified. DiceValue: " << diceValue << endl;
+  // cout << "Tile " << id << " was notified. DiceValue: " << diceValue << endl;
 
-  for (weak_ptr<Road> r : roads) {
-    cout << "Has Road " << (r.lock())->getId() << endl;
-  }
+  // for (weak_ptr<Road> r : roads) {
+  //   cout << "Has Road " << (r.lock())->getId() << endl;
+  // }
 
   Info board = whoNotified.getInfo();
   if (!hasGoose && board.value == diceValue) {

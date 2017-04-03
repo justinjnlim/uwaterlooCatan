@@ -186,6 +186,7 @@ bool Game::start() {
 
     try {
       win = (player.lock())->turn();
+      turnCount++;
     } catch (istream::failure & e) {
       if (cin.eof()) {
         cout << "Game terminating due to EOF. Saving..." << endl;
@@ -196,5 +197,19 @@ bool Game::start() {
     }
   }
 
-  return 1;
+  // Game was won
+  string response;
+  cout << (player.lock())->getColour() << " has won the game!" << endl;
+  cout << "Would you like to play again? [Yes/No]" << endl;
+  cout << "> ";
+  while (cin >> response) {
+    if (response == "Yes" || response == "Y" || response == "y")
+      return 1;
+    else if (response == "No" || response == "N" || response == "n")
+      return 0;
+    else {
+      cout << "Invalid option. Would you like to play again? [Yes/No]" << endl;
+      cout << "> ";
+    }
+  }
 }

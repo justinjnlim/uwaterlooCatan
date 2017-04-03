@@ -33,7 +33,7 @@ void Property::upgrade() {
 }
 
 void Property::notify(Subject& whoNotified) {
-  cout << "Property " << id << " was notified" << endl;
+  // cout << "Property " << id << " was notified" << endl;
   if (!owner.expired())
     (owner.lock())->addResource(whoNotified.getInfo().rt, static_cast<int>(p));
 }

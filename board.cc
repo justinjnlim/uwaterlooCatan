@@ -89,7 +89,7 @@ void Board::setupTiles(string layout) {
 }
 
 void Board::linkAssets() {
-  linkTiles_Roads(); // TODO Implement this
+  linkTiles_Roads();
   linkTiles_Properties();
   linkRoads_Properties();
 }

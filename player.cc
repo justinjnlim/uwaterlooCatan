@@ -175,7 +175,7 @@ bool Player::turn() {
   cout << "Builder " << colour << "'s turn." << endl;
   printStatus();
   string cmd;
-  // cout << "Your current dice is " << getDiceType() << ". ";
+  cout << "Your current dice is " << getDiceType() << ". ";
   cout << "Change or roll:" << endl;
   cout << "> ";
   while(cin >> cmd) {
@@ -444,5 +444,5 @@ bool Player::hasResources(string playerColour) {
 }
 
 string Player::getDiceType() {
-  //return diceChosen->getType();
+  return diceChosen.lock()->getType();
 }
