@@ -54,9 +54,9 @@ string Road::getOwnerColour() {
 
 bool Road::canBuild(string colour) {
   if (owner.expired()) {
-    for (weak_ptr<Property> p : neighbours) {
-      if ((p.lock())->getOwnerColour() == colour || (p.lock())->attachedToColourRoad(colour)) return true;
-    }
+     for (weak_ptr<Property> p : neighbours) {
+     if ((p.lock())->getOwnerColour() == colour) return true;//||(p.lock())->attachedToColourRoad(colour)) return true;
+     }
   }
   return false;
 }

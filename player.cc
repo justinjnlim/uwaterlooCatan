@@ -85,9 +85,10 @@ void Player::rollDice() {
       if(!g->getPlayer(i)->anyResourcesGained()) {
         --numGained;
       } else {
-        cout << "Builder " << colour << " gained:" << endl;
+        cout << "Builder " << g->getPlayer(i)->getColour() << " gained:" << endl;
         g->getPlayer(i)->printResourcesChange();
       }
+      g->getPlayer(i)->clearChangeInResources();
     }
     if(!numGained) { // no one gained resources
       cout << "No builders gained resources." << endl;
@@ -444,7 +445,9 @@ string Player::getColour() const {
 }
 
 void Player::clearChangeInResources() {
-  for(auto i : changeInResources) i = 0;
+  for(int i = 0; i < NUMRESOURCES; ++i) {
+    changeInResources[i] = 0;
+  }
 }
 
 string Player::steal(string playerColour) {
