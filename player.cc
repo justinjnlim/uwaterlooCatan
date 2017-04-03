@@ -143,13 +143,11 @@ void Player::rolledSeven() {
         cout << "Builder " << colour << " steals " << stolenResource;
         cout << " from builder " << stealFrom << "." << endl;
         break;
-      } else {
-        cout << "Builder " << stealFrom << " has no resources. Pick another player." << endl;
-        cout << "> ";
       }
     }
   } else {
-    cout << "Builder " << colour << " has no builders to steal from." << endl;
+    cout << "Builder " << colour << " has no builders to steal from or";
+    cout << " the builders living there have no resources." << endl;
   }
   g->getGameBoard()->printBoard();
 }

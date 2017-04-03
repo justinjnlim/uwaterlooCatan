@@ -383,7 +383,6 @@ ostream &operator<<(ostream &out, const Board& b) {
 }
 
 string Board::whoLivesOnTile(int address, string colour) {
-
   for(auto t : tiles) {
     if(t->getAddress() == address) {
       return t->whoLivesHere(colour);

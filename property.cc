@@ -74,10 +74,17 @@ Info Property::getInfo() const {
 }
 
 string Property::getOwnerColour() {
-  if(p == PropertyType::Unowned) {
+  if(!owner.expired()) {
     return "";
   }
   return (owner.lock())->getColour();
+}
+
+bool Property::ownerHasResources() {
+  if(!owner.expired()) {
+    if(owner.lock()->totalResources()) return true;
+  }
+  return false;
 }
 
 bool Property::hasOwner() {

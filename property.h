@@ -40,6 +40,7 @@ class Property : public Subject, public Observer, public std::enable_shared_from
   PropertyType getPropertyType() const;
   Info getInfo() const override;
   std::string getOwnerColour();
+  bool ownerHasResources();
 };
 
 #endif

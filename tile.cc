@@ -88,14 +88,15 @@ bool Tile::addGoose() {
 std::string Tile::whoLivesHere(string self) {
   vector<string> players = {"", "", "", ""};
   string builderList = "";
-
   for(auto p : properties) {
-    if(p.lock()->getOwnerColour() == "Blue") players[0] = "Blue";
-    if(p.lock()->getOwnerColour() == "Red") players[1] = "Red";
-    if(p.lock()->getOwnerColour() == "Orange") players[2] = "Orange";
-    if(p.lock()->getOwnerColour() == "Yellow") players[3] = "Yellow";
+    if(p.lock()->ownerHasResources()) {
+      if(p.lock()->getOwnerColour() == "Blue") players[0] = "Blue";
+      if(p.lock()->getOwnerColour() == "Red") players[1] = "Red";
+      if(p.lock()->getOwnerColour() == "Orange") players[2] = "Orange";
+      if(p.lock()->getOwnerColour() == "Yellow") players[3] = "Yellow";
+    }
   }
-  
+
   for(auto p : players) {
     if(p != self && p != "") { // not add self
       if(builderList != "") builderList += ", ";
