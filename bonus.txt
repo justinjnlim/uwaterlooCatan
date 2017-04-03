@@ -1,0 +1,3 @@
+Bonus Features Implemented:
+
+- Using smart pointers for memory management
