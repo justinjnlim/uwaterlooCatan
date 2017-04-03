@@ -62,6 +62,7 @@ class Board : public Subject {
   bool canBuildRoad(int id, std::string colour);
   bool canBuildProperty(int id, std::string colour);
   bool canBuildInitProperty(int id, std::string colour);
+  ResourceType getPropertyType(int id);
 };
 
 #endif

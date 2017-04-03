@@ -13,14 +13,22 @@ bool Player::buildProperty(int id) {
   if(!g->getGameBoard()->canBuildProperty(id, colour)) return false;
   weak_ptr<Property> w = g->getGameBoard()->buildProperty(id, shared_from_this());
   properties[id] = w;
+  int len = Game::propertyRecipes.at("Basement").size();
+  for(int i = 0; i < len; ++i) {
+    resources[i] -= Game::propertyRecipes.at("Basement")[i];
+  }
   ++numPoints;
   return true;
 }
 
 bool Player::buildRoad(int id) {
-  //if(!g->getGameBoard()->canBuildRoad(id, colour)) return false;
+  if(!g->getGameBoard()->canBuildRoad(id, colour)) return false;
   weak_ptr<Road> w = g->getGameBoard()->buildRoad(id, shared_from_this());
   roads[id] = w;
+  int len = Game::propertyRecipes.at("Road").size();
+  for(int i = 0; i < len; ++i) {
+    resources[i] -= Game::propertyRecipes.at("Road")[i];
+  }
   return true;
 }
 
@@ -54,8 +62,14 @@ void Player::printStatus() {
 }
 
 void Player::upgradeProperty(int id) {
-   properties[id].lock()->upgrade();
-   ++numPoints;
+  string type = properties[id].lock()->getBuildingType();
+  properties[id].lock()->upgrade();
+
+  int len = Game::propertyRecipes.at(type).size();
+  for(int i = 0; i < len; ++i) {
+    resources[i] -= Game::propertyRecipes.at(type)[i];
+  }
+  ++numPoints;
  }
 
 void Player::rollDice() {
@@ -210,10 +224,12 @@ bool Player::turn() {
       string s;
       int address;
       if(cin >> s) {
+
         if(istringstream(s) >> address) {
+;
           if(address < 0 || address >= NUMROADS) {
             cout << "That address does not exist" << endl;
-          } else if(!enoughResourcesToUpgrade(address)) {
+          } else if(!enoughResources("Road")) {
             cout << "You do not have enough resources." << endl;
           } else if(!buildRoad(address)) {
             cout << "You cannot build here." << endl;
@@ -227,7 +243,7 @@ bool Player::turn() {
         if(istringstream(s) >> address) {
           if(address < 0 || address >= NUMPROPERTIES) {
             cout << "That address does not exist" << endl;
-          } else if(!enoughResourcesToUpgrade(address)) {
+          } else if(!enoughResources("Basement")) {
             cout << "You do not have enough resources." << endl;
           } else if(!buildProperty(address)) {
             cout << "You cannot build here." << endl;
