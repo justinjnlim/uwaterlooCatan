@@ -5,6 +5,7 @@
 class Dice {
  public:
   virtual int getDiceRoll() = 0;
+  virtual std::string getType() = 0;
 };
 
 #endif

@@ -50,15 +50,9 @@ shared_ptr<Player> Game::getPlayer(string colour) {
   }
 }
 
-// void Game::setPlayer(int index, const PlayerData & pd) {
-//   weak_ptr<Player> player = getPlayer(index);
-//   (player.lock())->setResources(pd); // TODO function pending
-//   //gameBoard->setupProperties(player.lock(), pd); // TODO function pending
-// }
-
-void Game::setPlayer(weak_ptr<Player> player, const PlayerData & pd) {
-  (player.lock())->setResources(pd);
-  //gameBoard->setupProperties(player.lock(), pd); // TODO function pending
+void Game::setPlayer(shared_ptr<Player> player, const PlayerData & pd) {
+  player->setResources(pd);
+  gameBoard->setupAssets(player, pd); // TODO function pending
 }
 
 shared_ptr<Board> Game::getGameBoard() {
@@ -77,7 +71,6 @@ void Game::setGameBoard(ifstream & loadFile) {
 }
 
 void Game::setGameBoard() {
-  cout << "is the game set getting called" << endl;
   gameBoard->randomizeTiles();
 }
 
@@ -124,7 +117,6 @@ void Game::init() {
   }
 
   cout << *(gameBoard.get());
-  // board->print();
 }
 
 void Game::save(string file) {
@@ -139,6 +131,14 @@ void Game::save(string file) {
 
   saveFile << gameBoard->save() << endl;
   saveFile.close();
+}
+
+void Game::saveLayout(string file) {
+  string path = file;
+  ofstream layoutFile(path);
+
+  layoutFile << gameBoard->save() << endl;
+  layoutFile.close();
 }
 
 void Game::load(ifstream & loadFile) {
@@ -177,22 +177,24 @@ bool Game::start() {
 
   cin.exceptions(istream::failbit|istream::eofbit|istream::badbit);
 
-  try {
-    init();
-    gameBoard->printTiles();
-    getPlayer(0)->buildProperty(5);
-    getPlayer(0)->turn();
-    getPlayer(0)->upgradeProperty(5);
-    getPlayer(0)->printStatus();
-  } catch (istream::failure & e) {
-    if (cin.eof()) {
-      cout << "Game terminating due to EOF. Saving..." << endl;
-      save("backup.sv");
-      cout << "Done." << endl;
-    }
+  int turn;
+  weak_ptr<Player> player;
+  bool win = 0;
+  while (!win) {
+    turn = getTurnCount() % NUMPLAYERS;
+    player = getPlayer(turn);
 
-    return 0;
+    try {
+      win = (player.lock())->turn();
+    } catch (istream::failure & e) {
+      if (cin.eof()) {
+        cout << "Game terminating due to EOF. Saving..." << endl;
+        save("backup.sv");
+        cout << "Done." << endl;
+      }
+      return 0;
+    }
   }
 
-  return 0;
+  return 1;
 }

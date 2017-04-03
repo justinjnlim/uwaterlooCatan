@@ -16,8 +16,9 @@ void Property::addNeighbour(weak_ptr<Road> neighbour) {
   neighbours.emplace_back(neighbour);
 }
 
-shared_ptr<Property> Property::buy(shared_ptr<Player> player) {
-  upgrade();
+shared_ptr<Property> Property::buy(shared_ptr<Player> player, int multiple) {
+  for (int i = 0; i < multiple; i++)
+    upgrade();
   owner = player;
 
   // TELL THE FUCKIN DISPLAY!!!

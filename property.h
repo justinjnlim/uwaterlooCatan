@@ -23,7 +23,7 @@ class Property : public Subject, public Observer, public std::enable_shared_from
 
   void printNeighbours();
 
-  std::shared_ptr<Property> buy(std::shared_ptr<Player> player);
+  std::shared_ptr<Property> buy(std::shared_ptr<Player> player, int multiple = 1);
   void upgrade();
   bool hasOwner();
   void addNeighbour(std::weak_ptr<Road> neighbour);

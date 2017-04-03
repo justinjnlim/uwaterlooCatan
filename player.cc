@@ -175,6 +175,8 @@ bool Player::turn() {
   cout << "Builder " << colour << "'s turn." << endl;
   printStatus();
   string cmd;
+  // cout << "Your current dice is " << getDiceType() << ". ";
+  cout << "Change or roll:" << endl;
   cout << "> ";
   while(cin >> cmd) {
     if(cmd == "load") {

@@ -5,6 +5,7 @@
 class LoadedDice : public Dice {
  public:
   int getDiceRoll() override;
+  std::string getType() override;
 };
 
 #endif

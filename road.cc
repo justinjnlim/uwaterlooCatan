@@ -5,13 +5,6 @@ using namespace std;
 
 Road::Road(int id): id{id}, owner{weak_ptr<Player>()} {}
 
-shared_ptr<Road> Road::buy(shared_ptr<Player> player) {
-  owner = player;
-  notifyObservers(SubscriptionType::Display);
-
-  return shared_from_this();
-}
-
 void Road::addNeighbour(weak_ptr<Property> neighbour) {
   neighbours.emplace_back(neighbour);
 }
@@ -67,4 +60,10 @@ bool Road::canBuild(string colour) {
     }
   }
   return false;
+}
+
+shared_ptr<Road> Road::buy(shared_ptr<Player> player) {
+  owner = player;
+  notifyObservers(SubscriptionType::Display);
+  return shared_from_this();
 }

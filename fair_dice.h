@@ -11,6 +11,7 @@ class FairDice : public Dice {
  public:
   FairDice(std::mt19937 gen);
   int getDiceRoll() override;
+  std::string getType() override;
 };
 
 #endif

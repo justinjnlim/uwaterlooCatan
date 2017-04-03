@@ -11,6 +11,7 @@
 class Road;
 class Property;
 class Player;
+class PlayerData;
 class Tile;
 class Game;
 class TextDisplay;
@@ -45,7 +46,7 @@ class Board : public Subject {
 
   std::shared_ptr<Property> buildProperty(int id, std::shared_ptr<Player> player);
   std::shared_ptr<Road> buildRoad(int id, std::shared_ptr<Player> player);
-
+  void setupAssets(std::shared_ptr<Player> player, const PlayerData & pd);
   void getDiceRoll(int diceRoll);
 
   std::string save();
