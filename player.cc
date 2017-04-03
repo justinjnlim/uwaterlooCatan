@@ -142,11 +142,14 @@ void Player::rolledSeven() {
     while(cin >> stealFrom) {
       if(stealFrom == colour) {
         cout << "You cannot steal from yourself." << endl;
-      } else {
+      } else if(hasResources(stealFrom)){
         string stolenResource = steal(stealFrom);
         cout << "Builder " << colour << " steals " << stolenResource;
         cout << " from builder " << stealFrom << "." << endl;
         break;
+      } else {
+        cout << "Builder " << stealFrom << " has no resources. Pick another player." << endl;
+        cout << "> ";
       }
     }
   } else {
@@ -194,7 +197,7 @@ bool Player::turn() {
   cout << "> ";
   while(cin >> cmd) {
     if(cmd == "board") {
-      rolledSeven();
+      g->getGameBoard()->printBoard();
     } else if(cmd == "status") {
       for(int i = 0; i < NUMPLAYERS; ++i) {
         g->getPlayer(i)->printStatus();
@@ -288,26 +291,29 @@ void Player::setDiceToFair() {
   diceChosen = g->getFairDice();
 }
 
-// ResourceType Player::getRandomResource() {
-//   shuffle(resourceDistribution.begin(), resourceDistribution.end(), g->getRandEng());
-//   vector<int> resourceList;
-//
-//   int sumWeight = 0;
-//   for(auto i : resources) {
-//     for(int j = 0; j < i; ++j) {
-//       resourceList.emplace_back()
-//     }
-//   }
-//
-//   int randNum = g->genRand(1, sumWeight);
-//   for(int i = 0; i < NUMRESOURCES; ++i) {
-//     if(randNum < resources[i]) {
-//       return static_cast<ResourceType>(i);
-//     } else {
-//       randNum -= resources[i];
-//     }
-//   }
-// }
+ResourceType Player::getRandomResource() {
+  vector<int> resourceList = {};
+
+  int sumWeight = 0;
+  for(int i = 0; i < NUMRESOURCES; ++ i) {
+    for(int j = 0; j < i; ++j) {
+      resourceList.emplace_back(i);
+    }
+  }
+
+  shuffle(resourceList.begin(), resourceList.end(), g->getRandEng());
+  cout << to_string(resourceList[0]) << " is the rand resource" << endl;
+  return static_cast<ResourceType>(resourceList[0]);
+  //
+  // int randNum = g->genRand(1, sumWeight);
+  // for(int i = 0; i < NUMRESOURCES; ++i) {
+  //   if(randNum < resources[i]) {
+  //     return static_cast<ResourceType>(i);
+  //   } else {
+  //     randNum -= resources[i];
+  //   }
+  // }
+}
 
 string Player::save() {
   string saved;
@@ -422,4 +428,9 @@ string Player::steal(string playerColour) {
   if(random == ResourceType::Energy) return "ENERGY";
   if(random == ResourceType::Heat) return "HEAT";
   if(random == ResourceType::Wifi) return "WIFI";
+}
+
+bool Player::hasResources(string playerColour) {
+  weak_ptr<Player> p = g->getPlayer(playerColour);
+  return p.lock()->totalResources();
 }

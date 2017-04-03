@@ -65,6 +65,7 @@ private:
   void discardHalf();
   void trade(std::string player, std::string give, std::string take);
   ResourceType convertToResourceType(std::string r);
+  bool hasResources(std::string playerColour);
 };
 
 #endif
