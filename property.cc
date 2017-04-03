@@ -77,5 +77,5 @@ string Property::getOwnerColour() {
   if(p == PropertyType::Unowned) {
     return "";
   }
-  return (owner.lock())->getPlayerColour();
+  return (owner.lock())->getColour();
 }

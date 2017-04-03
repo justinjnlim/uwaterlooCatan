@@ -154,8 +154,7 @@ void Player::rolledSeven() {
   } else {
     cout << "Builder " << colour << " has no builders to steal from." << endl;
   }
-
-  // PRINT THE BOARD TODO
+  g->getGameBoard()->printBoard();
 }
 void Player::initTurn() {
   cout << "Builder " << colour << " where do you want to build a basement?" << endl;
@@ -320,7 +319,7 @@ string Player::save() {
     if(i) {
       saved += " ";
     }
-    saved += resources[i];
+    saved += to_string(resources[i]);
   }
   if(roads.size()) {
     saved += " r";
@@ -432,8 +431,4 @@ string Player::steal(string playerColour) {
 bool Player::hasResources(string playerColour) {
   weak_ptr<Player> p = g->getPlayer(playerColour);
   return p.lock()->totalResources();
-}
-
-string Player::getPlayerColour() {
-  return colour;
 }
