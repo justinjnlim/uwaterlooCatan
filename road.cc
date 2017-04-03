@@ -68,3 +68,9 @@ bool Road::canBuild(string colour) {
   }
   return false;
 }
+
+shared_ptr<Road> Road::buy(shared_ptr<Player> player) {
+  owner = player;
+  notifyObservers(SubscriptionType::Display);
+  return shared_from_this();
+}

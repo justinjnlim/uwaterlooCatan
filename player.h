@@ -38,11 +38,10 @@ public:
   std::string getPlayerFirstLetter(); // used for text display
   ResourceType getRandomResource();
   std::string save();
-  void addRoad(int id, std::weak_ptr<Road> r);
 
   // SETTERS/GETTERS
   void addProperty(int id, std::weak_ptr<Property> p);
-  // void addRoad(int id, weak_ptr<Road> r);  TODO: uncomment when add roads
+  void addRoad(int id, std::weak_ptr<Road> r);  // TODO: uncomment when add roads
   void setResources(const PlayerData & pd);
   int howManyResources(ResourceType r);
   bool buildBeginningProperty(int id);

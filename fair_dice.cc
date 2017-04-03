@@ -7,6 +7,10 @@ int FairDice::getDiceRoll() {
   return dist(gen) + dist(gen);
 }
 
+string FairDice::getType() {
+  return "Fair Dice";
+}
+
 // int main() {
 //   FairDice fd(seed);
 //   for (int i = 0; i < 10; i++)

@@ -5,6 +5,7 @@
 #include "property.h"
 #include "road.h"
 #include "player.h"
+#include "player_data.h"
 #include "game.h"
 #include "board.h"
 using namespace std;
@@ -58,6 +59,17 @@ void Board::printBoard() {
 
 shared_ptr<Property> Board::buildProperty(int id, shared_ptr<Player> player) {
   return properties[id]->buy(player);
+}
+
+void Board::setupAssets(shared_ptr<Player> player, const PlayerData & pd) {
+  for (int i : pd.roads())
+    player->addRoad(i, roads[i]->buy(player));
+  for (int i : pd.basements())
+    player->addProperty(i, properties[i]->buy(player));
+  for (int i : pd.houses())
+    player->addProperty(i, properties[i]->buy(player, 2));
+  for (int i : pd.towers())
+    player->addProperty(i, properties[i]->buy(player, 3));
 }
 
 void Board::setupTiles(string layout) {
@@ -345,6 +357,10 @@ void Board::getDiceRoll(int diceRoll) {
 Info Board::getInfo() const {
   Info ret = {diceValue};
   return ret;
+}
+
+string Board::save() {
+  return "Board save line";
 }
 
 bool Board::addGoose(int id) {

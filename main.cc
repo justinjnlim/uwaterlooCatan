@@ -76,13 +76,14 @@ int main(int argc, char * argv[]) {
   //   check istream.eof()
   //   g.save("backup.sv")
   try {
-    bool stopGame = 1;
-    while (stopGame) {
+    bool keepPlaying = 1;
+    while (keepPlaying) {
       Game g(options.seed);
 
       if (options.loadFlag) {
         options.boardFlag = 0;
         options.randomFlag = 0;
+        options.loadFlag = 0;
 
         ifstream f{options.loadFile};
         g.load(f);
@@ -90,16 +91,26 @@ int main(int argc, char * argv[]) {
 
       if (options.boardFlag) {
         options.randomFlag = 0;
+        options.boardFlag = 0;
 
         ifstream f{options.boardFile};
         g.setGameBoard(f);
+        g.init();
       }
 
       if (options.randomFlag) {
+        options.randomFlag = 0;
         g.setGameBoard();
+        g.init();
       }
 
-      stopGame = g.start();
+      keepPlaying = g.start();
+
+      if (keepPlaying) {
+        options.boardFlag = 1;
+        g.saveLayout("replay.layout");
+        options.boardFile = "replay.layout";
+      }
     }
   } catch (exception & e) {
     cout << "Error: " << e.what() << endl;
