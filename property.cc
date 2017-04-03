@@ -86,9 +86,21 @@ bool Property::hasOwner() {
 bool Property::attachedToColourRoad(std::string colour) {
   for (weak_ptr<Road> r : neighbours) {
     if (!r.expired()) {
-      
+      if ((r.lock())->getOwnerColour() == colour) return true;
     }
   }
+  return false;
 }
 
-bool canBuild(std::string
+bool canBuild(std::string colour) {
+  if (owner.expired()) {
+    // check if adjacent houses not owned
+    for (weak_ptr<Road> r : neighbours) {
+      if ((r.lock())->hasAdjacentProperty()) return false;
+    }
+    for (weak_ptr<Road> r : neighbours) {
+      if ((r.lock())->getOwnerColour() == colour) return true;
+    }
+  }
+  return false;
+}
