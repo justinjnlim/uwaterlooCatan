@@ -20,6 +20,12 @@ class TextDisplay: public Observer {
   std::vector<ResourceType> a_rt;
   std::vector<bool> a_geese;
 
+private:
+  // internal setters
+  void refresh();
+  void insertAt(int i, int j, std::string s);
+  void insertResource(int i, int j, ResourceType rt); 
+  void insertGoose(int i, int j, bool hasGoose);
 
 public:
   TextDisplay();
@@ -28,12 +34,6 @@ public:
   int getM() const;
   int getN() const;
   char getCharAt(int m, int n) const;
-
-  // Setters
-  void refresh();
-  void insertAt(int i, int j, std::string s);
-  void insertResource(int i, int j, ResourceType rt); 
-  void insertGoose(int i, int j, bool hasGoose);
 
   // Observer overrides; notify updates the board state of given subject
   void notify(Subject &whoNotified) override;

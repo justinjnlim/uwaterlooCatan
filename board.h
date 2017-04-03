@@ -32,15 +32,15 @@ class Board : public Subject {
   std::vector<int> resourceDistribution = {0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,4,4,4,5};
   std::vector<int> diceDistribution = {2,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11,12};
   Game * g;
-  // private
 
+private:
   void linkAssets();
   void linkRoads_Properties();
   void linkTiles_Properties();
   void linkTiles_Roads();
   void removeGoose();
 
- public:
+public:
 
   Board(Game * g);
 
