@@ -5,8 +5,7 @@
 #include "resources.h"
 using namespace std;
 
-
-TextDisplay::TextDisplay(): m(41), n(54), theDisplay(41,vector<char>(54,' ')),a_dv(19,""),a_rt(19),a_geese(19,false) {
+TextDisplay::TextDisplay(): m(41), n(54), theDisplay(41,vector<char>(54,' ')),a_dv(19,"  "),a_rt(19),a_geese(19,false) {
 
   for (int i = 0; i < 54; ++i) {
     if (i < 10) {
@@ -21,6 +20,14 @@ TextDisplay::TextDisplay(): m(41), n(54), theDisplay(41,vector<char>(54,' ')),a_
       a_road.emplace_back(" " + to_string(i));
     } else {
       a_road.emplace_back(to_string(i));
+    }
+  }
+
+  for (int i = 0; i < 19; ++i) {
+    if (i < 10) {
+      a_tile.emplace_back(" " + to_string(i));
+    } else {
+      a_tile.emplace_back(to_string(i));
     }
   }
 
@@ -123,25 +130,47 @@ void TextDisplay::refresh() {
     if ((i + 2) % 4 == 0 && i > 0 && i < 40) {
       if (i > 8 && i < 32) {
         insertAt(i,1,a_road[r++]);
-        if ((i - 2) % 8 == 0)  insertAt(i,6,a_dv[t++]);
+        if ((i - 2) % 8 == 0) {
+          insertAt(i,6,a_tile[t]);
+          insertResource(i+1,6,a_rt[t]);
+          insertAt(i+2,6,a_dv[t]);
+          insertGoose(i+3,6,a_geese[t++]);
+        }
       }
       if (i > 4 && i < 36) {
         insertAt(i,11,a_road[r++]);
-        if ((i + 2) % 8 == 0)  insertAt(i,16,a_dv[t++]);
+        if ((i + 2) % 8 == 0) {
+          insertAt(i,16,a_tile[t]);
+          insertResource(i+1,16,a_rt[t]);
+          insertAt(i+2,16,a_dv[t]);
+          insertGoose(i+3,16,a_geese[t++]);
+        }
       }
       insertAt(i,21,a_road[r++]);
       if ((i - 2) % 8 == 0) {
-        insertAt(i,26,a_dv[t]);
-        insertResource(i+1,26,a_rt[t++]);
+        insertAt(i,26,a_tile[t]);
+        insertResource(i+1,26,a_rt[t]);
+        insertAt(i+2,26,a_dv[t]);
+        insertGoose(i+3,26,a_geese[t++]);
       }
       insertAt(i,31,a_road[r++]);
       if (i > 4 && i < 36) {
         insertAt(i,41,a_road[r++]);
-        if ((i + 2) % 8 == 0)  insertAt(i,36,a_dv[t++]);
+        if ((i + 2) % 8 == 0) {
+          insertAt(i,36,a_tile[t]);
+          insertResource(i+1,36,a_rt[t]);
+          insertAt(i+2,36,a_dv[t]);
+          insertGoose(i+3,36,a_geese[t++]);
+        }
       }
       if (i > 8 && i < 32) {
         insertAt(i,51,a_road[r++]);
-        if ((i - 2) % 8 == 0)  insertAt(i,46,a_dv[t++]);
+        if ((i - 2) % 8 == 0) {
+          insertAt(i,46,a_tile[t]);
+          insertResource(i+1,46,a_rt[t]);
+          insertAt(i+2,46,a_dv[t]);
+          insertGoose(i+3,46,a_geese[t++]);
+        }
       }
     }
   }
@@ -153,6 +182,12 @@ void TextDisplay::insertAt(int i, int j, string s) {
 }
 
 void TextDisplay::insertResource(int i, int j, ResourceType rt) {
+  theDisplay[i][j-1] = ' ';
+  theDisplay[i][j] = ' ';
+  theDisplay[i][j+1] = ' ';
+  theDisplay[i][j+2] = ' ';
+  theDisplay[i][j+3] = ' ';
+  theDisplay[i][j+4] = ' ';
   switch(rt) {
     case ResourceType::Brick:
       theDisplay[i][j-1] = 'B';
@@ -191,16 +226,27 @@ void TextDisplay::insertResource(int i, int j, ResourceType rt) {
     case ResourceType::Park:
       theDisplay[i][j-1] = 'P';
       theDisplay[i][j] = 'A';
-      theDisplay[i][j+2] = 'R';
-      theDisplay[i][j+3] = 'K';
+      theDisplay[i][j+1] = 'R';
+      theDisplay[i][j+2] = 'K';
       break;
   }
 }
 
 void TextDisplay::insertGoose(int i, int j, bool hasGoose) {
-  
+  if (hasGoose) {
+    theDisplay[i][j-1] = 'G';
+    theDisplay[i][j] = 'O';
+    theDisplay[i][j+1] = 'O';
+    theDisplay[i][j+2] = 'S';
+    theDisplay[i][j+3] = 'E';
+  } else {
+    theDisplay[i][j-1] = ' ';
+    theDisplay[i][j] = ' ';
+    theDisplay[i][j+1] = ' ';
+    theDisplay[i][j+2] = ' ';
+    theDisplay[i][j+3] = ' ';
+  }
 }
-
 void TextDisplay::notify(Subject &whoNotified) {
   Info cell = whoNotified.getInfo();
   if (cell.type == "Property") { 

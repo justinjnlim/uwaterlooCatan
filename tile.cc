@@ -39,6 +39,9 @@ Info Tile::getInfo() const {
   if (diceValue < 10) {
     i.ownerString = " " + i.ownerString;
   }
+  if (r == ResourceType::Park) {
+    i.ownerString = "  ";
+  }
 
   return i;
 }

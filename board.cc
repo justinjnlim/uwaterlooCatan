@@ -20,7 +20,6 @@ Board::Board(Game * g): td{make_shared<TextDisplay>()}, g{g} {
     tiles.emplace_back(make_shared<Tile>(ResourceType::Brick, i, 5)); // default values so setUp is called after
     attach(tiles[i]);
     tiles[i]->attach(td);
-    tiles[i]->notifyObservers(SubscriptionType::Display);
   }
 
   for (int i = 0; i < NUMROADS; ++i) { // TODO: max roads
@@ -85,6 +84,7 @@ void Board::setupTiles(string layout) {
     ss >> dicevalue;
     tiles[i]->setResourceType(static_cast<ResourceType>(resource));
     tiles[i]->setDiceValue(dicevalue);
+    tiles[i]->notifyObservers(SubscriptionType::Display);
   }
 }
 
@@ -350,6 +350,7 @@ void Board::randomizeTiles() {
       tiles[i]->setDiceValue(diceDistribution[j]);
       ++j;
     }
+    tiles[i]->notifyObservers(SubscriptionType::Display);
   }
 }
 
