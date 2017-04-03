@@ -50,6 +50,12 @@ int main(int argc, char * argv[]) {
     switch (iarg) {
     case 's':
       options.seed = stoi(optarg);
+
+      if (argc <= 3) { // only seed is provided
+        options.randomFlag = 1;
+        cout << "Ctor game initializers not provided. Creating random board...\n" << endl;
+      }
+
       break;
     case 'l':
       options.loadFlag = 1;
