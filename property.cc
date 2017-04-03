@@ -28,7 +28,7 @@ shared_ptr<Property> Property::buy(shared_ptr<Player> player, int multiple) {
 
 void Property::upgrade() {
   p = static_cast<PropertyType>(static_cast<int>(p) + 1);
-  // TELL THE DISPLAY
+  notifyObservers(SubscriptionType::Display);
 }
 
 void Property::notify(Subject& whoNotified) {
@@ -118,4 +118,12 @@ bool Property::canInitBuild(std::string colour) {
     return true;
   }
   return false;
+}
+
+string Property::getBuildingUpgraded() const {
+  if (p == PropertyType::Basement) {
+    return "House";
+  } else {
+    return "Tower";
+  }
 }

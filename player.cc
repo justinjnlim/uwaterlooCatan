@@ -62,9 +62,8 @@ void Player::printStatus() {
 }
 
 void Player::upgradeProperty(int id) {
-  string type = properties[id].lock()->getBuildingType();
+  string type = properties[id].lock()->getBuildingUpgraded();
   properties[id].lock()->upgrade();
-
   int len = Game::propertyRecipes.at(type).size();
   for(int i = 0; i < len; ++i) {
     resources[i] -= Game::propertyRecipes.at(type)[i];
@@ -284,9 +283,8 @@ bool Player::turn() {
       } else {
         cout << "Invalid Command." << endl;
       }
-    } else if (cmd == "recipes") {
-      g->listRecipes();
-    } else if (cmd == "help") {
+
+    } else if(cmd == "help") {
       g->listCommands();
     } else if (cmd == "next") {
       return numPoints >= 10;
