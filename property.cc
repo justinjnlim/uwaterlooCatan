@@ -21,7 +21,6 @@ shared_ptr<Property> Property::buy(shared_ptr<Player> player, int multiple) {
     upgrade();
   owner = player;
 
-  // TELL THE FUCKIN DISPLAY!!!
   notifyObservers(SubscriptionType::Display);
 
   return shared_from_this();
@@ -33,7 +32,6 @@ void Property::upgrade() {
 }
 
 void Property::notify(Subject& whoNotified) {
-  // cout << "Property " << id << " was notified" << endl;
   if (!owner.expired())
     (owner.lock())->addResource(whoNotified.getInfo().rt, static_cast<int>(p));
 }
@@ -74,7 +72,7 @@ Info Property::getInfo() const {
 }
 
 string Property::getOwnerColour() {
-  if(!owner.expired()) {
+  if(owner.expired()) {
     return "";
   }
   return (owner.lock())->getColour();
@@ -93,9 +91,7 @@ bool Property::hasOwner() {
 
 bool Property::attachedToColourRoad(std::string colour) {
   for (weak_ptr<Road> r : neighbours) {
-    if (!r.expired()) {
-      if ((r.lock())->getOwnerColour() == colour) return true;
-    }
+    if ((r.lock())->getOwnerColour() == colour) return true;
   }
   return false;
 }

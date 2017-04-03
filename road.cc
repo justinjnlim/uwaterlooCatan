@@ -33,9 +33,7 @@ Info Road::getInfo() const {
 
 bool Road::hasAdjacentProperty() {
   for (weak_ptr<Property> p : neighbours) {
-    if (!p.expired()) {
-      if ((p.lock())->hasOwner() == true) return true;
-    }
+    if ((p.lock())->hasOwner() == true) return true;
   }
   return false;
 }
@@ -46,7 +44,7 @@ bool Road::hasOwner() {
 
 string Road::getOwnerColour() {
   if (owner.expired()) {
-    return "";
+    return " ";
   } else {
     return (owner.lock())->getColour();
   }
