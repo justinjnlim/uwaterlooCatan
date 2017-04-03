@@ -40,14 +40,14 @@ Info Road::getInfo() const {
 bool Road::hasAdjacentProperty() {
   for (weak_ptr<Property> p : neighbours) {
     if (!p.expired()) {
-      (p.lock())->hasOwner == true) return true;
+      if ((p.lock())->hasOwner() == true) return true;
     }
   }
   return false;
 }
 
 bool Road::hasOwner() {
-  return !(owner.expired);
+  return !(owner.expired());
 }
 
 string Road::getOwnerColour() {
@@ -62,7 +62,7 @@ bool Road::canBuild(string colour) {
   if (owner.expired()) {
     for (weak_ptr<Property> p : neighbours) {
       if (!p.expired()) {
-        if ((p.lock())->getOwnerColour == colour || (p.lock())->attachedToColourRoad(colour)) return true;
+        if ((p.lock())->getOwnerColour() == colour || (p.lock())->attachedToColourRoad(colour)) return true;
       }
     }
   }

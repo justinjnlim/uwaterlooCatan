@@ -80,7 +80,7 @@ string Property::getOwnerColour() {
 }
 
 bool Property::hasOwner() {
-  return !(owner.expired);
+  return !(owner.expired());
 }
 
 bool Property::attachedToColourRoad(std::string colour) {
@@ -92,7 +92,7 @@ bool Property::attachedToColourRoad(std::string colour) {
   return false;
 }
 
-bool canBuild(std::string colour) {
+bool Property::canBuild(std::string colour) {
   if (owner.expired()) {
     // check if adjacent houses not owned
     for (weak_ptr<Road> r : neighbours) {
