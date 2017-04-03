@@ -26,7 +26,6 @@ class Road : public Subject, public std::enable_shared_from_this<Road> {
   bool hasOwner();
   bool canBuild(std::string colour); 
   std::string getOwnerColour();
-  std::shared_ptr<Road> buy(std::shared_ptr<Player> player);
 };
 
 #endif
