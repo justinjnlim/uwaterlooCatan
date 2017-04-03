@@ -3,7 +3,6 @@
 #include "observer.h"
 #include "subscriptions.h"
 #include <iostream>
-using namespace std;
 
 using namespace std;
 
@@ -32,10 +31,11 @@ SubscriptionType Tile::subType() const {
 
 Info Tile::getInfo() const {
   Info i;
+  i.value = id;
   i.type = "Tile";
   i.hasGoose = hasGoose;
   i.rt = r;
-  i.ownerString = "";
+  i.ownerString = to_string(diceValue);
 
   return i;
 }

@@ -123,6 +123,7 @@ void Game::init() {
     (*i)->initTurn();
   }
 
+  cout << *(gameBoard.get());
   // board->print();
 }
 
@@ -177,6 +178,7 @@ bool Game::start() {
   cin.exceptions(istream::failbit|istream::eofbit|istream::badbit);
 
   try {
+    init();
     gameBoard->printTiles();
     getPlayer(0)->buildProperty(5);
     getPlayer(0)->turn();

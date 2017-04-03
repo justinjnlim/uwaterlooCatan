@@ -21,6 +21,7 @@ shared_ptr<Property> Property::buy(shared_ptr<Player> player) {
   owner = player;
 
   // TELL THE FUCKIN DISPLAY!!!
+  notifyObservers(SubscriptionType::Display);
 
   return shared_from_this();
 }

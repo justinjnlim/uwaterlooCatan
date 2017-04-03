@@ -18,9 +18,9 @@ class TextDisplay: public Observer {
 public:
   TextDisplay();
 
-  int getM();
-  int getN();
-  char getCharAt(int m, int n);
+  int getM() const;
+  int getN() const;
+  char getCharAt(int m, int n) const;
 
   void refresh();
   void insertAt(int i, int j, std::string s);
@@ -31,7 +31,7 @@ public:
 
   ~TextDisplay();
 
-  friend std::ostream &operator<<(std::ostream &out, std::shared_ptr<TextDisplay> td);
+  friend std::ostream &operator<<(std::ostream &out, const TextDisplay& td);
 };
 
 #endif

@@ -82,17 +82,18 @@ TextDisplay::TextDisplay(): m(41), n(54), theDisplay(41,vector<char>(54,' ')) {
       theDisplay[i][39] = '-';
     }
   }
+  refresh();
 }
 
-int TextDisplay::getM() {
+int TextDisplay::getM() const {
   return m;
 }
 
-int TextDisplay::getN() {
+int TextDisplay::getN() const {
   return n;
 }
 
-char TextDisplay::getCharAt(int m, int n) {
+char TextDisplay::getCharAt(int m, int n) const {
   return theDisplay[m][n];
 }
 
@@ -145,7 +146,8 @@ void TextDisplay::notify(Subject &whoNotified) {
     a_road[cell.value] = cell.ownerString;
 
   } else if (cell.type == "Tile") {
-
+    // Displays the id, resource, dice value, goose
+    
     
 
   }
@@ -158,11 +160,11 @@ SubscriptionType TextDisplay::subType() const {
   return SubscriptionType::Display;
 }
 
-ostream &operator<<(ostream &out, shared_ptr<TextDisplay> td) {
-  int m = td->getM(), n = td->getN();
+ostream &operator<<(ostream &out, const TextDisplay& td) {
+  int m = td.getM(), n = td.getN();
   for (int r = 0; r < m; ++r) {
     for (int c = 0; c < n; ++c) {
-      out << td->getCharAt(r,c);
+      out << td.getCharAt(r,c);
     }
     out << endl;
   }
