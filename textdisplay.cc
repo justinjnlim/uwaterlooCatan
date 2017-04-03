@@ -249,7 +249,7 @@ void TextDisplay::insertGoose(int i, int j, bool hasGoose) {
 }
 void TextDisplay::notify(Subject &whoNotified) {
   Info cell = whoNotified.getInfo();
-  if (cell.type == "Property") { 
+  if (cell.type == "Property") {
     // Displays the new ownerString.
     a_prop[cell.value] = cell.ownerString;
 

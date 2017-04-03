@@ -59,7 +59,7 @@ Info Property::getInfo() const {
   i.value = id;
   i.type = "Property";
   i.hasGoose = false;
-  if(p == PropertyType::Unowned) {
+  if (owner.expired()) {
     if(id < 10) {
       i.ownerString = " " + to_string(id);
     } else {
