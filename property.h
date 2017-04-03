@@ -25,10 +25,13 @@ class Property : public Subject, public Observer, public std::enable_shared_from
 
   std::shared_ptr<Property> buy(std::shared_ptr<Player> player);
   void upgrade();
-//  bool hasOwner();
+  bool hasOwner();
   void addNeighbour(std::weak_ptr<Road> neighbour);
   void notify(Subject& whoNotified) override;
-//  bool hasNeighbouringRoad(int id);
+  std::string getOwnerColour() const;
+  bool attachedToColourRoad(std::string);
+  bool canBuild(std::string colour);
+
   SubscriptionType subType() const override;
 // used to get the letter of it's property type for Player::printStatus
   std::string getBuildingType() const;

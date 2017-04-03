@@ -5,7 +5,7 @@
 using namespace std;
 
 
-TextDisplay::TextDisplay(): m(41), n(54), theDisplay(41,vector<char>(54,' ')) {
+TextDisplay::TextDisplay(): m(41), n(54), theDisplay(41,vector<char>(54,' ')),a_dv(19,""),a_rt(19),a_geese(19,false) {
 
   for (int i = 0; i < 54; ++i) {
     if (i < 10) {
@@ -147,7 +147,7 @@ void TextDisplay::notify(Subject &whoNotified) {
 
   } else if (cell.type == "Tile") {
     // Displays the id, resource, dice value, goose
-    
+        
     
 
   }
