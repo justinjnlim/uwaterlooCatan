@@ -8,6 +8,7 @@
 #include "subscriptions.h"
 #include "resources.h"
 
+// Displays the state of the board in a text-based format
 class TextDisplay: public Observer {
 
   int m, n;
@@ -22,21 +23,25 @@ class TextDisplay: public Observer {
 
 public:
   TextDisplay();
-
+  
+  // Getters
   int getM() const;
   int getN() const;
   char getCharAt(int m, int n) const;
 
+  // Setters
   void refresh();
   void insertAt(int i, int j, std::string s);
   void insertResource(int i, int j, ResourceType rt); 
   void insertGoose(int i, int j, bool hasGoose);
 
+  // Observer overrides; notify updates the board state of given subject
   void notify(Subject &whoNotified) override;
   SubscriptionType subType() const override;
 
   ~TextDisplay();
 
+  // overload output operator
   friend std::ostream &operator<<(std::ostream &out, const TextDisplay& td);
 };
 

@@ -10,7 +10,8 @@
 #include "subject.h"
 #include "subscriptions.h"
 #include "tile.h"
-/* class Player; */
+
+// Represents the Properties on the Ctor game board
 class Property : public Subject, public Observer, public std::enable_shared_from_this<Property> {
   std::weak_ptr<Player> owner;
   int id;
@@ -19,25 +20,30 @@ class Property : public Subject, public Observer, public std::enable_shared_from
 
   public:
 
+  // Constructor requires property id
   Property(int id);
 
   void printNeighbours();
 
+  // Allows a player to buy the property, take ownership and upgrade
   std::shared_ptr<Property> buy(std::shared_ptr<Player> player, int multiple = 1);
+  // Upgrades the property
   void upgrade();
-  bool hasOwner();
   void addNeighbour(std::weak_ptr<Road> neighbour);
   void notify(Subject& whoNotified) override;
-  std::string getOwnerColour() const;
-  bool attachedToColourRoad(std::string);
-  bool canBuild(std::string colour);
-  bool canInitBuild(std::string colour);
+  
+  // Getters
 
+  // Check if Property is adjacent to a road of a given colour
+  bool attachedToColourRoad(std::string);
+  // Checks if conditions are good for a player to build here
+  bool canBuild(std::string colour);
+  // Checks to build at init stage of game
+  bool canInitBuild(std::string colour);
+  bool hasOwner();
   SubscriptionType subType() const override;
-// used to get the letter of it's property type for Player::printStatus
   std::string getBuildingType() const;
   std::string getBuildingUpgraded() const;
-  // get the enum for property type
   PropertyType getPropertyType() const;
   Info getInfo() const override;
   std::string getOwnerColour();

@@ -10,6 +10,7 @@
 #include "subject.h"
 #include "observer.h"
 
+// Represents the Tiles on the Ctor game board
 class Tile : public Subject, public Observer {
 
   ResourceType r;
@@ -22,24 +23,28 @@ class Tile : public Subject, public Observer {
 
 public:
 
+  // Constructs with the resource, id, and dice value
   Tile(ResourceType r, int id, int dv);
-
-  ResourceType getResourceType();
+  
+  // Notify tells all observing properties to pay their owners
   void notify(Subject& whoNotified) override;
-  SubscriptionType subType() const override;
-  Info getInfo() const override;
 
-  int getDiceValue();
+  // Setters
   void addProperty(std::shared_ptr<Property> p);
   void addRoad(std::shared_ptr<Road>r);
   void setResourceType(ResourceType rt);
-
   void setDiceValue(int dv);
-  int getAddress();
-  bool getHasGoose();
   void removeGoose();
   bool addGoose();
+  
+  // Getters
+  int getAddress();
+  int getDiceValue();
+  bool getHasGoose();
   std::string whoLivesHere(std::string self);
+  ResourceType getResourceType();
+  SubscriptionType subType() const override;
+  Info getInfo() const override;
 
 };
 

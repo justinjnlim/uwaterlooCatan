@@ -9,6 +9,7 @@
 
 class Observer;
 
+// Subject for use in Observer design pattern
 class Subject {
   std::vector<std::shared_ptr<Observer>> observers;
  public:

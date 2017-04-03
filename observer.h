@@ -3,6 +3,7 @@
 #include "subscriptions.h"
 class Subject;
 
+// Observer for use in Observer design pattern
 class Observer {
  public:
   virtual void notify(Subject &whoNotified) = 0;
