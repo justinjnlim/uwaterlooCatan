@@ -49,6 +49,7 @@ class Board : public Subject {
 
   void save();
   void printTiles();
+  void printBoard();
   Info getInfo() const override;
   void setupTiles(std::string layout);
   void randomizeTiles();

@@ -1,3 +1,4 @@
+#include <iostream>
 #include "textdisplay.h"
 #include "resources.h"
 #include "tile.h"
@@ -49,6 +50,10 @@ void Board::printTiles() {
     cout << "Resource Type: " << static_cast<int>((t.lock())->getInfo().rt) << endl;
     cout << "Dice Value: " << (t.lock())->getDiceValue() << endl;
   }
+}
+
+void Board::printBoard() {
+  cout << *(td.get());
 }
 
 shared_ptr<Property> Board::buildProperty(int id, shared_ptr<Player> player) {
