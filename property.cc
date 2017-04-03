@@ -112,6 +112,7 @@ bool Property::canInitBuild(std::string colour) {
     for (weak_ptr<Road> r : neighbours) {
       if ((r.lock())->hasAdjacentProperty()) return false;
     }
+    return true;
   }
   return false;
 }

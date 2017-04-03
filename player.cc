@@ -55,7 +55,6 @@ void Player::printStatus() {
 void Player::upgradeProperty(int id) {
    properties[id].lock()->upgrade();
    ++numPoints;
-   cout << "upgradeProperty ran" << endl;
  }
 
 void Player::rollDice() {
@@ -154,6 +153,7 @@ void Player::rolledSeven() {
   }
   g->getGameBoard()->printBoard();
 }
+
 void Player::initTurn() {
   cout << "Builder " << colour << " where do you want to build a basement?" << endl;
   string s;
@@ -162,7 +162,7 @@ void Player::initTurn() {
     istringstream ss{s};
     int address;
     if(ss >> address) {
-      if(buildBeginningProperty(address)) break; // built
+      if(buildBeginningProperty(address)) break;
       cout << "You cannot build here." << endl;
     } else {
       cout << "Please provide an address." << endl;
@@ -203,9 +203,19 @@ bool Player::turn() {
     } else if(cmd == "residences") {
        printOwnedBuildings();
     } else if(cmd == "build-road") {
-
+      string s;
+      istringstream ss{s};
+      int address;
+      if(ss >> address) {
+        if(!buildProperty(address)) cout << "You cannot build here." << endl;
+      }
     } else if (cmd == "build-res") {
-
+      string s;
+      istringstream ss{s};
+      int address;
+      if(ss >> address) {
+        if(!buildProperty(address)) cout << "You cannot build here." << endl;
+      }
     } else if (cmd == "improve") {
       string s;
       if(cin >> s) {
