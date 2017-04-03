@@ -35,7 +35,6 @@ bool Player::buildRoad(int id) {
 void Player::addResource(ResourceType r, int qty) {
   resources[static_cast<int>(r)] += qty;
   changeInResources[static_cast<int>(r)] += qty;
-  cout << "addedResource ran" << endl;
 }
 
 void Player::printStatus() {

@@ -60,6 +60,10 @@ shared_ptr<Property> Board::buildProperty(int id, shared_ptr<Player> player) {
   return properties[id]->buy(player);
 }
 
+shared_ptr<Road> Board::buildRoad(int id, shared_ptr<Player> player) {
+  return roads[id]->buy(player);
+}
+
 void Board::setupTiles(string layout) {
   int resource;
   int dicevalue;
@@ -384,13 +388,13 @@ string Board::save() {
   return b;
 }
 
-bool canBuildRoad(int id, string colour) {
+bool Board::canBuildRoad(int id, string colour) {
   return roads[id]->canBuild(colour);
 }
 
-bool canBuildProperty(int id, string colour) {
+bool Board::canBuildProperty(int id, string colour) {
   return properties[id]->canBuild(colour);
 }
-bool canBuildInitProperty(int id, string colour) {
+bool Board::canBuildInitProperty(int id, string colour) {
   return properties[id]->canInitBuild(colour);
 }

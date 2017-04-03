@@ -44,6 +44,7 @@ class Board : public Subject {
   Board(Game * g);
 
   std::shared_ptr<Property> buildProperty(int id, std::shared_ptr<Player> player);
+  std::shared_ptr<Road> buildRoad(int id, std::shared_ptr<Player> player);
 
   void getDiceRoll(int diceRoll);
 
