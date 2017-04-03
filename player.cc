@@ -17,6 +17,13 @@ bool Player::buildProperty(int id) {
   return true;
 }
 
+bool Player::buildRoad(int id) {
+  //if(!g->getGameBoard()->canBuildRoad(id, colour)) return false;
+  weak_ptr<Road> w = g->getGameBoard()->buildRoad(id, shared_from_this());
+  roads[id] = w;
+  return true;
+}
+
 bool Player::buildBeginningProperty(int id) {
   if(!g->getGameBoard()->canBuildInitProperty(id, colour)) return false;
   weak_ptr<Property> w = g->getGameBoard()->buildProperty(id, shared_from_this());
@@ -25,12 +32,6 @@ bool Player::buildBeginningProperty(int id) {
   return true;
 }
 
-bool Player::buildRoad(int id) {
-  if(!g->getGameBoard()->canBuildRoad(id, colour)) return false;
-  weak_ptr<Road> w = g->getGameBoard()->buildRoad(id, shared_from_this());
-  roads[id] = w;
-  return true;
-}
 
 void Player::addResource(ResourceType r, int qty) {
   resources[static_cast<int>(r)] += qty;
@@ -207,24 +208,30 @@ bool Player::turn() {
        printOwnedBuildings();
     } else if(cmd == "build-road") {
       string s;
-      istringstream ss{s};
       int address;
-      if(ss >> address) {
-        if(address < 0 || address >= NUMROADS) {
-          cout << "That address does not exist" << endl;
-        } else if(!buildRoad(address)) {
-          cout << "You cannot build here." << endl;
+      if(cin >> s) {
+        if(istringstream(s) >> address) {
+          if(address < 0 || address >= NUMROADS) {
+            cout << "That address does not exist" << endl;
+          } else if(!enoughResourcesToUpgrade(address)) {
+            cout << "You do not have enough resources." << endl;
+          } else if(!buildRoad(address)) {
+            cout << "You cannot build here." << endl;
+          }
         }
       }
     } else if (cmd == "build-res") {
       string s;
-      istringstream ss{s};
       int address;
-      if(ss >> address) {
-        if(address < 0 || address >= NUMPROPERTIES) {
-          cout << "That address does not exist" << endl;
-        } else if(!buildProperty(address)) {
-          cout << "You cannot build here." << endl;
+      if(cin >> s) {
+        if(istringstream(s) >> address) {
+          if(address < 0 || address >= NUMPROPERTIES) {
+            cout << "That address does not exist" << endl;
+          } else if(!enoughResourcesToUpgrade(address)) {
+            cout << "You do not have enough resources." << endl;
+          } else if(!buildProperty(address)) {
+            cout << "You cannot build here." << endl;
+          }
         }
       }
     } else if (cmd == "improve") {
@@ -315,9 +322,8 @@ void Player::setDiceToFair() {
 ResourceType Player::getRandomResource() {
   vector<int> resourceList = {};
 
-  int sumWeight = 0;
   for(int i = 0; i < NUMRESOURCES; ++ i) {
-    for(int j = 0; j < i; ++j) {
+    for(int j = 0; j < resources[i]; ++j) {
       resourceList.emplace_back(i);
     }
   }
@@ -325,15 +331,6 @@ ResourceType Player::getRandomResource() {
   shuffle(resourceList.begin(), resourceList.end(), g->getRandEng());
   cout << to_string(resourceList[0]) << " is the rand resource" << endl;
   return static_cast<ResourceType>(resourceList[0]);
-  //
-  // int randNum = g->genRand(1, sumWeight);
-  // for(int i = 0; i < NUMRESOURCES; ++i) {
-  //   if(randNum < resources[i]) {
-  //     return static_cast<ResourceType>(i);
-  //   } else {
-  //     randNum -= resources[i];
-  //   }
-  // }
 }
 
 string Player::save() {

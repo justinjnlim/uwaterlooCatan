@@ -401,6 +401,8 @@ string Board::save() {
 }
 
 bool Board::canBuildRoad(int id, string colour) {
+  cout << id << "is the id passed" << endl;
+  cout << roads[id] << "is roads[id]" << endl;
   return roads[id]->canBuild(colour);
 }
 
