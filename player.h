@@ -36,6 +36,7 @@ public:
   void setDiceToLoaded();
   void setDiceToFair();
   std::string getPlayerFirstLetter(); // used for text display
+  std::string getPlayerColour();
   ResourceType getRandomResource();
   std::string save();
   void addRoad(int id, std::weak_ptr<Road> r);

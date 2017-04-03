@@ -72,3 +72,10 @@ Info Property::getInfo() const {
   }
   return i;
 }
+
+string Property::getOwnerColour() {
+  if(p == PropertyType::Unowned) {
+    return "";
+  }
+  return (owner.lock())->getPlayerColour();
+}

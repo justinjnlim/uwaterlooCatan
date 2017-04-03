@@ -122,9 +122,9 @@ void Player::rolledSeven() {
   }
   cout << "Choose where to place the GEESE." << endl;
   string s;
+  int address;
   cout << "> ";
   while(cin >> s) {
-    int address;
     istringstream(s) >> address;
     if(!placeGoose(address)) {
       cout << "You can not place GEESE on same spot. Please choose another spot." << endl;
@@ -132,8 +132,7 @@ void Player::rolledSeven() {
       break;
     }
   }
-  string builders = "temporary string until justin makes method";
-  //string builders = g->getGameBoard()->whoLivesOnTile(address); // TODO: Add function
+  string builders = g->getGameBoard()->whoLivesOnTile(address, colour);
   if(builders != "") {
     cout << "Builder " << colour << " can choose to steal from " << builders << endl;
     cout << "Choose a builder to steal from." << endl;
@@ -153,7 +152,7 @@ void Player::rolledSeven() {
       }
     }
   } else {
-    cout << "Builder <colour1> has no builders to steal from." << endl;
+    cout << "Builder " << colour << " has no builders to steal from." << endl;
   }
 
   // PRINT THE BOARD TODO
@@ -433,4 +432,8 @@ string Player::steal(string playerColour) {
 bool Player::hasResources(string playerColour) {
   weak_ptr<Player> p = g->getPlayer(playerColour);
   return p.lock()->totalResources();
+}
+
+string Player::getPlayerColour() {
+  return colour;
 }

@@ -56,6 +56,7 @@ class Board : public Subject {
   bool addGoose(int id);
 
   friend std::ostream &operator<<(std::ostream &out, const Board& b);
+  std::string whoLivesOnTile(int address, std::string colour);
 };
 
 #endif

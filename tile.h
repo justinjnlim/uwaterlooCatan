@@ -39,6 +39,7 @@ public:
   bool getHasGoose();
   void removeGoose();
   bool addGoose();
+  std::string whoLivesHere(std::string self);
 
 };
 

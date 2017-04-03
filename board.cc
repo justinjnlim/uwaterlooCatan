@@ -366,3 +366,12 @@ ostream &operator<<(ostream &out, const Board& b) {
   out << *(b.td.get());
   return out;
 }
+
+string Board::whoLivesOnTile(int address, string colour) {
+
+  for(auto t : tiles) {
+    if(t->getAddress() == address) {
+      return t->whoLivesHere(colour);
+    }
+  }
+}

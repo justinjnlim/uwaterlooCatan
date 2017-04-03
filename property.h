@@ -35,6 +35,7 @@ class Property : public Subject, public Observer, public std::enable_shared_from
   // get the enum for property type
   PropertyType getPropertyType() const;
   Info getInfo() const override;
+  std::string getOwnerColour();
 };
 
 #endif
