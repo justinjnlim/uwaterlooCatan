@@ -288,18 +288,26 @@ void Player::setDiceToFair() {
   diceChosen = g->getFairDice();
 }
 
-ResourceType Player::getRandomResource() {
-  int sumWeight = 0;
-  for(auto i : resources) sumWeight += i;
-  int randNum = g->genRand(1, sumWeight);
-  for(int i = 0; i < NUMRESOURCES; ++i) {
-    if(randNum < resources[i]) {
-      return static_cast<ResourceType>(i);
-    } else {
-      randNum -= resources[i];
-    }
-  }
-}
+// ResourceType Player::getRandomResource() {
+//   shuffle(resourceDistribution.begin(), resourceDistribution.end(), g->getRandEng());
+//   vector<int> resourceList;
+//
+//   int sumWeight = 0;
+//   for(auto i : resources) {
+//     for(int j = 0; j < i; ++j) {
+//       resourceList.emplace_back()
+//     }
+//   }
+//
+//   int randNum = g->genRand(1, sumWeight);
+//   for(int i = 0; i < NUMRESOURCES; ++i) {
+//     if(randNum < resources[i]) {
+//       return static_cast<ResourceType>(i);
+//     } else {
+//       randNum -= resources[i];
+//     }
+//   }
+// }
 
 string Player::save() {
   string saved;
