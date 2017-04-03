@@ -25,6 +25,10 @@ Game::Game(int seed):
 
 Game::~Game() {}
 
+mt19937 Game::getRandEng() {
+  return gen;
+}
+
 int Game::getTurnCount() {
   return turnCount;
 }
@@ -32,8 +36,6 @@ int Game::getTurnCount() {
 void Game::setTurnCount(int turn) {
   turnCount = turn;
 }
-
-// TODO set current player
 
 shared_ptr<Player> Game::getCurrentPlayer() {
   return currentPlayer;
@@ -86,16 +88,21 @@ int Game::genRand(int min, int max) {
   uniform_int_distribution<> dist{min, max};
   return dist(gen);
 }
-std::mt19937 Game::getRandEng() {
-  return gen;
+
+void Game::listRecipes() {
+  cout << R"(Recipes:
+Basement - [ 1 x Brick, 1 x Energy, 1 x Glass, 1 x Wifi ]
+House - [ 2 x Glass,  3 x Heat ]
+Tower - [ 3 x Brick,  2 x Energy,  2 x Glass,  2 x Heat,  1 x Wifi ]
+Road - [ 1 x Heat,  1 x Wifi ])" << endl;
 }
 
 void Game::listCommands() {
-  // uses string literal
   cout << R"(Valid commands:
 board
 status
 residences
+recipes
 build-road <path#>
 build-res <housing#>
 improve <housing#>
@@ -197,7 +204,7 @@ bool Game::start() {
     }
   }
 
-  // Game was won
+  // Game won
   string response;
   cout << (player.lock())->getColour() << " has won the game!" << endl;
   cout << "Would you like to play again? [Yes/No]" << endl;

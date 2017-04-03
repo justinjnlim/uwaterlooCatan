@@ -284,8 +284,9 @@ bool Player::turn() {
       } else {
         cout << "Invalid Command." << endl;
       }
-
-    } else if(cmd == "help") {
+    } else if (cmd == "recipes") {
+      g->listRecipes();
+    } else if (cmd == "help") {
       g->listCommands();
     } else if (cmd == "next") {
       return numPoints >= 10;
