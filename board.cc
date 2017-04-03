@@ -61,8 +61,6 @@ shared_ptr<Property> Board::buildProperty(int id, shared_ptr<Player> player) {
 }
 
 void Board::setupTiles(string layout) {
-  cout << layout << endl;
-
   int resource;
   int dicevalue;
   istringstream ss{layout};
@@ -374,4 +372,14 @@ string Board::whoLivesOnTile(int address, string colour) {
       return t->whoLivesHere(colour);
     }
   }
+}
+
+string Board::save() {
+  string b = "";
+  for(auto t : tiles) {
+    ResourceType r = t->getResourceType();
+    int dv = t->getDiceValue();
+    b += to_string(static_cast<int>(r)) + " " + to_string(dv) + " ";
+  }
+  return b;
 }

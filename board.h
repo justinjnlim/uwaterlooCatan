@@ -47,7 +47,7 @@ class Board : public Subject {
 
   void getDiceRoll(int diceRoll);
 
-  void save();
+  std::string save();
   void printTiles();
   void printBoard();
   Info getInfo() const override;

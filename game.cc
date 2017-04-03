@@ -137,7 +137,7 @@ void Game::save(string file) {
     saveFile << p->save() << endl;
   }
 
-  // board->save();
+  saveFile << gameBoard->save() << endl;
   saveFile.close();
 }
 

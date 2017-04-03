@@ -432,3 +432,7 @@ bool Player::hasResources(string playerColour) {
   weak_ptr<Player> p = g->getPlayer(playerColour);
   return p.lock()->totalResources();
 }
+
+string Player::getDiceType() {
+  //return diceChosen->getType();
+}

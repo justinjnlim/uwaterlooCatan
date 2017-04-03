@@ -50,6 +50,7 @@ public:
   bool placeGoose(int id);
   int totalResources();
   void initTurn();
+  std::string getDiceType();
 
 private:
   void rollDice();
