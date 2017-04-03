@@ -224,9 +224,7 @@ bool Player::turn() {
       string s;
       int address;
       if(cin >> s) {
-
         if(istringstream(s) >> address) {
-;
           if(address < 0 || address >= NUMROADS) {
             cout << "That address does not exist" << endl;
           } else if(!enoughResources("Road")) {
