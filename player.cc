@@ -140,6 +140,7 @@ void Player::rolledSeven() {
     istringstream(s) >> address;
     if(!placeGoose(address)) {
       cout << "You can not place GEESE on same spot. Please choose another spot." << endl;
+      cout << "> ";
     } else {
       break;
     }
@@ -283,8 +284,9 @@ bool Player::turn() {
       } else {
         cout << "Invalid Command." << endl;
       }
-
-    } else if(cmd == "help") {
+    } else if (cmd == "recipes") {
+      g->listRecipes();
+    } else if (cmd == "help") {
       g->listCommands();
     } else if (cmd == "next") {
       return numPoints >= 10;
@@ -311,6 +313,8 @@ void Player::trade(string player, string give, string take) {
   addResource(t, 1);
   p.lock()->subtractResource(t, 1);
   p.lock()->addResource(g, 1);
+  p.lock()->clearChangeInResources();
+  clearChangeInResources();
 }
 
 ResourceType Player::convertToResourceType(string r) {
@@ -318,7 +322,7 @@ ResourceType Player::convertToResourceType(string r) {
   if(r == "Glass") return ResourceType::Glass;
   if(r == "Energy") return ResourceType::Energy;
   if(r == "Heat") return ResourceType::Heat;
-  if(r == "Wifi") return ResourceType::Wifi;
+  if(r == "WiFi") return ResourceType::Wifi;
 }
 
 string Player::getPlayerFirstLetter() {
@@ -343,7 +347,7 @@ ResourceType Player::getRandomResource() {
   }
 
   shuffle(resourceList.begin(), resourceList.end(), g->getRandEng());
-  cout << to_string(resourceList[0]) << " is the rand resource" << endl;
+  // cout << to_string(resourceList[0]) << " is the rand resource" << endl;
   return static_cast<ResourceType>(resourceList[0]);
 }
 
