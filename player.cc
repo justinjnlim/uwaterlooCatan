@@ -10,16 +10,15 @@ colour{colour}, resources(NUMRESOURCES, 0), changeInResources(NUMRESOURCES, 0),
 diceChosen{diceChosen}, g{g} {}
 
 bool Player::buildProperty(int id) {
-  // if(!canBuildProperty(id)) return false;
+  if(!g->getGameBoard()->canBuildProperty(id, colour)) return false;
   weak_ptr<Property> w = g->getGameBoard()->buildProperty(id, shared_from_this());
   properties[id] = w;
   ++numPoints;
   return true;
-  cout << "buildProperty ran" << endl;
 }
 
 bool Player::buildBeginningProperty(int id) {
-  // if(!canBuildBeginningProperty(id)) return false;
+  if(!g->getGameBoard()->canBuildInitProperty(id, colour)) return false;
   weak_ptr<Property> w = g->getGameBoard()->buildProperty(id, shared_from_this());
   properties[id] = w;
   ++numPoints;
@@ -27,10 +26,10 @@ bool Player::buildBeginningProperty(int id) {
 }
 
 bool Player::buildRoad(int id) {
-  // if(!canBuildRoad(id)) return false;
-  // weak_ptr<Road> w = g->getGameBoard()->buildRoad(id, shared_from_this());
-  // roads[id] = w;
-  // return true;
+  if(!g->getGameBoard()->canBuildRoad(id, colour)) return false;
+  weak_ptr<Road> w = g->getGameBoard()->buildRoad(id, shared_from_this());
+  roads[id] = w;
+  return true;
 }
 
 void Player::addResource(ResourceType r, int qty) {

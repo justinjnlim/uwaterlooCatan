@@ -383,3 +383,14 @@ string Board::save() {
   }
   return b;
 }
+
+bool canBuildRoad(int id, string colour) {
+  return roads[id]->canBuild(colour);
+}
+
+bool canBuildProperty(int id, string colour) {
+  return properties[id]->canBuild(colour);
+}
+bool canBuildInitProperty(int id, string colour) {
+  return properties[id]->canInitBuild(colour);
+}

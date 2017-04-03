@@ -31,6 +31,7 @@ class Property : public Subject, public Observer, public std::enable_shared_from
   std::string getOwnerColour() const;
   bool attachedToColourRoad(std::string);
   bool canBuild(std::string colour);
+  bool canInitBuild(std::string colour);
 
   SubscriptionType subType() const override;
 // used to get the letter of it's property type for Player::printStatus

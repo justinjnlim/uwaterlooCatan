@@ -104,3 +104,13 @@ bool Property::canBuild(std::string colour) {
   }
   return false;
 }
+
+bool canInitBuild(std::string colour) {
+  if (owner.expired()) {
+    // check if adjacent houses not owned
+    for (weak_ptr<Road> r : neighbours) {
+      if ((r.lock())->hasAdjacentProperty()) return false;
+    }
+  }
+  return false;
+}

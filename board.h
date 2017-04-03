@@ -57,6 +57,9 @@ class Board : public Subject {
 
   friend std::ostream &operator<<(std::ostream &out, const Board& b);
   std::string whoLivesOnTile(int address, std::string colour);
+  bool canBuildRoad(int id, std::string colour);
+  bool canBuildProperty(int id, std::string colour);
+  bool canBuildInitProperty(int id, std::string colour);
 };
 
 #endif
