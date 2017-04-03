@@ -36,6 +36,9 @@ Info Tile::getInfo() const {
   i.hasGoose = hasGoose;
   i.rt = r;
   i.ownerString = to_string(diceValue);
+  if (diceValue < 10) {
+    i.ownerString = " " + i.ownerString;
+  }
 
   return i;
 }

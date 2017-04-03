@@ -2,6 +2,7 @@
 #include <utility>
 #include "textdisplay.h"
 #include "info.h"
+#include "resources.h"
 using namespace std;
 
 
@@ -98,7 +99,7 @@ char TextDisplay::getCharAt(int m, int n) const {
 }
 
 void TextDisplay::refresh() {
-  int p = 0, r = 0;
+  int p = 0, r = 0, t = 0;
 
   for (int i = 0; i < m; ++i) {
 
@@ -120,12 +121,28 @@ void TextDisplay::refresh() {
     }
 
     if ((i + 2) % 4 == 0 && i > 0 && i < 40) {
-      if (i > 8 && i < 32) insertAt(i,1,a_road[r++]);
-      if (i > 4 && i < 36) insertAt(i,11,a_road[r++]);
+      if (i > 8 && i < 32) {
+        insertAt(i,1,a_road[r++]);
+        if ((i - 2) % 8 == 0)  insertAt(i,6,a_dv[t++]);
+      }
+      if (i > 4 && i < 36) {
+        insertAt(i,11,a_road[r++]);
+        if ((i + 2) % 8 == 0)  insertAt(i,16,a_dv[t++]);
+      }
       insertAt(i,21,a_road[r++]);
+      if ((i - 2) % 8 == 0) {
+        insertAt(i,26,a_dv[t]);
+        insertResource(i+1,26,a_rt[t++]);
+      }
       insertAt(i,31,a_road[r++]);
-      if (i > 4 && i < 36) insertAt(i,41,a_road[r++]);
-      if (i > 8 && i < 32) insertAt(i,51,a_road[r++]);
+      if (i > 4 && i < 36) {
+        insertAt(i,41,a_road[r++]);
+        if ((i + 2) % 8 == 0)  insertAt(i,36,a_dv[t++]);
+      }
+      if (i > 8 && i < 32) {
+        insertAt(i,51,a_road[r++]);
+        if ((i - 2) % 8 == 0)  insertAt(i,46,a_dv[t++]);
+      }
     }
   }
 }
@@ -133,6 +150,55 @@ void TextDisplay::refresh() {
 void TextDisplay::insertAt(int i, int j, string s) {
   theDisplay[i][j] = s[0];
   theDisplay[i][j+1] = s[1];
+}
+
+void TextDisplay::insertResource(int i, int j, ResourceType rt) {
+  switch(rt) {
+    case ResourceType::Brick:
+      theDisplay[i][j-1] = 'B';
+      theDisplay[i][j] = 'R';
+      theDisplay[i][j+1] = 'I';
+      theDisplay[i][j+2] = 'C';
+      theDisplay[i][j+3] = 'K';
+      break;
+    case ResourceType::Energy:
+      theDisplay[i][j-1] = 'E';
+      theDisplay[i][j] = 'N';
+      theDisplay[i][j+1] = 'E';
+      theDisplay[i][j+2] = 'R';
+      theDisplay[i][j+3] = 'G';
+      theDisplay[i][j+4] = 'Y';
+      break;
+    case ResourceType::Glass:
+      theDisplay[i][j-1] = 'G';
+      theDisplay[i][j] = 'L';
+      theDisplay[i][j+1] = 'A';
+      theDisplay[i][j+2] = 'S';
+      theDisplay[i][j+3] = 'S';
+      break;
+    case ResourceType::Heat:
+      theDisplay[i][j-1] = 'H';
+      theDisplay[i][j] = 'E';
+      theDisplay[i][j+1] = 'A';
+      theDisplay[i][j+2] = 'T';
+      break;
+    case ResourceType::Wifi:
+      theDisplay[i][j-1] = 'W';
+      theDisplay[i][j] = 'I';
+      theDisplay[i][j+1] = 'F';
+      theDisplay[i][j+2] = 'I';
+      break;
+    case ResourceType::Park:
+      theDisplay[i][j-1] = 'P';
+      theDisplay[i][j] = 'A';
+      theDisplay[i][j+2] = 'R';
+      theDisplay[i][j+3] = 'K';
+      break;
+  }
+}
+
+void TextDisplay::insertGoose(int i, int j, bool hasGoose) {
+  
 }
 
 void TextDisplay::notify(Subject &whoNotified) {
@@ -147,9 +213,9 @@ void TextDisplay::notify(Subject &whoNotified) {
 
   } else if (cell.type == "Tile") {
     // Displays the id, resource, dice value, goose
-        
-    
-
+    a_dv[cell.value] = cell.ownerString;
+    a_rt[cell.value] = cell.rt;
+    a_geese[cell.value] = cell.hasGoose;
   }
   refresh();
 }

@@ -28,7 +28,8 @@ public:
 
   void refresh();
   void insertAt(int i, int j, std::string s);
-  void insertType(int i, int j, std::string s); 
+  void insertResource(int i, int j, ResourceType rt); 
+  void insertGoose(int i, int j, bool hasGoose);
 
   void notify(Subject &whoNotified) override;
   SubscriptionType subType() const override;
